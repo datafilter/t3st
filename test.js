@@ -1,22 +1,26 @@
 const {assert, test, display_message } = require('./index')
 
-let ok_test = test(`show [ok] on ok`, () => {
-    let two = 2
+const ok_test = test(`show [ok] on ok`, () => {
+    const two = 2
     assert(`${two} == 2`)
 })
-let err_eval = test(`show evaluation on error`, () => {
+
+const err_eval = test(`show evaluation on error`, () => {
     assert(`1 > 2`)
 })
-let err_eval_err = test(`show evaluation exception`, () => {
+
+const err_eval_err = test(`show evaluation exception`, () => {
     assert(undefined_variable)
 })
-let err_throw = test(`show thrown error`, () => {
+
+const err_throw = test(`show thrown error`, () => {
     throw 'ThrownError'
 })
-let ok_test_tests = test(`test functions yield expected results with correct messages`, () => {
-    let test_test = (result, expected_assert, expected_message) => {
-        let passed = !result.error
-        let message = display_message(result)
+
+const ok_test_tests = test(`test functions yield expected results with correct messages`, () => {
+    const test_test = (result, expected_assert, expected_message) => {
+        const passed = !result.error
+        const message = display_message(result)
         assert(`${passed === expected_assert} && '${result.description}'`)
         assert(`'${message}' === '${expected_message}'`)
     }
@@ -26,7 +30,6 @@ let ok_test_tests = test(`test functions yield expected results with correct mes
     test_test(err_throw, false, '[error] show thrown error --> ThrownError')
 })
 
-const print = console.log
-let display = (test) => print(display_message(test))
+const display = (test) => console.log(display_message(test))
+
 display(ok_test_tests)
-print('-'.repeat(99))
