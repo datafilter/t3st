@@ -1,22 +1,4 @@
-const assert = (assumption) => {
-    if (!eval(assumption))
-        throw `Evaluation [${assumption}]`
-}
-
-const test = (description, func) => {
-    try {
-        func()
-        return { description: description }
-    } catch (err) {
-        return { description: description, error: err }
-    }
-}
-
-const display_message = test => {
-    let prefix = test.error ? 'error' : 'ok'
-    let postfix = test.error ? ' --> ' + test.error : ''
-    return `[${prefix}] ${test.description}${postfix}`
-}
+const {assert, test, display_message } = require('./index')
 
 let ok_test = test(`show [ok] on ok`, () => {
     let two = 2

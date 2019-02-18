@@ -2,7 +2,7 @@
   "name": "npm-t3st",
   "version": "2019.2.18",
   "description": "tiny test module for npm",
-  "main": "test.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
