@@ -2,7 +2,7 @@
 What better documentation than actual running tests? :)
 ```javascript
 // Lets import
-const { assert, test, display_message } = require('./index')
+const { assert, test, display_message } = require('t3st')
 ```
 Basic happy path test
 
@@ -54,7 +54,7 @@ const ok_test_tests = test(`test functions yield expected results with correct m
 ```
  > [ok] test functions yield expected results with correct messages
 
-Everything was printed with that **display_message** we imported above as follows:
+Everything was printed with that **display_message** function we imported above as follows:
 
 ```javascript
 const display = (test) => console.log(display_message(test))
@@ -67,8 +67,6 @@ console.log('\nExpected passing tests:\n')
 display(ok_test)
 display(ok_test_tests)
 ```
-
-By themselves test functions return a result and don't cause a side-effect.
 
 Here's the full [code  of the test framework](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
 
