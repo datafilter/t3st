@@ -1,0 +1,24 @@
+{
+  "name": "npm-t3st",
+  "version": "2019.2.18",
+  "description": "tiny test module for npm",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devmachiine/npm-t3st.git"
+  },
+  "keywords": [
+    "test",
+    "minimal",
+    "tiny"
+  ],
+  "author": "devmachiine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devmachiine/npm-t3st/issues"
+  },
+  "homepage": "https://github.com/devmachiine/npm-t3st#readme"
+}
