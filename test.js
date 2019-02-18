@@ -1,4 +1,4 @@
-const {assert, test, display_message } = require('./index')
+const { assert, test, display_message } = require('./index')
 
 const ok_test = test(`show [ok] on ok`, () => {
     const two = 2
@@ -25,11 +25,17 @@ const ok_test_tests = test(`test functions yield expected results with correct m
         assert(`'${message}' === '${expected_message}'`)
     }
     test_test(ok_test, true, '[ok] show [ok] on ok')
-    test_test( err_eval, false, '[error] show evaluation on error --> Evaluation [1 > 2]')
+    test_test(err_eval, false, '[error] show evaluation on error --> Evaluation [1 > 2]')
     test_test(err_eval_err, false, '[error] show evaluation exception --> ReferenceError: undefined_variable is not defined')
     test_test(err_throw, false, '[error] show thrown error --> ThrownError')
 })
 
 const display = (test) => console.log(display_message(test))
 
+console.log('Expected failing tests:\n')
+display(err_eval)
+display(err_eval_err)
+display(err_throw)
+console.log('\nExpected passing tests:\n')
+display(ok_test)
 display(ok_test_tests)
