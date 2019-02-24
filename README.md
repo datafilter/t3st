@@ -5,11 +5,19 @@ What better documentation than actual running tests? :)
 const { assert, test, display_message } = require('t3st')
 ```
 Basic happy path test
-
+```javascript
+test_result = test(`2 + 3 = 5`, () => {
+    const sum = 2 + 3
+    assert(sum, 5)
+})
+```
+> [ok] 2 + 3 = 5
+---
+You could also use dynamic evaluation by passing a single string argument to assert
 ```javascript
 const ok_test = test(`show [ok] on ok`, () => {
     const two = 2
-    assert(`${two} == 2`)
+    assert(`${two} === 2`)
 })
 ```
  > [ok] show [ok] on ok
@@ -68,6 +76,8 @@ display(ok_test)
 display(ok_test_tests)
 ```
 ---
+#### **tldr: Use assert(this,that)**
+
 The code of the test framework [can be found here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
 
 With a single argument, truth is asserted as:
@@ -78,7 +88,7 @@ const assert = (assumption) => {
         throw `Evaluation [${assumption}]`
 }
 ```
-## Caution ~ a pitfall, and how to avoid it:
+### An assert(eval) pitfall ~ and how to avoid it: 
 
 ```javascript
 !!eval('n => n <= 1 ? 1 : even_undefined === 67')
@@ -114,9 +124,4 @@ assert(actual, expected)
 // instead of just : is the sky blue ?
 assert(expected, actual)
 ```
-
-Note that comparing strings with this usage of assert tries to wrap them for the eval function
-```javascript
-const quote_wrap = (value) => typeof value === 'string' ? `'${value.replace(/['"]/g, `\\'`)}'` : value
-```
-If there is a better way, or you find something strange with this assert(this,that) [submit a pull request or propose a solution here.](https://github.com/devmachiine/npm-t3st/issues)
+Improvements, suggestions ? [Submit a pull request or propose a solution here.](https://github.com/devmachiine/npm-t3st/issues)
