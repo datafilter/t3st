@@ -67,35 +67,56 @@ console.log('\nExpected passing tests:\n')
 display(ok_test)
 display(ok_test_tests)
 ```
+---
+The code of the test framework [can be found here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
 
-Here's the full [code  of the test framework](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
+With a single argument, truth is asserted as:
 
 ```javascript
 const assert = (assumption) => {
     if (!eval(assumption))
         throw `Evaluation [${assumption}]`
 }
+```
+## Here be dragons (and a hero!)
 
-const test = (description, func) => {
-    try {
-        func()
-        return { description: description }
-    } catch (err) {
-        return { description: description, error: err }
-    }
-}
+```javascript
+!!eval('n => n <= 1 ? 1 : even_undefined === 67')
+```
+> true
 
-const display_message = test => {
-    let prefix = test.error ? 'error' : 'ok'
-    let postfix = test.error ? ' --> ' + test.error : ''
-    return `[${prefix}] ${test.description}${postfix}`
-}
+True? Because the whole thing is evaluated to a `function`
 
-module.exports = {
-    assert,
-    test,
-    display_message
-}
+
+A function filled with a `[Uncaught ReferenceError: even_undefined is not defined]` ticking timebomb,
+but a truthy value nonetheless.
+
+Wrapping the comparisons in some brackets resolves this:
+
+```javascript
+!!eval('(n => n <= 1 ? 1 : even_undefined) === (67)')
+```
+> false
+
+Another way to avoid this trap, is to evaluate them before passing them into assert:
+```javascript
+boolean_val = (n => n <= 1 ? 1 : even_undefined) === (67)
+
+assert(`"a useful assertion error message" && ` + boolean_val)
+```
+Or you could use assert like this!
+```javascript
+assert((n => n <= 1 ? 1 : even_undefined), 67)
+assert('this value', "that value")
+
+assert(actual, expected)
+// if you are into saying things like: is blue the color of the sky ?   
+// instead of just : is the sky blue ?
+assert(expected, actual)
 ```
 
-
+Note that comparing strings with this usage of assert tries to wrap them for the eval function
+```javascript
+const quote_wrap = (value) => typeof value === 'string' ? `'${value.replace(/['"]/g, `\\'`)}'` : value
+```
+If there is a better way, or you find something strange with this assert(this,that) [submit a pull request or propose a solution here.](https://github.com/devmachiine/npm-t3st/issues)

@@ -1,19 +1,17 @@
 {
   "name": "t3st",
-  "version": "2019.2.20",
+  "version": "2019.2.24",
   "description": "tiny test module for npm",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Try - node test.js in this directory\" && exit 1"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devmachiine/npm-t3st.git"
   },
   "keywords": [
-    "test",
-    "minimal",
-    "tiny"
+    "test"
   ],
   "author": "devmachiine",
   "license": "MIT",
