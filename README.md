@@ -78,7 +78,7 @@ const assert = (assumption) => {
         throw `Evaluation [${assumption}]`
 }
 ```
-## Here be dragons (and a hero!)
+## Caution ~ a pitfall, and how to avoid it:
 
 ```javascript
 !!eval('n => n <= 1 ? 1 : even_undefined === 67')
