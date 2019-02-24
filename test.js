@@ -46,8 +46,8 @@ const ok_test_tests = test(`test functions yield expected results with correct m
     test_test(err_eval, false, '[error] show evaluation on error --> Evaluation [1 > 2]')
     test_test(err_eval_err, false, '[error] show evaluation exception --> ReferenceError: undefined_variable is not defined')
     test_test(err_throw, false, '[error] show thrown error --> ThrownError')
-    test_test(err_assert_two_arguments_equals, false, '[error] assert with 2 arguments compares with equals --> Evaluation [(2) === (123)]')
-    test_test(err_assert_two_arguments_types, false, `[error] assert with 2 arguments preserves types --> Evaluation [('123') === (123)]`)
+    test_test(err_assert_two_arguments_equals, false, '[error] assert with 2 arguments compares with equals --> Evaluation [2] === [123]')
+    test_test(err_assert_two_arguments_types, false, `[error] assert with 2 arguments preserves types --> Evaluation ['123'] === [123]`)
 })
 
 const display = (test) => console.log(display_message(test))

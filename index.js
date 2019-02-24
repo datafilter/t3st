@@ -1,12 +1,13 @@
 const assert = (assumption, expected) => {
     if (expected) {
-        assert(`(${quote_wrap(assumption)}) === (${quote_wrap(expected)})`)
+        if (assumption !== expected)
+            throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]`
     }
     else if (!eval(assumption))
         throw `Evaluation [${assumption}]`
 }
 
-const quote_wrap = (value) => typeof value === 'string' ? `'${value.replace(/['"]/g, `\\'`)}'` : value
+const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
 
 const test = (description, func) => {
     try {
