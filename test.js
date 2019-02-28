@@ -10,6 +10,10 @@ const ok_assert_two_arguments = test(`assert with 2 arguments compares with (x) 
     assert(two, 2)
 })
 
+const ok_second_argument_false = test('both assert arguments can be false', () => {
+    assert(!!undefined, false)
+})
+
 const err_eval = test(`show evaluation on error`, () => {
     assert(`1 > 2`)
 })
@@ -43,6 +47,7 @@ const ok_test_tests = test(`test functions yield expected results with correct m
     }
     test_test(ok_test, true, '[ok] show [ok] on ok')
     test_test(ok_assert_two_arguments, true, '[ok] assert with 2 arguments compares with (x) === (y)')
+    test_test(ok_second_argument_false, true, '[ok] both assert arguments can be false')
     test_test(err_eval, false, '[error] show evaluation on error --> Evaluation [1 > 2]')
     test_test(err_eval_err, false, '[error] show evaluation exception --> ReferenceError: undefined_variable is not defined')
     test_test(err_throw, false, '[error] show thrown error --> ThrownError')
@@ -61,4 +66,5 @@ display(err_assert_two_arguments_types)
 console.log('\nExpected passing tests:\n')
 display(ok_test)
 display(ok_assert_two_arguments)
+display(ok_second_argument_false)
 display(ok_test_tests)

@@ -1,5 +1,5 @@
 const assert = (assumption, expected) => {
-    if (expected) {
+    if (typeof expected !== 'undefined') {
         if (assumption !== expected)
             throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]`
     }
