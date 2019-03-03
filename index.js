@@ -2,6 +2,8 @@ const assert = (assumption, expected) => {
     if (typeof expected !== 'undefined') {
         if (assumption !== expected)
             throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]`
+    } else if (typeof assumption !== 'string') {
+        throw 'Use assert(boolean, !!something) to assert truthy values. (PEP 20 ~ explicit is better than implicit)'
     }
     else if (!eval(assumption))
         throw `Evaluation [${assumption}]`

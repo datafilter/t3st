@@ -42,7 +42,6 @@ const ok_test_tests = test(`test functions yield expected results with correct m
         const message = display_message(result)
         assert(`${passed === expected_assert} && '${result.description}'`)
         assert(`"${message}" === "${expected_message}"`)
-        assert(message === expected_message)
         assert(message, expected_message)
     }
     test_test(ok_test, true, '[ok] show [ok] on ok')
