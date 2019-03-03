@@ -1,4 +1,4 @@
-const { assert, test, display_message } = require('./index')
+const { assert, test, display_message, tally_results } = require('./index')
 
 const ok_test = test(`show [ok] on ok`, () => {
     const one = 1
@@ -14,12 +14,16 @@ const ok_second_argument_false = test('both assert arguments can be false', () =
     assert(!!undefined, false)
 })
 
+const err_code = test(`show evaluation exception`, () => {
+    undefined_reference
+})
+
 const err_eval = test(`show evaluation on error`, () => {
     assert(`1 > 2`)
 })
 
-const err_eval_err = test(`show evaluation exception`, () => {
-    assert(undefined_variable)
+const err_eval_non_string = test(`show single truthy assert error`, () => {
+    assert(!!'test')
 })
 
 const err_throw = test(`show thrown error`, () => {
@@ -48,22 +52,30 @@ const ok_test_tests = test(`test functions yield expected results with correct m
     test_test(ok_assert_two_arguments, true, '[ok] assert with 2 arguments compares with (x) === (y)')
     test_test(ok_second_argument_false, true, '[ok] both assert arguments can be false')
     test_test(err_eval, false, '[error] show evaluation on error --> Evaluation [1 > 2]')
-    test_test(err_eval_err, false, '[error] show evaluation exception --> ReferenceError: undefined_variable is not defined')
+    test_test(err_code, false, '[error] show evaluation exception --> ReferenceError: undefined_reference is not defined')
+    test_test(err_eval_non_string, false, `[error] show single truthy assert error --> Use assert(boolean, !!something) to assert truthy values. (PEP 20 ~ explicit is better than implicit)`)
     test_test(err_throw, false, '[error] show thrown error --> ThrownError')
     test_test(err_assert_two_arguments_equals, false, '[error] assert with 2 arguments compares with equals --> Evaluation [2] === [123]')
     test_test(err_assert_two_arguments_types, false, `[error] assert with 2 arguments preserves types --> Evaluation ['123'] === [123]`)
 })
 
-const display = (test) => console.log(display_message(test))
+let error_tests = [err_eval
+    , err_code
+    , err_eval_non_string
+    , err_throw
+    , err_assert_two_arguments_equals
+    , err_assert_two_arguments_types
+]
 
-console.log('Expected failing tests:\n')
-display(err_eval)
-display(err_eval_err)
-display(err_throw)
-display(err_assert_two_arguments_equals)
-display(err_assert_two_arguments_types)
-console.log('\nExpected passing tests:\n')
-display(ok_test)
-display(ok_assert_two_arguments)
-display(ok_second_argument_false)
-display(ok_test_tests)
+let ok_tests = [ok_test
+    , ok_assert_two_arguments
+    , ok_second_argument_false
+    , ok_test_tests
+]
+
+let show = console.log
+
+show(tally_results("Expected passing tests", ...ok_tests))
+
+show(tally_results("Expected failing tests", ...error_tests))
+

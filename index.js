@@ -26,8 +26,39 @@ const display_message = test => {
     return `[${prefix}] ${test.description}${postfix}`
 }
 
+const result_text = test_result => {
+    let short_message = display_message(test_result)
+    let postfix_stack = test_result.error_stack ? '\nstack:\n' + test_result.error_stack : ''
+    return `${short_message}${postfix_stack}`
+}
+
+let tally_results = (name, ...results) => {
+    if (typeof name !== 'string') {
+        results.unshift(name)
+        name = ''
+    } else {
+        name += " "
+    }
+    let ok_tests = 0, err_tests = 0, error_messages = ''
+    results.forEach(result => {
+        if (!result || !result.description) {
+            error_messages += `\nNot a test result: ${result} ${JSON.stringify(result)}`
+            err_tests++
+        }
+        else if (result.error) {
+            error_messages += `\n${result_text(result)}`
+            err_tests++
+        }
+        else ok_tests++
+    })
+    let ss = n => n > 1 ? 's' : ''
+    let overview = `${ok_tests} test${ss(ok_tests)} [ok] ${err_tests > 0 ? `..and ${err_tests} [error${ss(err_tests)}] ⚔️ 🔥` : '🌼'}`
+    return `${name}${overview}\n${error_messages}`
+}
+
 module.exports = {
     assert,
     test,
-    display_message
+    display_message,
+    tally_results
 }
