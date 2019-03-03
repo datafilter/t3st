@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="play/t3st.png"/>
+  <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
 
 What better documentation than actual running tests? :)
