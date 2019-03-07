@@ -9,6 +9,17 @@ const assert = (assumption, expected) => {
         throw `Evaluation [${assumption}]`
 }
 
+let assert_fun = (assumption, message) => {
+    try {
+        if (!assumption())
+            throw false
+    } catch (err) {
+        let err_prefix = err ? `!! Test failed *before* assertion --> ` + err : ''
+        let message_prefix = message ? (err_prefix ? '\n\t--> ' : '') + message : ''
+        throw `${err_prefix}${message_prefix} \n\t--> Evaluation[${assumption}]`
+    }
+}
+
 const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
 
 const test = (description, func) => {
@@ -58,7 +69,8 @@ let tally_results = (name, ...results) => {
 
 module.exports = {
     assert,
+    assert_fun,
     test,
-    display_message,
+    result_text,
     tally_results
 }

@@ -1,4 +1,4 @@
-const { assert, test, display_message, tally_results } = require('./index')
+const { assert, assert_fun, test, result_text, tally_results } = require('./index')
 
 const ok_test = test(`show [ok] on ok`, () => {
     const one = 1
@@ -43,10 +43,9 @@ const err_assert_two_arguments_types = test(`assert with 2 arguments preserves t
 const ok_test_tests = test(`test functions yield expected results with correct messages`, () => {
     const test_test = (result, expected_assert, expected_message) => {
         const passed = !result.error
-        const message = display_message(result)
+        const message = result_text(result)
         assert(`${passed === expected_assert} && '${result.description}'`)
-        assert(`"${message}" === "${expected_message}"`)
-        assert(message, expected_message)
+        assert_fun(() => expected_message.startsWith(message))
     }
     test_test(ok_test, true, '[ok] show [ok] on ok')
     test_test(ok_assert_two_arguments, true, '[ok] assert with 2 arguments compares with (x) === (y)')
@@ -59,6 +58,12 @@ const ok_test_tests = test(`test functions yield expected results with correct m
     test_test(err_assert_two_arguments_types, false, `[error] assert with 2 arguments preserves types --> Evaluation ['123'] === [123]`)
 })
 
+let ok_tests = [ok_test
+    , ok_assert_two_arguments
+    , ok_second_argument_false
+    , ok_test_tests
+]
+
 let error_tests = [err_eval
     , err_code
     , err_eval_non_string
@@ -67,15 +72,9 @@ let error_tests = [err_eval
     , err_assert_two_arguments_types
 ]
 
-let ok_tests = [ok_test
-    , ok_assert_two_arguments
-    , ok_second_argument_false
-    , ok_test_tests
-]
-
 let show = console.log
 
-show(tally_results("Expected passing tests", ...ok_tests))
+show(tally_results(`${ok_tests.length} Expected passing tests:\n`, ...ok_tests))
 
-show(tally_results("Expected failing tests", ...error_tests))
+show(tally_results(`${error_tests.length} Expected failing tests:\n`, ...error_tests))
 
