@@ -1,9 +1,16 @@
+const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
+
 const assert = (assumption, expected) => {
     if (typeof expected !== 'undefined') {
         if (assumption !== expected)
             throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]`
     } else if (typeof assumption !== 'string') {
-        throw 'Use assert(boolean, !!something) to assert truthy values. (PEP 20 ~ explicit is better than implicit)'
+        let unexpected_type_message =
+            `Use assert(boolean, !!something) to assert truthy values.
+        (PEP 20 ~ explicit is better than implicit)
+        
+        Did you intend to use assert_fun([name,] function) ?`
+        throw unexpected_type_message
     }
     else if (!eval(assumption))
         throw `Evaluation [${assumption}]`
@@ -14,33 +21,53 @@ let assert_fun = (assumption, message) => {
         if (!assumption())
             throw false
     } catch (err) {
-        let err_prefix = err ? `!! Test failed *before* assertion --> ` + err : ''
-        let message_prefix = message ? (err_prefix ? '\n\t--> ' : '') + message : ''
-        throw `${err_prefix}${message_prefix} \n\t--> Evaluation[${assumption}]`
+        let err_prefix = err ? `!! Test failed *before* assertion --> ${err}\n\t--> ` : ''
+        let message_prefix = (typeof message !== 'undefined') ? message + '\n\t-->' : ''
+        throw `${err_prefix}${message_prefix} Evaluation[${assumption}]`
     }
 }
 
-const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
+const ok_result = (description) => {
+    return { description: description }
+}
 
-const test = (description, func) => {
+const error_result = (description, err) => {
+    let stack = err.stack ? '\nstack:\n' + err.stack : ''
+    return {
+        description: description,
+        error: '' + err + stack
+    }
+}
+
+const test = (description, func, then_func = x => x) =>
+    typeof func === 'function' ?
+        test_direct(description, func, then_func)
+        : test_async(description, func, then_func)
+
+
+const test_direct = (description, func, then_func) => {
     try {
-        func()
-        return { description: description }
+        then_func(func())
+        return ok_result(description)
     } catch (err) {
-        return { description: description, error: err }
+        return error_result(description, err)
     }
 }
 
-const display_message = test => {
-    let prefix = test.error ? 'error' : 'ok'
-    let postfix = test.error ? ' --> ' + test.error : ''
-    return `[${prefix}] ${test.description}${postfix}`
-}
+const test_async = (description, promise, then_func = x => x) => promise
+    .then(result => result)
+    .catch(err => {
+        err.message = 'Promise rejected >> ' + err.message
+        throw err
+    })
+    .then((result) => then_func(result))
+    .then(_ => ok_result(description))
+    .catch(err => error_result(description, err))
 
-const result_text = test_result => {
-    let short_message = display_message(test_result)
-    let postfix_stack = test_result.error_stack ? '\nstack:\n' + test_result.error_stack : ''
-    return `${short_message}${postfix_stack}`
+const result_text = result => {
+    let prefix = result.error ? 'error' : 'ok'
+    let postfix = result.error ? '\n\t--> ' + result.error : ''
+    return `[${prefix}] ${result.description}${postfix}`
 }
 
 let tally_results = (name, ...results) => {
@@ -63,14 +90,15 @@ let tally_results = (name, ...results) => {
         else ok_tests++
     })
     let ss = n => n > 1 ? 's' : ''
-    let overview = `${ok_tests} test${ss(ok_tests)} [ok] ${err_tests > 0 ? `..and ${err_tests} [error${ss(err_tests)}] ⚔️ 🔥` : '🌼'}`
+    let overview = `${ok_tests} test${ss(ok_tests)} [ok] ${err_tests > 0 ? `..and ${err_tests} [error${ss(err_tests)}] ⚔️🔥` : '🌼'}`
     return `${name}${overview}\n${error_messages}`
 }
 
 module.exports = {
-    assert,
-    assert_fun,
-    test,
-    result_text,
-    tally_results
-}
+    assert
+    , assert_fun
+    , test
+    , tally_results
+    , result_text
+};
+
