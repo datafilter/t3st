@@ -2,6 +2,9 @@
   "name": "t3st",
   "version": "2019.3.3",
   "description": "tiny test module for npm",
+  "files": [
+    "index.js"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
