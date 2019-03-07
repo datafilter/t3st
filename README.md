@@ -2,10 +2,29 @@
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
 
-What better documentation than actual running tests? :)
+It'll be quicker to review the ~100 lines of test framework code [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
+
+You can run the tests that test the test framework:
+
+```
+git clone https://github.com/devmachiine/npm-t3st.git
+cd t3st
+npm test
+```
+
+In words:
+
+* assert : compare 2 values or a single expression, throws on false/error
+* assert_fun : run a function that throws if an expression is not truthy
+* test : catch assert or other errors, and returns a result: {description [,error]}
+* result_text : create a single message from a test result
+* tally_results : create a complete summary from a group of test results
+
+Some examples:
+
 ```javascript
 // Lets import
-const { assert, test, display_message } = require('t3st')
+const { assert, test } = require('t3st')
 ```
 Basic happy path test
 ```javascript
@@ -47,51 +66,12 @@ const err_throw = test(`show thrown error`, () => {
 
  > [error] show thrown error --> ThrownError
 
-Now, lets test all the above tests with one mega-test
 
-```javascript
-const ok_test_tests = test(`test functions yield expected results with correct messages`, () => {
-    const test_test = (result, expected_assert, expected_message) => {
-        const passed = !result.error
-        const message = display_message(result)
-        assert(`${passed === expected_assert} && '${result.description}'`)
-        assert(`'${message}' === '${expected_message}'`)
-    }
-    test_test(ok_test, true, '[ok] show [ok] on ok')
-    test_test(err_eval, false, '[error] show evaluation on error --> Evaluation [1 > 2]')
-    test_test(err_eval_err, false, '[error] show evaluation exception --> ReferenceError: undefined_variable is not defined')
-    test_test(err_throw, false, '[error] show thrown error --> ThrownError')
-})
-```
- > [ok] test functions yield expected results with correct messages
 
-Everything was printed with that **display_message** function we imported above as follows:
-
-```javascript
-const display = (test) => console.log(display_message(test))
-
-console.log('Expected failing tests:\n')
-display(err_eval)
-display(err_eval_err)
-display(err_throw)
-console.log('\nExpected passing tests:\n')
-display(ok_test)
-display(ok_test_tests)
-```
 ---
-#### **tldr: Use assert(this,that)**
 
-The code of the test framework [can be found here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
 
-With a single argument, truth is asserted as:
-
-```javascript
-const assert = (assumption) => {
-    if (!eval(assumption))
-        throw `Evaluation [${assumption}]`
-}
-```
-### An assert(eval) pitfall ~ and how to avoid it: 
+### An assert(eval) pitfall ~ and how to avoid it: (**tldr: Use assert(this,that)**)
 
 ```javascript
 !!eval('n => n <= 1 ? 1 : even_undefined === 67')
@@ -127,4 +107,3 @@ assert(actual, expected)
 // instead of just : is the sky blue ?
 assert(expected, actual)
 ```
-Improvements, suggestions ? [Submit a pull request or propose a solution here.](https://github.com/devmachiine/npm-t3st/issues)

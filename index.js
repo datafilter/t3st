@@ -101,4 +101,3 @@ module.exports = {
     , tally_results
     , result_text
 };
-
