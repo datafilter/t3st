@@ -1,0 +1,11 @@
+{
+    "emeraldwalk.runonsave": {
+        "autoClearConsole": true,
+        "commands": [
+            {
+                "match": "\\.js$",
+                "cmd": "node ${workspaceRoot}\\test.js"
+            }
+        ]
+    }
+}
