@@ -2,21 +2,23 @@
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
 
-It'll be quicker to review the ~100 lines of test framework code [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
+The ~110 lines of test framework code is [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
 
 You can run the tests that test the test framework:
 
 ```
 git clone https://github.com/devmachiine/npm-t3st.git
-cd t3st
+cd npm-t3st
 npm test
 ```
 
 In words:
 
-* assert : compare 2 values or a single expression, throws on false/error
-* assert_fun : run a function that throws if an expression is not truthy
-* test : catch assert or other errors, and returns a result: {description [,error]}
+* test(description_string, () => function) : catch assert or other errors, and returns a result: {description [,error]}
+* assert(a,b) : compare 2 values are ===, throws on false/error
+* assert('string expression') : does !eval(expression), throws on false/error
+* assert_fun(() => function) : run a function that throws if an expression is not truthy
+* assert_fun(extra_description_string, () => function) : same as above with additional output
 * result_text : create a single message from a test result
 * tally_results : create a complete summary from a group of test results
 
