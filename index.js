@@ -79,24 +79,20 @@ const tally_results = (name, ...results) => {
     if (typeof name !== 'string') {
         results.unshift(name)
         name = ''
-    } else {
-        name += " "
     }
-    let ok_tests = 0, err_tests = 0, error_messages = ''
-    results.forEach(result => {
-        if (!result || !result.description) {
-            error_messages += `\nNot a test result: ${result} ${JSON.stringify(result)}`
-            err_tests++
-        }
-        else if (result.error) {
-            error_messages += `\n${result_text(result)}`
-            err_tests++
-        }
-        else ok_tests++
-    })
+
+    let result_message = (result) =>
+        (!result || !result.description) ? `\nNot a test result: ${result} ${JSON.stringify(result)}`
+            : (result.error) ? `\n${result_text(result)}`
+                : ''
+
+    let error_messages = results.map(result_message).filter(x => x !== '')
+    let total_err = error_messages.length
+    let total_ok = results.length - total_err
+
     let ss = n => n == 1 ? '' : 's'
-    let overview = `${ok_tests} test${ss(ok_tests)} [ok] ${err_tests > 0 ? `..and ${err_tests} [error${ss(err_tests)}] ⚔️🔥` : '🥦'}`
-    return `${name}${overview}\n${error_messages}`
+    let overview = `${total_ok} test${ss(total_ok)} [ok] ${total_err > 0 ? `..and ${total_err} [error${ss(total_err)}] ⚔️🔥` : '🥦'}`
+    return `${name}${name ? ' ' : ''}${overview}\n${error_messages.join('')}`
 }
 
 module.exports = {
