@@ -101,4 +101,4 @@ module.exports = {
     , assert_fun
     , result_text
     , tally_results
-};
+}
