@@ -3,7 +3,7 @@ const ok_result = (description) => {
 }
 
 const error_result = (description, err) => {
-    let stack = err.stack ? '\nstack:\n' + err.stack : ''
+    const stack = err.stack ? '\nstack:\n' + err.stack : ''
     return {
         description: description,
         error: '' + err + stack
@@ -42,7 +42,7 @@ const assert = (assumption, expected) => {
         if (assumption !== expected)
             throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]`
     } else if (typeof assumption !== 'string') {
-        let unexpected_type_message =
+        const unexpected_type_message =
             `Use assert(boolean, !!something) to assert truthy values.
             (PEP 20 ~ explicit is better than implicit)
             
@@ -55,7 +55,7 @@ const assert = (assumption, expected) => {
 
 const assert_fun = (assumption, message) => {
     if (typeof message === 'function') {
-        let swap = assumption
+        const swap = assumption
         assumption = message
         message = swap
     }
@@ -63,15 +63,15 @@ const assert_fun = (assumption, message) => {
         if (!assumption())
             throw false
     } catch (err) {
-        let err_prefix = err ? `!! Test failed *before* assertion --> ${err}\n\t--> ` : ''
-        let message_prefix = (typeof message !== 'undefined') ? message + '\n\t-->' : ''
+        const err_prefix = err ? `!! Test failed *before* assertion --> ${err}\n\t--> ` : ''
+        const message_prefix = (typeof message !== 'undefined') ? message + '\n\t-->' : ''
         throw `${err_prefix}${message_prefix} Evaluation[${assumption}]`
     }
 }
 
 const result_text = result => {
-    let prefix = result.error ? 'error' : 'ok'
-    let postfix = result.error ? '\n\t--> ' + result.error : ''
+    const prefix = result.error ? 'error' : 'ok'
+    const postfix = result.error ? '\n\t--> ' + result.error : ''
     return `[${prefix}] ${result.description}${postfix}`
 }
 
@@ -81,17 +81,17 @@ const tally_results = (name, ...results) => {
         name = ''
     }
 
-    let result_message = (result) =>
+    const result_message = (result) =>
         (!result || !result.description) ? `\nNot a test result: ${result} ${JSON.stringify(result)}`
             : (result.error) ? `\n${result_text(result)}`
                 : ''
 
-    let error_messages = results.map(result_message).filter(x => x !== '')
-    let total_err = error_messages.length
-    let total_ok = results.length - total_err
+    const error_messages = results.map(result_message).filter(x => x !== '')
+    const total_err = error_messages.length
+    const total_ok = results.length - total_err
 
-    let ss = n => n == 1 ? '' : 's'
-    let overview = `${total_ok} test${ss(total_ok)} [ok] ${total_err > 0 ? `..and ${total_err} [error${ss(total_err)}] ⚔️🔥` : '🥦'}`
+    const ss = n => n == 1 ? '' : 's'
+    const overview = `${total_ok} test${ss(total_ok)} [ok] ${total_err > 0 ? `..and ${total_err} [error${ss(total_err)}] ⚔️🔥` : '🥦'}`
     return `${name}${name ? ' ' : ''}${overview}\n${error_messages.join('')}`
 }
 
