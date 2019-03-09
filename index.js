@@ -75,11 +75,12 @@ const result_text = result => {
     return `[${prefix}] ${result.description}${postfix}`
 }
 
-const tally_results = (name, ...results) => {
-    if (typeof name !== 'string') {
-        results.unshift(name)
-        name = ''
+const tally_results = (label = '', ...results) => {
+    if (typeof label !== 'string') {
+        results = results.concat(label)
+        label = ''
     }
+    results = results.flat(99)
 
     const result_message = (result) =>
         (!result || !result.description) ? `\nNot a test result: ${result} ${JSON.stringify(result)}`
@@ -92,7 +93,7 @@ const tally_results = (name, ...results) => {
 
     const ss = n => n == 1 ? '' : 's'
     const overview = `${total_ok} test${ss(total_ok)} [ok] ${total_err > 0 ? `..and ${total_err} [error${ss(total_err)}] ⚔️🔥` : '🥦'}`
-    return `${name}${name ? ' ' : ''}${overview}\n${error_messages.join('')}`
+    return `${label}${label ? ' ' : ''}${overview}\n${error_messages.join('')}`
 }
 
 module.exports = {
