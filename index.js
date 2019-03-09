@@ -55,10 +55,10 @@ const assert = (assumption = default_assumption, expected = default_expected) =>
 
 const assert_eval = (assumption) => {
     try {
-        if (!eval(assumption))
-            throw `Evaluation [${assumption}]`
+        if (eval(assumption)) return true
+        else throw 'falsy eval'
     } catch (err) {
-        const eval_failure = `eval failed with (${err + ''}). Did you test assert(string, undefined) ?`
+        const eval_failure = `(${err + ''})`
         throw `Evaluation [${assumption}] !! ${eval_failure}`
     }
 }

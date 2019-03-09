@@ -9,7 +9,7 @@ module.exports = (framework) => {
             // const err_invalid_name_type = test("na", () => test(() => {}))
             console.log('ia:' + err_invalid_name_value)
             console.log('ia:' + err_invalid_name_value.error)
-            // assert('wtk', err_invalid_name_value.error)
+            // assert(err_invalid_name_value.error, 'expected name..')
         })
 
     ]

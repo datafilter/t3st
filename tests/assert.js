@@ -1,6 +1,6 @@
 module.exports = (framework) => {
 
-    const { test, assert, assert_fun, assert_eval } = framework
+    const { test, assert, assert_fun } = framework
 
     const assert_chain_tests = [
         test("true assert returns true",
@@ -42,14 +42,5 @@ module.exports = (framework) => {
 
     ]
 
-    const assert_eval_tests = [
-        test("True eval is ok", () => assert_eval('true') && assert_eval('1 == 1'))
-        , test("Truthy eval is ok", () => assert_eval('5') && assert_eval(`'truthy'`))
-        , test("False eval is error", () => {
-            const err_false_eval = test("_", () => assert_eval('1 > 2'))
-            // assert('Evaluation [1 > 2]', err_false_eval.error)
-        })
-    ]
-
-    return [assert_chain_tests, assert_equal_tests, assert_eval_tests]
+    return [assert_chain_tests, assert_equal_tests]
 }
