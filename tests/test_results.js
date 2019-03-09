@@ -1,6 +1,6 @@
 module.exports = (framework) => {
 
-    const { test, assert, assert_fun, tally_results } = framework
+    const { test, assert, assert_fun } = framework
 
     const test_results = [
         test("OK test passed with empty body", () => { })

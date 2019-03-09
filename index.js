@@ -37,20 +37,30 @@ const test_async = (description, promise, then_func) => promise
 
 const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
 
-const assert = (assumption, expected) => {
-    if (typeof expected !== 'undefined') {
-        if (assumption !== expected)
-            throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]`
-    } else if (typeof assumption !== 'string') {
-        const unexpected_type_message =
-            `Use assert(boolean, !!something) to assert truthy values.
-            (PEP 20 ~ explicit is better than implicit)
-            
-            Did you intend to use assert_fun([name,] function) ?`
-        throw unexpected_type_message
+const default_assumption = '__undefined_assumption'
+const default_expected = '__undefined_expected'
+
+const assert = (assumption = default_assumption, expected = default_expected) => {
+    if (assumption !== expected) {
+        if (assumption === default_assumption || expected === default_expected) {
+            throw 'assert(?,?) missing or undefined argument(s). use assert(!!a,!!b) -or- assert_fun(() => truthy)'
+        }
+        const tE = typeof assumption
+        const tA = typeof expected
+        const type_error = (tE === tA) ? '' : ` !! Type mismatch: assert(${tE}, ${tA}).`
+        throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}`
     }
-    else if (!eval(assumption))
-        throw `Evaluation [${assumption}]`
+    return true
+}
+
+const assert_eval = (assumption) => {
+    try {
+        if (!eval(assumption))
+            throw `Evaluation [${assumption}]`
+    } catch (err) {
+        const eval_failure = `eval failed with (${err + ''}). Did you test assert(string, undefined) ?`
+        throw `Evaluation [${assumption}] !! ${eval_failure}`
+    }
 }
 
 const assert_fun = (assumption, message) => {
@@ -100,6 +110,7 @@ module.exports = {
     test
     , assert
     , assert_fun
+    , assert_eval
     , result_text
     , tally_results
 }

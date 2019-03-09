@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2019.3.8",
+  "version": "2019.3.9",
   "description": "tiny test module for npm",
   "files": [
     "index.js"
