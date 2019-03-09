@@ -44,7 +44,6 @@ test_result = test(`2 + 3 = 5`, () => {
 ```
 > [ok] 2 + 3 = 5
 
-
 Expected failing tests
 
 ```javascript
@@ -59,14 +58,17 @@ const err_eval_err = test(`show evaluation exception`, () => {
 const err_throw = test(`show thrown error`, () => {
     throw 'ThrownError'
 })
----
+```
+
 If you *really* need it, you could also use dynamic evaluation:
+
 ```javascript
 const ok_test = test(`1 + 1 = 2`, () => {
     assert_eval(`${1 + 1} === 2`)
 })
 ```
  > [ok] 1 + 1 = 2
+---
 
 ### An assert(eval) pitfall ~ and how to avoid it:
 
