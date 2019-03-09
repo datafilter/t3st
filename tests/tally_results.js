@@ -6,7 +6,7 @@ module.exports = (framework) => {
     const results_single_success = [{ description: "mkay fine" }]
 
     const tally_results_tests = [
-        test("tally_results label empty results", () => {
+        test("tally_results empty results", () => {
             const expected_start = "0 tests [ok] 🥦"
             const test_cases = [
                 tally_results()
@@ -23,7 +23,7 @@ module.exports = (framework) => {
                 assert_fun(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
             })
         }),
-        test("tally_results label single OK result", () => {
+        test("tally_results single OK result", () => {
             const expected_start = "1 test [ok] 🥦"
             const test_cases = [
                 tally_results(results_single_success)
