@@ -21,3 +21,7 @@
 // stacktrace from asserts.
 // empty test name error or default
 // missing test code error
+// Within test itself, and all asserts? -> Test failed *before* assertion
+// Similar naming convention, wrt:
+//  'strings' or "strings"
+//  test names OK, ERRROR ?

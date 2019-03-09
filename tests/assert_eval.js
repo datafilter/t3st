@@ -17,8 +17,13 @@ module.exports = (framework) => {
         , test("Truthy eval is ok", () => assert_eval('5') && assert_eval(`'truthy'`))
         , test("False eval is error", () => {
             const err_false_eval = test("_", () => assert_eval('1 > 2'))
-            // assert('Evaluation [1 > 2]', err_false_eval.error)
+            assert('Evaluation [1 > 2] !! (falsy eval)', err_false_eval.error)
         })
+        , test("error in assertion is included in error", () => {
+            const err_invalid_eval = test("_", () => assert_eval('missing_reference'))
+            assert_fun(() => err_invalid_eval.error.includes('ReferenceError: missing_reference is not defined'))
+        })
+        , test("Fails with no arguments ", () => assert(true, !!test("", () => assert_eval()).error))
     ]
 
     return [assert_eval_chain_tests, assert_eval_tests]
