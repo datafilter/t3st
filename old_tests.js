@@ -1,8 +1,8 @@
-const { assert, assert_fun, test, result_text, tally_results } = require('./index')
+const { assert, assert_fun, assert_eval, test, result_text, tally_results } = require('./index')
 
 const ok_test = test(`show [ok] on ok`, () => {
     const one = 1
-    assert(`${one} == 1`)
+    assert_eval(`${one} == 1`)
 })
 
 const ok_assert_two_arguments = test(`assert with 2 arguments compares with (x) === (y)`, () => {

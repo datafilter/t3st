@@ -2,7 +2,7 @@
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
 
-The ~110 lines of test framework code is [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
+The ~120 lines of test framework code is [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
 
 You can run the tests that test the test framework:
 
@@ -28,6 +28,13 @@ Some examples:
 // Lets import
 const { assert, test } = require('t3st')
 ```
+Assert compares with ====
+```javascript
+assert(actual, expected)
+// if you are into saying things like: is blue the color of the sky ?   
+// instead of just : is the sky blue ?
+assert(expected, actual)
+```
 Basic happy path test
 ```javascript
 test_result = test(`2 + 3 = 5`, () => {
@@ -36,21 +43,13 @@ test_result = test(`2 + 3 = 5`, () => {
 })
 ```
 > [ok] 2 + 3 = 5
----
-You could also use dynamic evaluation by passing a single string argument to assert
-```javascript
-const ok_test = test(`show [ok] on ok`, () => {
-    const two = 2
-    assert(`${two} === 2`)
-})
-```
- > [ok] show [ok] on ok
+
 
 Expected failing tests
 
 ```javascript
 const err_eval = test(`show evaluation on error`, () => {
-    assert(`1 > 2`)
+    assert_eval(`1 > 2`)
 })
 
 const err_eval_err = test(`show evaluation exception`, () => {
@@ -60,20 +59,16 @@ const err_eval_err = test(`show evaluation exception`, () => {
 const err_throw = test(`show thrown error`, () => {
     throw 'ThrownError'
 })
-```
-
- > [error] show evaluation on error --> Evaluation [1 > 2]
-
- > [error] show evaluation exception --> ReferenceError: undefined_variable is not defined
-
- > [error] show thrown error --> ThrownError
-
-
-
 ---
+If you *really* need it, you could also use dynamic evaluation:
+```javascript
+const ok_test = test(`1 + 1 = 2`, () => {
+    assert_eval(`${1 + 1} === 2`)
+})
+```
+ > [ok] 1 + 1 = 2
 
-
-### An assert(eval) pitfall ~ and how to avoid it: (**tldr: Use assert(this,that)**)
+### An assert(eval) pitfall ~ and how to avoid it:
 
 ```javascript
 !!eval('n => n <= 1 ? 1 : even_undefined === 67')
@@ -97,15 +92,5 @@ Another way to avoid this trap, is to evaluate them before passing them into ass
 ```javascript
 boolean_val = (n => n <= 1 ? 1 : even_undefined) === (67)
 
-assert(`"a useful assertion error message" && ` + boolean_val)
-```
-Or you could use assert like this!
-```javascript
-assert((n => n <= 1 ? 1 : even_undefined), 67)
-assert('this value', "that value")
-
-assert(actual, expected)
-// if you are into saying things like: is blue the color of the sky ?   
-// instead of just : is the sky blue ?
-assert(expected, actual)
+assert_eval(`"a useful assertion error message" && ` + boolean_val)
 ```

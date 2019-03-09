@@ -25,3 +25,4 @@
 // Similar naming convention, wrt:
 //  'strings' or "strings"
 //  test names OK, ERRROR ?
+// test assert(undefined_variable) assert( some other error?) -> caught in test()
