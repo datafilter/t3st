@@ -19,6 +19,13 @@ module.exports = (framework) => {
             const err_false_eval = test("_", () => assert_eval('1 > 2'))
             assert('Evaluation [1 > 2] !! (falsy eval)', err_false_eval.error)
         })
+        , test("Falsey evals are errors", () => {
+            const falsy_values = [false, undefined, null, NaN, 0, '']
+            falsy_values.forEach(v => {
+                assert(false, !!v)
+                assert(true, !!test("", () => assert_eval(v)).error)
+            })
+        })
         , test("error in assertion is included in error", () => {
             const err_invalid_eval = test("_", () => assert_eval('missing_reference'))
             assert_fun(() => err_invalid_eval.error.includes('ReferenceError: missing_reference is not defined'))
