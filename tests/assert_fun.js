@@ -18,8 +18,17 @@ module.exports = (framework) => {
     ]
 
     const fun_tests = [
+        test("expects a boolean result", () => {
+            let non_boolean = test("_", () => assert_fun(() => 'truthy'))
+            assert(true, !!non_boolean.error)
+        })
+        , test("ok assert truthy with !!", () => assert_fun(() => !!'truthy'))
 
     ]
 
     return [fun_chain_tests, fun_tests]
 }
+
+// todo: 
+// throw 'Expected assert_fun(function => boolean) gives invalid (Test failed *before* assertion)
+//   

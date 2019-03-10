@@ -74,7 +74,11 @@ const assert_fun = (assumption, message) => {
         message = swap
     }
     try {
-        if (assumption()) return true
+        const ok = assumption()
+        if (typeof ok !== 'boolean') {
+            throw 'expected assert_fun(function => boolean), not assert_fun(function => truty)'
+        }
+        if (ok) return true
         else throw false
     } catch (err) {
         const err_prefix = err ? `!! Test failed *before* assertion --> ${err}\n\t--> ` : ''
