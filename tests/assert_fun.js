@@ -18,17 +18,28 @@ module.exports = (framework) => {
     ]
 
     const fun_tests = [
-        test("expects a boolean result", () => {
-            let non_boolean = test("_", () => assert_fun(() => 'truthy'))
+        test("includes error message of invalid assertion", () => {
+            const err_false = test("_", () => assert_fun(() => mark))
+            assert(true, err_false.error.includes("failed *before* assertion"))
+            assert(true, err_false.error.includes("ReferenceError: mark is not defined"))
+        })
+        , test("expects a boolean result", () => {
+            const non_boolean = test("_", () => assert_fun(() => 'truthy'))
             assert(true, !!non_boolean.error)
+            assert_fun(non_boolean.error, () =>
+                non_boolean.error.includes('expected assert_fun(function => boolean)'))
+
+            assert(false, non_boolean.error.includes("failed *before* assertion"))
         })
         , test("ok assert truthy with !!", () => assert_fun(() => !!'truthy'))
+        , test("includes evaluation in false assertion", () => {
+            const err_false = test("_", () => assert_fun(() => 50 < 1))
+            assert(err_false.error, "Evaluation[() => 50 < 1]")
+
+            assert(false, err_false.error.includes("failed *before* assertion"))
+        })
 
     ]
 
     return [fun_chain_tests, fun_tests]
 }
-
-// todo: 
-// throw 'Expected assert_fun(function => boolean) gives invalid (Test failed *before* assertion)
-//   

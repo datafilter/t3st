@@ -67,6 +67,9 @@ const assert_eval = (assumption) => {
     }
 }
 
+const truthy_error = 'expected assert_fun(function => boolean), not assert_fun(function => truthy)'
+const empty_error = '____todo-refactor-t3st-magic-strings'
+
 const assert_fun = (assumption, message) => {
     if (typeof message === 'function') {
         const swap = assumption
@@ -76,15 +79,16 @@ const assert_fun = (assumption, message) => {
     try {
         const ok = assumption()
         if (typeof ok !== 'boolean') {
-            throw 'expected assert_fun(function => boolean), not assert_fun(function => truty)'
+            throw truthy_error
         }
         if (ok) return true
-        else throw false
+        else throw empty_error
     } catch (err) {
-        const err_prefix = err ? `!! Test failed *before* assertion --> ${err}\n\t--> ` : ''
-        const message_prefix = (typeof message !== 'undefined') ? message + '\n\t-->' : ''
-        const detail_space = err_prefix || message_prefix ? ' ' : ''
-        throw `${err_prefix}${message_prefix}${detail_space}Evaluation[${assumption}]`
+        const err_prefix = err !== empty_error && err !== truthy_error ?
+            `!! Test failed *before* assertion --> ${err}\n\t--> `
+            : err === empty_error ? '' : err
+        const message_prefix = (typeof message !== 'undefined') ? message + '\n\t--> ' : ''
+        throw `${err_prefix}${message_prefix}Evaluation[${assumption}]`
     }
 }
 
@@ -101,16 +105,16 @@ const tally_results = (label = '', ...results) => {
         results = results.concat(label)
         label = ''
     }
-    results = results.flat(99)
+    const flat_results = results.flat(99)
 
     const result_message = (result) =>
         (!result || !result.description) ? `\nNot a test result: ${result} ${JSON.stringify(result)}`
             : (result.error) ? `\n${result_text(result)}`
                 : ''
 
-    const error_messages = results.map(result_message).filter(x => x !== '')
+    const error_messages = flat_results.map(result_message).filter(x => x !== '')
     const total_err = error_messages.length
-    const total_ok = results.length - total_err
+    const total_ok = flat_results.length - total_err
 
     const ss = n => n == 1 ? '' : 's'
     const overview = `${total_ok} test${ss(total_ok)} [ok] ${total_err > 0 ? `..and ${total_err} [error${ss(total_err)}] ⚔️🔥` : '🥦'}`
