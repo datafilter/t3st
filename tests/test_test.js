@@ -18,10 +18,12 @@ module.exports = (framework) => {
             const fun_test = test(name => `${name} has a plane.`, () => { })
             assert(fun_test.description(person), 'brendan has a plane.')
         })
-        // ,test("error is open for re-use", () => {
-
-        // })
-
+        , test("error is open for re-use", () => {
+            const err_test = test("_", () => { throw ((y) => y + 8) })
+            assert(!!err_test.error, true)
+            assert(false, typeof err_test.error === 'string')
+            assert(err_test.error(8), 16)
+        })
     ]
 
     return test_tests

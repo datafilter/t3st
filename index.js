@@ -3,10 +3,9 @@ const ok_result = (description) => {
 }
 
 const error_result = (description, err) => {
-    const stack = err.stack ? '\nstack:\n' + err.stack : ''
     return {
         description: description,
-        error: '' + err + stack
+        error: err
     }
 }
 
@@ -85,9 +84,11 @@ const assert_fun = (assumption, message) => {
 }
 
 const result_text = result => {
-    const prefix = result.error ? 'error' : 'ok'
-    const postfix = result.error ? '\n\t--> ' + result.error : ''
-    return `[${prefix}] ${result.description}${postfix}`
+    const outcome = result.error ? 'error' : 'ok'
+    const maybe_error = result.error ? '\n\t--> ' + result.error : ''
+    const maybe_stack = result.error && result.error.stack ?
+        '\nstack:\n' + result.error.stack : ''
+    return `[${outcome}] ${result.description}${maybe_error}${maybe_stack}`
 }
 
 const tally_results = (label = '', ...results) => {

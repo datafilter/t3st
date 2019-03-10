@@ -21,8 +21,8 @@ module.exports = (framework) => {
             assert("Evaluation ['text'] === ['other text']", test("err", () => assert("text", `other text`)).error)
             assert_fun(() => error_result_bool.error.includes("Evaluation [true] === [false]"))
             assert_fun(() => test("err", () => assert(5, true)).error.includes("Evaluation [5] === [true]"))
-        }),
-        test("assert nothing or undefined returns error", () => {
+        })
+        , test("assert nothing or undefined returns error", () => {
             const nullary = test("_", () => assert())
             const unary = test("_", () => assert(undefined))
             const binary = test("_", () => assert(undefined, undefined))

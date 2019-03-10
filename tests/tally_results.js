@@ -22,8 +22,8 @@ module.exports = (framework) => {
             test_cases.forEach(c => {
                 assert_fun(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
             })
-        }),
-        test("tally_results single OK result", () => {
+        })
+        , test("tally_results single OK result", () => {
             const expected_start = "1 test [ok] 🥦"
             const test_cases = [
                 tally_results(results_single_success)
@@ -34,8 +34,8 @@ module.exports = (framework) => {
             test_cases.forEach(c => {
                 assert_fun(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
             })
-        }),
-        test("tally_results adds label", () => {
+        })
+        , test("tally_results adds label", () => {
             const expected_start = "Label test"
             const test_cases = [
                 tally_results('Label test')

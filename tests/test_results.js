@@ -19,8 +19,8 @@ module.exports = (framework) => {
         })
         , test("Error stack is included in error if available", () => {
             const err_result = test("", () => { throw new Error('#20?') })
-            assert_fun(err_result.error, () => err_result.error.includes('stack'))
-            assert_fun(err_result.error, () => err_result.error.includes('test_results.js:21'))
+            assert_fun(() => typeof err_result.error.stack !== undefined)
+            assert_fun(err_result.error, () => err_result.error.stack.includes('test_results.js:21'))
         })
     ]
 
