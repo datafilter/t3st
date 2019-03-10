@@ -47,7 +47,7 @@ const default_expected = '__undefined_expected'
 const assert = (assumption = default_assumption, expected = default_expected) => {
     if (assumption !== expected) {
         if (assumption === default_assumption || expected === default_expected) {
-            throw 'assert(?,?) missing or undefined argument(s). use assert(!!a,!!b) -or- assert_fun(() => truthy)'
+            throw 'assert(?,?) missing or undefined argument(s). Did you want to use assert_fun(function => boolean)?'
         }
         const tE = typeof assumption
         const tA = typeof expected
@@ -97,7 +97,7 @@ const assert_fun = (assumption, message) => {
             `!! Test failed *before* assertion --> ${err}\n\t--> `
             : err === err_empty ? '' : err
         const message_prefix = (typeof message !== 'undefined') ? message + '\n\t--> ' : ''
-        throw `${err_prefix}${message_prefix}Evaluation[${assumption}]`
+        throw `${err_prefix}${message_prefix}Evaluation [${assumption}]`
     }
 }
 

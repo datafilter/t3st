@@ -13,7 +13,7 @@ module.exports = (framework) => {
                 && assert_fun(() => 1 === 5)
                 && assert_fun(() => 6 === 7)
             )
-            assert('Evaluation[() => 1 === 5]', err_third.error)
+            assert('Evaluation [() => 1 === 5]', err_third.error)
         })
     ]
 
@@ -34,7 +34,7 @@ module.exports = (framework) => {
         , test("ok assert truthy with !!", () => assert_fun(() => !!'truthy'))
         , test("includes evaluation in false assertion", () => {
             const err_false = test("_", () => assert_fun(() => 50 < 1))
-            assert(err_false.error, "Evaluation[() => 50 < 1]")
+            assert(err_false.error, "Evaluation [() => 50 < 1]")
 
             assert(false, err_false.error.includes("failed *before* assertion"))
         })
@@ -44,7 +44,7 @@ module.exports = (framework) => {
             const flavor = "cinnamon"
             const err_description = test("_", () => assert_fun(flavor, () => flavor == "vanilla"))
             assert(true, err_description.error.includes(flavor))
-            assert(true, err_description.error.includes(`Evaluation[() => flavor == "vanilla"]`))
+            assert(true, err_description.error.includes(`Evaluation [() => flavor == "vanilla"]`))
         })
 
     ]

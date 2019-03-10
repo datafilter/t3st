@@ -16,6 +16,14 @@ module.exports = (framework) => {
 
     const assert_equal_tests = [
         test("OK results from equal values", () => assert(true, true))
+        , test("assert is strict", () => {
+            const strict_ok = test("_", () => assert(5, 5) && assert('5', '5'))
+            assert(false, !!strict_ok.error)
+
+            const nonstrict_err = test("_", () => assert('5', 5))
+            assert(true, !!nonstrict_err.error)
+            assert_fun(() => nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
+        })
         , test("Evaluation is included in error message", () => {
             const error_result_bool = test("err", () => assert(true, false))
             assert("Evaluation ['text'] === ['other text']", test("err", () => assert("text", `other text`)).error)
@@ -38,8 +46,6 @@ module.exports = (framework) => {
             assert_fun(() => undefined_1st.error.includes(undefined_argument_error))
             assert_fun(() => undefined_2nd.error.includes(undefined_argument_error))
         })
-        // test('')
-
     ]
 
     return [assert_chain_tests, assert_equal_tests]
