@@ -10,11 +10,16 @@ const error_result = (description, err) => {
     }
 }
 
-const test = (description, func, then_func = x => x) =>
-    typeof func === 'function' ?
+const missing_body = () => {
+    throw 'invalid test !! expected test(string, { promise || [async] function } [,function])'
+}
+
+const test = (description = 'empty test', func = missing_body, then_func = x => x) => {
+
+    return typeof func === 'function' ?
         test_now(description, func, then_func)
         : test_async(description, func, then_func)
-
+}
 
 const test_now = (description, func, then_func) => {
     try {

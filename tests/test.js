@@ -3,14 +3,24 @@ module.exports = (framework) => {
     const { test, assert, assert_fun } = framework
 
     const test_tests = [
-        test("empty test description throws error", () => {
-            const err_invalid_name_value = test("na", () => test('', () => {}))
-            // const err_missing_name = test("na", () => test(() => {}))
-            // const err_invalid_name_type = test("na", () => test(() => {}))
-            console.log('ia:' + err_invalid_name_value)
-            console.log('ia:' + err_invalid_name_value.error)
-            // assert(err_invalid_name_value.error, 'expected name..')
+        test("nothing returns error", () => {
+            const nothing = test()
+            assert("empty test", nothing.description)
+            assert_fun(() => nothing.error.includes('invalid test'))
         })
+        , test("without body returns error", () => {
+            const detached_head = test("assert truthy")
+            assert(true, !!detached_head.error)
+            assert_fun(() => detached_head.error.includes('invalid test'))
+        })
+        , test("description is open for re-use", () => {
+            const sut = 'joe'
+            const fun_test = test(name => `${name} has a plane.`, () => { })
+            assert(fun_test.description(sut), 'joe has a plane.')
+        })
+        // ,test("error is open for re-use", () => {
+
+        // })
 
     ]
 

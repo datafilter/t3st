@@ -4,13 +4,17 @@
     const show = console.log
 
     const framework_tests = [
-        require('./tests/test_results')(framework),
-        require('./tests/test')(framework),
-        require('./tests/assert')(framework),
-        require('./tests/assert_eval')(framework),
-        require('./tests/tally_results')(framework)
+        require('./tests/test_results')(framework)
+      ,  require('./tests/test')(framework)
+      ,  require('./tests/test_now')(framework)
+      ,  await require('./tests/test_async')(framework)
+      ,  require('./tests/assert')(framework)
+      ,  require('./tests/assert_fun')(framework)
+      ,  require('./tests/assert_eval')(framework)
+      ,  require('./tests/result_text')(framework)
+      ,  require('./tests/tally_results')(framework)
     ]
-
+    
     show('-'.repeat(40))
     show(framework.tally_results('framework', ...framework_tests))
 
