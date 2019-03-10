@@ -24,6 +24,12 @@ module.exports = (framework) => {
             assert(false, typeof err_test.error === 'string')
             assert(err_test.error(8), 16)
         })
+        , test("OK boolean body returns true result", 500 !== 43 && '5' == 5)
+        , test("ERROR boolean body returns result", () => {
+            const err_bool = test("_", NaN === NaN)
+            assert(true, !!err_bool.error)
+            assert(err_bool.error, '(false)')
+        })
     ]
 
     return test_tests

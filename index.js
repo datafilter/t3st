@@ -15,6 +15,10 @@ const missing_body = () => {
 
 const test = (description = 'empty test', func = missing_body, then_func = x => x) => {
 
+    if (typeof func === 'boolean') {
+        return func ? ok_result(description) : error_result(description, "(false)")
+    }
+
     return typeof func === 'function' ?
         test_now(description, func, then_func)
         : test_async(description, func, then_func)
@@ -32,6 +36,9 @@ const test_now = (description, func, then_func) => {
 const test_async = (description, promise, then_func) => promise
     .then(result => result)
     .catch(err => {
+        if (typeof err !== 'object' || err.constructor.name !== 'Error') {
+            err = new Error(`unexpected error [${err}]`)
+        }
         err.message = 'Promise rejected >> ' + err.message
         throw err
     })
