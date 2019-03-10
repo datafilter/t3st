@@ -24,8 +24,8 @@
 // function that points to folder and runs all tests found.
 // Within test itself, and all  assert variants? -> Test failed *before* assertion
 // Similar naming convention, wrt:
-//  'strings' or "strings"
-//  test names OK, ERRROR ?
+//    'strings' or "strings"
+//    test names OK, ERRROR ?
 // test assert(undefined_variable) assert( some other error?) -> caught in test()
 // stacktrace from asserts. or rather just name & loc.
 // add filename&loc to error message
@@ -34,3 +34,4 @@
 // replace .forEach with .every
 // more fp === more better.
 // consolidate invald_test_message && 'type' error test message + hint ~ they signify the same thing
+// dry assert_fun && assert_eval
