@@ -57,18 +57,27 @@ const assert = (assumption = default_assumption, expected = default_expected) =>
     return true
 }
 
+const err_eval_truthy = new Error('expected assert_eval(expression => boolean), not assert_eval(expression => truthy)')
+const err_eval_empty = new Error('assert_eval(?) missing or undefined expression. use !! to evaluate truthy values')
+
 const assert_eval = (assumption) => {
     try {
-        if (eval(assumption)) return true
-        else throw 'falsy eval'
+        if (typeof assumption === 'undefined')
+            throw err_eval_empty
+        const ok = eval(assumption)
+        if (typeof ok !== 'boolean') {
+            throw err_eval_truthy
+        }
+        if (ok) return true
+        else throw 'false'
     } catch (err) {
         const eval_failure = `(${err + ''})`
         throw `Evaluation [${assumption}] !! ${eval_failure}`
     }
 }
 
-const truthy_error = 'expected assert_fun(function => boolean), not assert_fun(function => truthy)'
-const empty_error = '____todo-refactor-t3st-magic-strings'
+const err_fun_truthy = new Error('expected assert_fun(function => boolean), not assert_fun(function => truthy)')
+const err_empty = new Error('____todo-refactor-t3st-magic-strings')
 
 const assert_fun = (assumption, message) => {
     if (typeof message === 'function') {
@@ -79,14 +88,14 @@ const assert_fun = (assumption, message) => {
     try {
         const ok = assumption()
         if (typeof ok !== 'boolean') {
-            throw truthy_error
+            throw err_fun_truthy
         }
         if (ok) return true
-        else throw empty_error
+        else throw err_empty
     } catch (err) {
-        const err_prefix = err !== empty_error && err !== truthy_error ?
+        const err_prefix = err !== err_empty && err !== err_fun_truthy ?
             `!! Test failed *before* assertion --> ${err}\n\t--> `
-            : err === empty_error ? '' : err
+            : err === err_empty ? '' : err
         const message_prefix = (typeof message !== 'undefined') ? message + '\n\t--> ' : ''
         throw `${err_prefix}${message_prefix}Evaluation[${assumption}]`
     }
