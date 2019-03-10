@@ -7,8 +7,8 @@ module.exports = (framework) => {
             () => assert(true, assert_eval(true)))
         , test("chained assert stops at first error", () => {
             const err_third = test("_",
-                () => assert_eval(true) && assert_eval('1 == 1') && assert_eval('1 == 5') && assert_eval('6 == 7'))
-            assert('Evaluation [1 == 5] !! (falsy eval)', err_third.error)
+                () => assert_eval(true) && assert_eval('1 === 1') && assert_eval('1 === 5') && assert_eval('6 === 7'))
+            assert('Evaluation [1 === 5] !! (falsy eval)', err_third.error)
         })
     ]
 

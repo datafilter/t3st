@@ -74,12 +74,13 @@ const assert_fun = (assumption, message) => {
         message = swap
     }
     try {
-        if (!assumption())
-            throw false
+        if (assumption()) return true
+        else throw false
     } catch (err) {
         const err_prefix = err ? `!! Test failed *before* assertion --> ${err}\n\t--> ` : ''
         const message_prefix = (typeof message !== 'undefined') ? message + '\n\t-->' : ''
-        throw `${err_prefix}${message_prefix} Evaluation[${assumption}]`
+        const detail_space = err_prefix || message_prefix ? ' ' : ''
+        throw `${err_prefix}${message_prefix}${detail_space}Evaluation[${assumption}]`
     }
 }
 
