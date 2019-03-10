@@ -9,9 +9,8 @@ const error_result = (description, err) => {
     }
 }
 
-const missing_body = () => {
-    throw 'invalid test !! expected test(string, { promise || [async] function } [,function])'
-}
+const invald_test_message = 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])'
+const missing_body = () => { throw invald_test_message }
 
 const test = (description = 'empty test', body = missing_body, then_func = x => x) => {
     switch (typeof body) {
@@ -24,7 +23,7 @@ const test = (description = 'empty test', body = missing_body, then_func = x => 
                 return test_async(description, body, then_func)
     }
     return error_result(description,
-        `invalid test body type in test(string, ${typeof body})`)
+        `invalid test body type in test(string, ${typeof body}). Did you want test(name, () => {.. code ..}) ?`)
 }
 
 const function_test = (description, body, then_func) => {
