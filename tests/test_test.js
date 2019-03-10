@@ -14,9 +14,9 @@ module.exports = (framework) => {
             assert_fun(() => detached_head.error.includes('invalid test'))
         })
         , test("description is open for re-use", () => {
-            const sut = 'joe'
+            const person = 'brendan'
             const fun_test = test(name => `${name} has a plane.`, () => { })
-            assert(fun_test.description(sut), 'joe has a plane.')
+            assert(fun_test.description(person), 'brendan has a plane.')
         })
         // ,test("error is open for re-use", () => {
 

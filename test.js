@@ -5,7 +5,7 @@
 
     const framework_tests = [
         require('./tests/test_results')(framework)
-      ,  require('./tests/test')(framework)
+      ,  require('./tests/test_test')(framework)
       ,  require('./tests/test_now')(framework)
       ,  await require('./tests/test_async')(framework)
       ,  require('./tests/assert')(framework)
