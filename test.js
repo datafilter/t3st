@@ -31,4 +31,7 @@
 //  test names OK, ERRROR ?
 // test assert(undefined_variable) assert( some other error?) -> caught in test()
 // add filename&loc to error message
-// remove throws / uncomment & change results in index.js to find untested behaviour
+// remove index.js throws / uncomment & change results in index.js to find untested behaviour
+// change all test throws to return 'invalid test error' instead
+// replace .forEach with .every
+// more fp === more better.

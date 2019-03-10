@@ -13,15 +13,27 @@ const missing_body = () => {
     throw 'invalid test !! expected test(string, { promise || [async] function } [,function])'
 }
 
-const test = (description = 'empty test', func = missing_body, then_func = x => x) => {
-
-    if (typeof func === 'boolean') {
-        return func ? ok_result(description) : error_result(description, "(false)")
+const test = (description = 'empty test', body = missing_body, then_func = x => x) => {
+    switch (typeof body) {
+        case 'boolean':
+            return body ? ok_result(description) : error_result(description, "(false)")
+        case 'function':
+            return function_test(description, body, then_func)
+        case 'object':
+            if (body && body.constructor.name === 'Promise')
+                return test_async(description, body, then_func)
     }
+    return error_result(description,
+        `invalid test body type in test(string, ${typeof body})`)
+}
 
-    return typeof func === 'function' ?
-        test_now(description, func, then_func)
-        : test_async(description, func, then_func)
+const function_test = (description, body, then_func) => {
+    switch (body.constructor.name) {
+        case 'Function':
+            return test_now(description, body, then_func)
+        case 'AsyncFunction':
+            return test_async(description, body(), then_func)
+    }
 }
 
 const test_now = (description, func, then_func) => {
