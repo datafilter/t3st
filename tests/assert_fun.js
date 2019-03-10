@@ -38,6 +38,14 @@ module.exports = (framework) => {
 
             assert(false, err_false.error.includes("failed *before* assertion"))
         })
+        , test("description is optional", () => assert_fun(() => true))
+        , test("description can be added", () => assert_fun("something", () => true))
+        , test("description is shown in error message", () => {
+            const flavor = "cinnamon"
+            const err_description = test("_", () => assert_fun(flavor, () => flavor == "vanilla"))
+            assert(true, err_description.error.includes(flavor))
+            assert(true, err_description.error.includes(`Evaluation[() => flavor == "vanilla"]`))
+        })
 
     ]
 
