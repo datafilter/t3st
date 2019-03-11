@@ -32,15 +32,18 @@ module.exports = (framework) => {
             })
         })
         , test("error is included in error message", () => {
-            const err_undefined = test("_", () => { throw 'err-msg' })
-            assert_fun(() => result_text(err_undefined).includes('err-msg'))
+            const err_undefined = test("_", () => { not_defined })
+            assert_fun(() => result_text(err_undefined).includes('ReferenceError: not_defined is not defined'))
 
-            const err_undefined_new = test("_", () => { throw new Error('err--msg') })
-            const rt = result_text(err_undefined_new)
+            const err_string = test("_", () => { throw 'err-msg' })
+            assert_fun(() => result_text(err_string).includes('err-msg'))
+
+            const err_new_error = test("_", () => { throw new Error('err--msg') })
+            const rt = result_text(err_new_error)
             assert_fun(() => rt.includes('Error'))
             assert_fun(() => rt.includes('err--msg'))
             assert_fun(() => rt.includes('stack'))
-            assert_fun(() => rt.includes('result_text.js:38'))
+            assert_fun(() => rt.includes('result_text.js:41'))
         })
 
     ]

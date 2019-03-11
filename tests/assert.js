@@ -15,7 +15,7 @@ module.exports = (framework) => {
     const undefined_argument_error = 'assert(?,?) missing or undefined argument(s)'
 
     const assert_equal_tests = [
-        test("OK results from equal values", () => assert(true, true))
+        test("OK results from equal values", () => assert(true, true) && assert(false, false) && assert('a', 'a'))
         , test("assert is strict", () => {
             const strict_ok = test("_", () => assert(5, 5) && assert('5', '5'))
             assert(false, !!strict_ok.error)
