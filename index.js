@@ -59,14 +59,14 @@ const test_async = (description, promise, then_func) => promise
 
 const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
 
-const default_assumption = '__undefined_assumption'
-const default_expected = '__undefined_expected'
+const assert_hint = () => {
+    throw `assert(?,?) missing or undefined argument(s).
+        You could explicitly state : assert(true, typeof something === 'undefined')
+        ~ Or did you intend to use : assert_fun(function => boolean) ?`
+}
 
-const assert = (assumption = default_assumption, expected = default_expected) => {
+const assert = (assumption = assert_hint(), expected = assert_hint()) => {
     if (assumption !== expected) {
-        if (assumption === default_assumption || expected === default_expected) {
-            throw 'assert(?,?) missing or undefined argument(s). Did you want to use assert_fun(function => boolean)?'
-        }
         const tE = typeof assumption
         const tA = typeof expected
         const type_error = (tE === tA) ? '' : ` !! Type mismatch: assert(${tE}, ${tA}).`
