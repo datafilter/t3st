@@ -13,12 +13,6 @@ module.exports = (framework) => {
             assert(true, !!detached_head.error)
             assert_fun(() => detached_head.error.includes('invalid test'))
         })
-        , test("OK boolean body returns true result", 500 !== 43 && '5' == 5)
-        , test("ERROR boolean body returns result", () => {
-            const err_bool = test("_", NaN === NaN)
-            assert(true, !!err_bool.error)
-            assert(err_bool.error, '(false)')
-        })
         , test("function body returns immediate result", () => {
             const test_complete = test("_", () => { })
             assert(test_complete.constructor.name, 'Object')
