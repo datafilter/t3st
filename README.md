@@ -12,17 +12,9 @@ cd npm-t3st
 npm test
 ```
 
-Checking out the tests in the repo give the best examples, but here's a english description too:
+Checking out the tests in the repo give the best examples.
 
-* test(description_string, () => function) : catch assert or other errors, and returns a result: {description [,error]}
-* assert(a,b) : compare 2 values are ===, throws on false/error
-* assert('string expression') : does !eval(expression), throws on false/error
-* assert_fun(() => function) : run a function that throws if an expression is not truthy
-* assert_fun(extra_description_string, () => function) : same as above with additional output
-* result_text : create a single message from a test result
-* tally_results : create a complete summary from a group of test results
-
-Some examples:
+Some extracts:
 
 ```javascript
 // Lets import
@@ -41,7 +33,7 @@ assert(expected, actual)
 ```
 Eg.
 ```javascript
-test_result = test(`2 + 3 = 5`, () => {
+test(`2 + 3 = 5`, () => {
     const sum = 2 + 3
     assert(sum, 5)
 })
@@ -51,11 +43,41 @@ test_result = test(`2 + 3 = 5`, () => {
 Expected failing tests
 
 ```javascript
-const err_eval_err = test(`show evaluation exception`, () => {
+test(`show evaluation exception`, () => {
     undefined_variable
 })
 
-const err_throw = test(`show thrown error`, () => {
+test(`show thrown error`, () => {
     throw 'ThrownError'
 })
+```
+
+The tests in the repo are the *real* docs, here's a brief incomplete summary:
+
+### test
+> test(description, boolean)
+* expects the boolean to be true.
+> test(description, function => boolean)
+* catch assert or other errors, and returns a result: {description [,error]}
+### assert(a, b)
+> assert(a,b)
+* compare 2 values are ===, throws on false/error
+### assert_fun([string,] function => boolean)
+> assert_fun(() => function)
+* run a function that throws if an expression is not truthy
+> assert_fun(description, () => function)
+* same as above with additional output on error
+### result_text
+> result_text
+* create a single message from a test result
+### tally_results
+> tally_results
+* create a complete summary from a group of test results
+
+There's no truthy or undefined tests.
+
+Fuzzy assumptions can be explicitly stated with existing methods:
+```javascript
+test(`5 and '5' are basically the same thing, right?`, 5 == '5')
+test("You didn't see any droids", () => typeof droids === 'undefined')
 ```
