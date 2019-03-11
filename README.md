@@ -52,7 +52,7 @@ test(`show thrown error`, () => {
 })
 ```
 
-The tests in the repo are the *real* docs, here's a brief incomplete summary:
+The tests in the repo are the *real* docs ~ here's a brief incomplete summary:
 
 ### test
 > test(description, boolean)
@@ -63,13 +63,13 @@ The tests in the repo are the *real* docs, here's a brief incomplete summary:
 > assert(a,b)
 * compare 2 values are ===, throws on false/error
 ### assert_fun([string,] function => boolean)
-> assert_fun(() => function)
-* run a function that throws if an expression is not truthy
-> assert_fun(description, () => function)
+> assert_fun(function => boolean)
+* run a function that throws if an expression is not true.
+> assert_fun(description, function => boolean)
 * same as above with additional output on error
 ### result_text
 > result_text
-* create a single message from a test result
+* create a message string from a test result
 ### tally_results
 > tally_results
 * create a complete summary from a group of test results

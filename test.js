@@ -35,3 +35,4 @@
 // more fp === more better.
 // consolidate invald_test_message && 'type' error test message + hint ~ they signify the same thing
 // dry assert_fun
+// continuation(s) on assert fun with ([description,] ...funcs) ?
