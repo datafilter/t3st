@@ -1,9 +1,4 @@
-const { assert, assert_fun, assert_eval, test, result_text, tally_results } = require('./index')
-
-const ok_test = test(`show [ok] on ok`, () => {
-    const one = 1
-    assert_eval(`${one} == 1`)
-})
+const { assert, assert_fun, test, tally_results } = require('./index')
 
 const ok_assert_two_arguments = test(`assert with 2 arguments compares with (x) === (y)`, () => {
     const two = 2
@@ -16,14 +11,6 @@ const ok_second_argument_false = test('both assert arguments can be false', () =
 
 const err_code = test(`show evaluation exception`, () => {
     undefined_reference
-})
-
-const err_eval = test(`show evaluation on error`, () => {
-    assert(`1 > 2`)
-})
-
-const err_eval_non_string = test(`show single truthy assert error`, () => {
-    assert(!!'test')
 })
 
 const err_throw = test(`show thrown error`, () => {
@@ -48,14 +35,13 @@ const err_assert_fun_invalid_code = test("assert_fun fails when function code is
     assert_fun(() => nondefined)
 })
 
-let ok_tests = [ok_test
-    , ok_assert_two_arguments
+let ok_tests = [
+    ok_assert_two_arguments
     , ok_second_argument_false
 ]
 
-let error_tests = [err_eval
-    , err_code
-    , err_eval_non_string
+let error_tests = [
+    err_code
     , err_throw
     , err_assert_two_arguments_equals
     , err_assert_two_arguments_types

@@ -75,25 +75,6 @@ const assert = (assumption = default_assumption, expected = default_expected) =>
     return true
 }
 
-const err_eval_truthy = new Error('expected assert_eval(expression => boolean), not assert_eval(expression => truthy)')
-const err_eval_empty = new Error('assert_eval(?) missing or undefined expression. use !! to evaluate truthy values')
-
-const assert_eval = (assumption) => {
-    try {
-        if (typeof assumption === 'undefined')
-            throw err_eval_empty
-        const ok = eval(assumption)
-        if (typeof ok !== 'boolean') {
-            throw err_eval_truthy
-        }
-        if (ok) return true
-        else throw 'false'
-    } catch (err) {
-        const eval_failure = `(${err + ''})`
-        throw `Evaluation [${assumption}] !! ${eval_failure}`
-    }
-}
-
 const err_fun_truthy = new Error('expected assert_fun(function => boolean), not assert_fun(function => truthy)')
 const err_empty = new Error('____todo-refactor-t3st-magic-strings')
 
@@ -153,7 +134,6 @@ module.exports = {
     test
     , assert
     , assert_fun
-    , assert_eval
     , result_text
     , tally_results
 }

@@ -11,7 +11,6 @@
       ,  await require('./tests/test_async')(framework)
       ,  require('./tests/assert')(framework)
       ,  require('./tests/assert_fun')(framework)
-      ,  require('./tests/assert_eval')(framework)
       ,  require('./tests/result_text')(framework)
       ,  require('./tests/tally_results')(framework)
     ]
@@ -35,4 +34,4 @@
 // replace .forEach with .every
 // more fp === more better.
 // consolidate invald_test_message && 'type' error test message + hint ~ they signify the same thing
-// dry assert_fun && assert_eval
+// dry assert_fun

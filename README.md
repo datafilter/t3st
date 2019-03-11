@@ -2,7 +2,7 @@
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
 
-The ~120 lines of test framework code is [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
+The ~140 lines of test framework code is [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
 
 You can run the tests that test the test framework:
 
@@ -12,7 +12,7 @@ cd npm-t3st
 npm test
 ```
 
-In words:
+Checking out the tests in the repo give the best examples, but here's a english description too:
 
 * test(description_string, () => function) : catch assert or other errors, and returns a result: {description [,error]}
 * assert(a,b) : compare 2 values are ===, throws on false/error
@@ -28,6 +28,10 @@ Some examples:
 // Lets import
 const { assert, test } = require('t3st')
 ```
+Basic happy path test
+```javascript
+test("five is big", 5 > 1)
+```
 Assert compares with ====
 ```javascript
 assert(actual, expected)
@@ -35,7 +39,7 @@ assert(actual, expected)
 // instead of just : is the sky blue ?
 assert(expected, actual)
 ```
-Basic happy path test
+Eg.
 ```javascript
 test_result = test(`2 + 3 = 5`, () => {
     const sum = 2 + 3
@@ -47,52 +51,11 @@ test_result = test(`2 + 3 = 5`, () => {
 Expected failing tests
 
 ```javascript
-const err_eval = test(`show evaluation on error`, () => {
-    assert_eval(`1 > 2`)
-})
-
 const err_eval_err = test(`show evaluation exception`, () => {
-    assert(undefined_variable)
+    undefined_variable
 })
 
 const err_throw = test(`show thrown error`, () => {
     throw 'ThrownError'
 })
-```
-
-If you *really* need it, you could also use dynamic evaluation:
-
-```javascript
-const ok_test = test(`1 + 1 = 2`, () => {
-    assert_eval(`${1 + 1} === 2`)
-})
-```
- > [ok] 1 + 1 = 2
----
-
-### An assert(eval) pitfall ~ and how to avoid it:
-
-```javascript
-!!eval('n => n <= 1 ? 1 : even_undefined === 67')
-```
-> true
-
-True? Because the whole thing is evaluated to a `function`
-
-
-A function filled with a `[Uncaught ReferenceError: even_undefined is not defined]` ticking timebomb,
-but a truthy value nonetheless.
-
-Wrapping the comparisons in some brackets resolves this:
-
-```javascript
-!!eval('(n => n <= 1 ? 1 : even_undefined) === (67)')
-```
-> false
-
-Another way to avoid this trap, is to evaluate them before passing them into assert:
-```javascript
-boolean_val = (n => n <= 1 ? 1 : even_undefined) === (67)
-
-assert_eval(`"a useful assertion error message" && ` + boolean_val)
 ```
