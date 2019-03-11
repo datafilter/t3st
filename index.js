@@ -15,7 +15,7 @@ const missing_body = () => { throw invald_test_message }
 const test = (description = 'empty test', body = missing_body, then_func = x => x) => {
     switch (typeof body) {
         case 'boolean':
-            return body ? ok_result(description) : error_result(description, "(false)")
+            return body ? test_now(description, () => true, then_func) : error_result(description, "(false)")
         case 'function':
             return function_test(description, body, then_func)
         case 'object':
@@ -114,8 +114,9 @@ const assert_fun = (assumption, message) => {
         const err_prefix = err !== err_empty && err !== err_fun_truthy ?
             `!! Test failed *before* assertion --> ${err}\n\t--> `
             : err === err_empty ? '' : err
-        const message_prefix = (typeof message !== 'undefined') ? message + '\n\t--> ' : ''
-        throw `${err_prefix}${message_prefix}Evaluation [${assumption}]`
+        const message_prefix = (typeof message !== 'undefined') ? `Description: ${message}\n\t--> ` : ''
+        const err_newline = err_prefix && message_prefix ? '\n\t--> ' : ''
+        throw `${err_prefix}${err_newline}${message_prefix}Evaluation [${assumption}]`
     }
 }
 

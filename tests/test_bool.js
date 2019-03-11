@@ -9,7 +9,16 @@ module.exports = (framework) => {
             assert(true, !!err_bool.error)
             assert(err_bool.error, '(false)')
         })
-
+        , test("OK boolean body runs continuation", () => {
+            const resumed_test = test("_", true, () => { throw '~err~' })
+            assert(true, !!resumed_test.error)
+            assert('~err~', resumed_test.error)
+        })
+        , test("Error boolean body stops immediately", () => {
+            const stopped_test = test("_", false, () => { throw '~err~' })
+            assert(true, !!stopped_test.error)
+            assert('(false)', stopped_test.error)
+        })
     ]
 
     return test_tests
