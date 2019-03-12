@@ -16,13 +16,15 @@ module.exports = (framework) => {
 
     const assert_equal_tests = [
         test("OK results from equal values", () => assert(true, true) && assert(false, false) && assert('a', 'a'))
-        , test("assert is strict", () => {
-            const strict_ok = test("_", () => assert(5, 5) && assert('5', '5'))
-            assert(false, !!strict_ok.error)
-
+        , test("strict assert shows type mismatch error", () => {
             const nonstrict_err = test("_", () => assert('5', 5))
             assert(true, !!nonstrict_err.error)
             assert_fun(() => nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
+        })
+        , test("Error results for same type doesn't show type error", () => {
+            const nonstrict_err = test("_", () => assert(1, 2))
+            assert(true, !!nonstrict_err.error)
+            assert(false, nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
         })
         , test("Evaluation is included in error message", () => {
             const error_result_bool = test("err", () => assert(true, false))
