@@ -2,7 +2,7 @@ module.exports = (framework) => {
 
     const { test, assert, affirm } = framework
 
-    const fun_chain_tests = [
+    const affirm_chain_tests = [
         test("true assert returns true", () =>
             assert(true, affirm(() => true))
         )
@@ -17,8 +17,12 @@ module.exports = (framework) => {
         })
     ]
 
-    const fun_tests = [
-        test("includes error message of invalid assertion", () => {
+    const affirm_tests = [
+        test("affirm nothing gives hint", () => {
+            const nullary_affirm = test("_", () => affirm())
+            assert(true, nullary_affirm.error.includes('expected (...values, function => boolean'))
+        })
+        , test("includes error message of invalid assertion", () => {
             const err_false = test("_", () => affirm(() => mark))
             assert(true, err_false.error.includes("failed *before* assertion"))
             assert(true, err_false.error.includes("ReferenceError: mark is not defined"))
@@ -60,5 +64,5 @@ module.exports = (framework) => {
         })
     ]
 
-    return [fun_chain_tests, fun_tests]
+    return [affirm_chain_tests, affirm_tests]
 }

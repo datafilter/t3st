@@ -79,7 +79,7 @@ const assert = (assumption = assert_hint(), expected = assert_hint()) => {
 
 const affirm = (...factors) => {
     if (factors.length === 0)
-        throw 'affirm([...factors], assumption) expected (...values, function => boolean)'
+        throw 'affirm expected (...values, function => boolean)'
     const [assumption, ...reversed_propositions] = factors.reverse()
     const propositions = reversed_propositions.reverse()
 
