@@ -62,11 +62,9 @@ The tests in the repo are the *real* docs ~ here's a brief incomplete summary:
 ### assert(a, b)
 > assert(a,b)
 * compare 2 values are ===, throws on false/error
-### assert_fun([string,] function => boolean)
-> assert_fun(function => boolean)
+### affirm([string,] function => boolean)
+> affirm(\[...propositions,\] function => boolean)
 * run a function that throws if an expression is not true.
-> assert_fun(description, function => boolean)
-* same as above with additional output on error
 ### result_text
 > result_text
 * create a message string from a test result

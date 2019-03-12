@@ -9,10 +9,12 @@ const error_result = (description, err) => {
     }
 }
 
+const id = a => a
+
 const invald_test_message = 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])'
 const missing_body = () => { throw invald_test_message }
 
-const test = (description = 'empty test', body = missing_body, then_func = x => x) => {
+const test = (description = 'empty test', body = missing_body, then_func = id) => {
     switch (typeof body) {
         case 'boolean':
             return body ? test_now(description, () => true, then_func) : error_result(description, "(false)")
@@ -62,7 +64,7 @@ const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
 const assert_hint = () => {
     throw `assert(?,?) missing or undefined argument(s).
         You could explicitly state : assert(true, typeof something === 'undefined')
-        ~ Or did you intend to use : assert_fun(function => boolean) ?`
+        ~ Or did you intend to use : affirm([...propositions,] function => boolean) ?`
 }
 
 const assert = (assumption = assert_hint(), expected = assert_hint()) => {
@@ -75,29 +77,28 @@ const assert = (assumption = assert_hint(), expected = assert_hint()) => {
     return true
 }
 
-const err_fun_truthy = new Error('expected assert_fun(function => boolean), not assert_fun(function => truthy)')
-const err_empty = new Error('____todo-refactor-t3st-magic-strings')
+const affirm = (...factors) => {
+    if (factors.length === 0)
+        throw 'affirm([...factors], assumption) expected (...values, function => boolean)'
+    const [assumption, ...reversed_propositions] = factors.reverse()
+    const propositions = reversed_propositions.reverse()
 
-const assert_fun = (assumption, message) => {
-    if (typeof message === 'function') {
-        const swap = assumption
-        assumption = message
-        message = swap
-    }
+    const error_message = evaluate(assumption, propositions)
+    if (error_message) {
+        const precondition = propositions.reduce((xs, s) => `${xs}\n\t--> ${s}`, error_message) + '\n\t-->'
+        throw `${precondition} Evaluation [${assumption}]`
+    } else return true
+}
+
+const evaluate = (assumption, propositions) => {
     try {
-        const ok = assumption()
-        if (typeof ok !== 'boolean') {
-            throw err_fun_truthy
-        }
-        if (ok) return true
-        else throw err_empty
+        const ok = assumption(...propositions)
+        if (typeof ok === 'boolean') {
+            if (ok) return ''
+            else return '!! false assertion'
+        } else return '!! expected affirm(function => boolean), not affirm(function => truthy)'
     } catch (err) {
-        const err_prefix = err !== err_empty && err !== err_fun_truthy ?
-            `!! Test failed *before* assertion --> ${err}\n\t--> `
-            : err === err_empty ? '' : err
-        const message_prefix = (typeof message !== 'undefined') ? `Description: ${message}\n\t--> ` : ''
-        const err_newline = err_prefix && message_prefix ? '\n\t--> ' : ''
-        throw `${err_prefix}${err_newline}${message_prefix}Evaluation [${assumption}]`
+        return `!! affirm failed *before* assertion\n\t--> !! ${err}`
     }
 }
 
@@ -133,7 +134,7 @@ const tally_results = (label = '', ...results) => {
 module.exports = {
     test
     , assert
-    , assert_fun
+    , affirm
     , result_text
     , tally_results
 }

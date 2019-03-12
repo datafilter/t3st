@@ -1,6 +1,6 @@
 module.exports = (framework) => {
 
-    const { test, assert, assert_fun } = framework
+    const { test, assert, affirm } = framework
 
     const assert_chain_tests = [
         test("true assert returns true",
@@ -19,7 +19,7 @@ module.exports = (framework) => {
         , test("strict assert shows type mismatch error", () => {
             const nonstrict_err = test("_", () => assert('5', 5))
             assert(true, !!nonstrict_err.error)
-            assert_fun(() => nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
+            affirm(() => nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
         })
         , test("Error results for same type doesn't show type error", () => {
             const nonstrict_err = test("_", () => assert(1, 2))
@@ -29,8 +29,8 @@ module.exports = (framework) => {
         , test("Evaluation is included in error message", () => {
             const error_result_bool = test("err", () => assert(true, false))
             assert("Evaluation ['text'] === ['other text']", test("err", () => assert("text", `other text`)).error)
-            assert_fun(() => error_result_bool.error.includes("Evaluation [true] === [false]"))
-            assert_fun(() => test("err", () => assert(5, true)).error.includes("Evaluation [5] === [true]"))
+            affirm(() => error_result_bool.error.includes("Evaluation [true] === [false]"))
+            affirm(() => test("err", () => assert(5, true)).error.includes("Evaluation [5] === [true]"))
         })
         , test("assert nothing or undefined returns error", () => {
             const nullary = test("_", () => assert())
@@ -38,15 +38,15 @@ module.exports = (framework) => {
             const binary = test("_", () => assert(undefined, undefined))
             assert(nullary.error, unary.error)
             assert(unary.error, binary.error)
-            assert_fun(() => nullary.error.includes(undefined_argument_error))
+            affirm(() => nullary.error.includes(undefined_argument_error))
         })
         , test("assert value against undefined returns error", () => {
             const missing_2nd = test("_", () => assert("truthy?"))
             const undefined_1st = test("_", () => assert(undefined, "truthy?"))
             const undefined_2nd = test("_", () => assert("truthy?", undefined))
-            assert_fun(() => missing_2nd.error.includes(undefined_argument_error))
-            assert_fun(() => undefined_1st.error.includes(undefined_argument_error))
-            assert_fun(() => undefined_2nd.error.includes(undefined_argument_error))
+            affirm(() => missing_2nd.error.includes(undefined_argument_error))
+            affirm(() => undefined_1st.error.includes(undefined_argument_error))
+            affirm(() => undefined_2nd.error.includes(undefined_argument_error))
         })
     ]
 

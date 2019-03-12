@@ -10,7 +10,7 @@
       ,  require('./tests/test_now')(framework)
       ,  await require('./tests/test_async')(framework)
       ,  require('./tests/assert')(framework)
-      ,  require('./tests/assert_fun')(framework)
+      ,  require('./tests/affirm')(framework)
       ,  require('./tests/result_text')(framework)
       ,  require('./tests/tally_results')(framework)
     ]
@@ -32,7 +32,5 @@
 // remove index.js throws / uncomment & change results in index.js to find untested behaviour
 // change all test throws to return 'invalid test error' instead
 // replace .forEach with .every
-// more fp === more better.
+// more fp === more better. muuuch better.
 // consolidate invald_test_message && 'type' error test message + hint ~ they signify the same thing
-// dry assert_fun
-// continuation(s) on assert fun with ([description,] ...funcs) ?

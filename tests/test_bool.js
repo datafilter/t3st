@@ -1,6 +1,6 @@
 module.exports = (framework) => {
 
-    const { test, assert, assert_fun } = framework
+    const { test, assert, affirm } = framework
 
     const test_tests = [
         test("OK boolean body returns true result", 500 !== 43 && '5' == 5)

@@ -1,6 +1,6 @@
 module.exports = async (framework) => {
 
-    const { test, assert, assert_fun, result_text } = framework
+    const { test, assert, affirm, result_text } = framework
 
     const async_tests = [
         await test("Promised task runs async",
@@ -16,8 +16,8 @@ module.exports = async (framework) => {
                 assert(basic.description, basic_async.description)
                 assert(basic_async.description, async_promise.description)
                 assert(false, !!basic.error)
-                assert_fun(() => basic.error === basic_async.error)
-                assert_fun(() => basic_async.error === async_promise.error)
+                affirm(() => basic.error === basic_async.error)
+                affirm(() => basic_async.error === async_promise.error)
             })())
         )
         , await test("rejected promise returns error result",
@@ -26,7 +26,7 @@ module.exports = async (framework) => {
                     const async_error = await test("_", rejected_promise)
                     assert(true, !!async_error.error)
                     const err_result = result_text(async_error)
-                    assert_fun(err_result, () => err_result.includes(error_message))
+                    affirm(err_result, () => err_result.includes(error_message))
                 }
                 await assert_error(Promise.reject(), 'Promise rejected >> unexpected error [undefined]')
                 await assert_error(Promise.reject(3), 'Promise rejected >> unexpected error [3]')

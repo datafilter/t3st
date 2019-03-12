@@ -1,6 +1,6 @@
 module.exports = (framework) => {
 
-    const { test, assert, assert_fun } = framework
+    const { test, assert, affirm } = framework
 
     const now_tests = [
         

@@ -1,6 +1,6 @@
 module.exports = (framework) => {
 
-    const { test, assert, assert_fun, result_text } = framework
+    const { test, assert, affirm, result_text } = framework
 
     const nop = () => { }
 
@@ -28,22 +28,22 @@ module.exports = (framework) => {
                 const err_test = test(name, () => assert(false, true))
                 assert(err_test.description, name)
                 assert(!!err_test.error, true)
-                assert_fun(() => result_text(err_test).includes('[error] ' + name))
+                affirm(() => result_text(err_test).includes('[error] ' + name))
             })
         })
         , test("error is included in error message", () => {
             const err_undefined = test("_", () => { not_defined })
-            assert_fun(() => result_text(err_undefined).includes('ReferenceError: not_defined is not defined'))
+            affirm(() => result_text(err_undefined).includes('ReferenceError: not_defined is not defined'))
 
             const err_string = test("_", () => { throw 'err-msg' })
-            assert_fun(() => result_text(err_string).includes('err-msg'))
+            affirm(() => result_text(err_string).includes('err-msg'))
 
             const err_new_error = test("_", () => { throw new Error('err--msg') })
             const rt = result_text(err_new_error)
-            assert_fun(() => rt.includes('Error'))
-            assert_fun(() => rt.includes('err--msg'))
-            assert_fun(() => rt.includes('stack'))
-            assert_fun(() => rt.includes('result_text.js:41'))
+            affirm(() => rt.includes('Error'))
+            affirm(() => rt.includes('err--msg'))
+            affirm(() => rt.includes('stack'))
+            affirm(() => rt.includes('result_text.js:41'))
         })
 
     ]
