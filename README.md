@@ -59,17 +59,17 @@ The tests in the repo are the *real* docs ~ here's a brief incomplete summary:
 * expects the boolean to be true.
 > test(description, function => boolean)
 * catch assert or other errors, and returns a result: {description [,error]}
-### assert(a, b)
+### assert
 > assert(a,b)
 * compare 2 values are ===, throws on false/error
-### affirm([string,] function => boolean)
-> affirm(\[...propositions,\] function => boolean)
+### affirm
+> affirm(\[...values,\] function => boolean)
 * run a function that throws if an expression is not true.
 ### result_text
-> result_text
+> [ok | error] Test name
 * create a message string from a test result
 ### tally_results
-> tally_results
+> [description] {n} test(s) ok [and n tests failed with: etc..]
 * create a complete summary from a group of test results
 
 There's no truthy or undefined tests.
