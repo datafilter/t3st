@@ -17,18 +17,12 @@ const test_file = (file_path) => {
     }
 }
 
-const test_output = async (dir, label = '', func_or_file = console.log) => {
+const test_output = async (dir, label = '', func = console.log) => {
     const test_results = await Promise.all(
         io.walk_dir(dir)
             .map(test_file))
     const summary = tally_results(label, test_results)
-    switch (typeof func_or_file) {
-        case 'function':
-            return func_or_file(summary)
-        case 'string':
-            return io.save_data(func_or_file, summary)
-    }
-    throw 'Unexpected function or file in test_dir(function || filepath)'
+    func(summary)
 }
 
 module.exports = {

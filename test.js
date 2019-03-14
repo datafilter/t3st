@@ -4,7 +4,7 @@
 
   console.log('-'.repeat(40))
 
-  framework.test_output('./tests')
+  framework.test_output('./tests', 'framework')
 
 })()
 
