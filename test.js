@@ -1,10 +1,10 @@
 (async () => {
 
-  const framework = require('./index')
+  const { require_tests } = require('./index')
 
   console.log('-'.repeat(40))
 
-  framework.test_output('./tests', 'framework')
+  require_tests('./tests', 'framework')
 
 })()
 

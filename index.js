@@ -17,7 +17,7 @@ const test_file = (file_path) => {
     }
 }
 
-const test_output = async (dir, label = '', func = console.log) => {
+const require_tests = async (dir, label = '', func = console.log) => {
     const test_results = await Promise.all(
         io.walk_dir(dir)
             .map(test_file))
@@ -31,5 +31,5 @@ module.exports = {
     , affirm
     , result_text
     , tally_results
-    , test_output
+    , require_tests
 }
