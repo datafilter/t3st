@@ -1,4 +1,4 @@
-const { test, assert, affirm } = require('./lib/t3st')
+const { test, assert, affirm } = require('./lib/validation')
 const { result_text, tally_results } = require('./lib/text')
 
 const framework = { test, assert, affirm, result_text, tally_results }

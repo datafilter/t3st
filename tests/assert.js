@@ -48,6 +48,13 @@ module.exports = (framework) => {
             affirm(() => undefined_1st.error.includes(undefined_argument_error))
             affirm(() => undefined_2nd.error.includes(undefined_argument_error))
         })
+        , test("error in assert is caught in test before it's passed to assert", () => {
+            const err_assert = test("_", () => assert(1, not_defined))
+            affirm(err_assert.error + '', (e) => e.includes('not_defined is not defined'))
+
+            const test_err = test("_", () => not_defined)
+            affirm(test_err.error + '', err_assert.error + '', (t, e) => t === e)
+        })
     ]
 
     return [assert_chain_tests, assert_equal_tests]
