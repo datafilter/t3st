@@ -3,8 +3,7 @@ module.exports = (framework) => {
     const { test, assert, affirm } = framework
 
     const test_results = [
-        test("OK test passed with empty body", () => { })
-        , test("OK test returns it's own description, without error", () => {
+        test("OK test returns it's own description, without error", () => {
             const ok_result = test("my description", () => { })
             affirm(() => ok_result && !!ok_result.description)
             affirm(() => !ok_result.error)
@@ -20,7 +19,7 @@ module.exports = (framework) => {
         , test("Error stack is included in error if available", () => {
             const err_result = test("", () => { throw new Error('#20?') })
             affirm(() => typeof err_result.error.stack !== undefined)
-            affirm(err_result.error, () => err_result.error.stack.includes('test_results.js:21'))
+            affirm(err_result.error, () => err_result.error.stack.includes('test_results.js:20'))
         })
     ]
 
