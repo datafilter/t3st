@@ -13,7 +13,6 @@
 // Similar naming convention, wrt:
 //    'strings' or "strings"
 //    test names OK, ERRROR ?
-// test assert(undefined_variable) assert( some other error?) -> caught in test()
 // stacktrace from asserts. or rather just name & loc.
 // add filename&loc to error message
 // remove index.js throws / uncomment & change results in index.js to find untested behaviour
