@@ -9,14 +9,14 @@
 })()
 
 // todo's
-// Within test itself, and all  assert variants? -> Test failed *before* assertion
 // Similar naming convention, wrt:
 //    'strings' or "strings"
 //    test names OK, ERRROR ?
 // stacktrace from asserts. or rather just name & loc.
 // add filename&loc to error message
-// remove index.js throws / uncomment & change results in index.js to find untested behaviour
+
 // change all test throws to return 'invalid test error' instead
-// replace .forEach with .every
 // more fp === more better. muuuch better.
 // consolidate invald_test_message && 'type' error test message + hint ~ they signify the same thing
+
+// remove index.js throws / uncomment & change results in index.js to find untested behaviour

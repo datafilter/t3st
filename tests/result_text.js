@@ -16,20 +16,20 @@ module.exports = (framework) => {
 
     const result_tests = [
         test("OK test description is converted to string", () => {
-            nonstring_names.forEach(name => {
+            assert(true, nonstring_names.every(name => {
                 const ok_test = test(name, nop)
-                assert(ok_test.description, name)
-                assert(!!ok_test.error, false)
-                assert(result_text(ok_test), '[ok] ' + name)
-            })
+                return assert(ok_test.description, name)
+                    && assert(!!ok_test.error, false)
+                    && assert(result_text(ok_test), '[ok] ' + name)
+            }))
         })
         , test("ERROR test description is converted to string", () => {
-            nonstring_names.forEach(name => {
+            assert(true, nonstring_names.every(name => {
                 const err_test = test(name, () => assert(false, true))
-                assert(err_test.description, name)
-                assert(!!err_test.error, true)
-                affirm(() => result_text(err_test).includes('[error] ' + name))
-            })
+                return assert(err_test.description, name)
+                    && assert(!!err_test.error, true)
+                    && affirm(() => result_text(err_test).includes('[error] ' + name))
+            }))
         })
         , test("error is included in error message", () => {
             const err_undefined = test("_", () => { not_defined })

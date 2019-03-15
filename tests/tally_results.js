@@ -1,6 +1,6 @@
 module.exports = (framework) => {
 
-    const { test, affirm, tally_results } = framework
+    const { test, assert, affirm, tally_results } = framework
 
     const results_empty = []
     const results_single_success = [{ description: "mkay fine" }]
@@ -19,9 +19,9 @@ module.exports = (framework) => {
                 , tally_results(...results_empty)
                 , tally_results('', ...results_empty)
             ]
-            test_cases.forEach(c => {
+            assert(true, test_cases.every(c =>
                 affirm(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
-            })
+            ))
         })
         , test("tally_results single OK result", () => {
             const expected_start = "1 test [ok] 🥦"
@@ -31,9 +31,9 @@ module.exports = (framework) => {
                 , tally_results(...results_single_success)
                 , tally_results('', ...results_single_success)
             ]
-            test_cases.forEach(c => {
-                affirm(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
-            })
+            assert(true, test_cases.every(c =>
+                affirm(c, expected_start, (c, expected_start) => c.startsWith(expected_start))
+            ))
         })
         , test("tally_results adds label", () => {
             const expected_start = "Label test"
@@ -44,9 +44,9 @@ module.exports = (framework) => {
                 , tally_results('Label test', ...results_empty)
                 , tally_results('Label test', ...results_single_success)
             ]
-            test_cases.forEach(c => {
+            assert(true, test_cases.every(c =>
                 affirm(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
-            })
+            ))
         })
     ]
 
