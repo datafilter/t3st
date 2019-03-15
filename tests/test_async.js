@@ -12,7 +12,6 @@ module.exports = async (framework) => {
                 const basic = test("_", () => { })
                 const basic_async = await test("_", () => { })
                 const async_promise = await test("_", Promise.resolve())
-                // todo test async_async
                 assert(basic.description, basic_async.description)
                 assert(basic_async.description, async_promise.description)
                 assert(false, !!basic.error)
@@ -24,17 +23,23 @@ module.exports = async (framework) => {
             Promise.resolve((async () => {
                 const assert_error = async (rejected_promise, error_message = '?') => {
                     const async_error = await test("_", rejected_promise)
-                    assert(true, !!async_error.error)
                     const err_result = result_text(async_error)
-                    affirm(err_result, () => err_result.includes(error_message))
+                    return assert(true, !!async_error.error)
+                        && affirm(err_result, () => err_result.includes(error_message))
                 }
-                await assert_error(Promise.reject(), 'Promise rejected >> unexpected error [undefined]')
-                await assert_error(Promise.reject(3), 'Promise rejected >> unexpected error [3]')
-                await assert_error(Promise.reject(new Error("oh my")), 'Promise rejected >> oh my')
-            })())
+                const e1 = await assert_error(Promise.reject(), 'Promise rejected >> unexpected error [undefined]')
+                const e2 = await assert_error(Promise.reject(3), 'Promise rejected >> unexpected error [3]')
+                const e3 = await assert_error(Promise.reject(new Error("oh my")), 'Promise rejected >> oh my')
+
+                return e1 && e2 && e3
+            })()), (resolved) => {
+                assert(true, resolved)
+            }
         )
         , await test("async test can run with async function", async () => {
-            // todo proof.
+            return 'proof'
+        }, (async_ran) => {
+            assert('proof', async_ran)
         })
     ]
 
