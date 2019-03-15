@@ -10,5 +10,6 @@
 
 // todo's
 
-// stacktrace from asserts. or rather just name & loc.
-// add filename&loc to error message
+// test error origin : (filename&loc to error messages)
+
+// test error.includes helper function or create alternative

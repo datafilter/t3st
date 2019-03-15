@@ -30,9 +30,9 @@ module.exports = (framework) => {
         })
         , test("test catches error in affirm proposition arguments", () => {
             const err_false = test("_", () => affirm(mark, (_n, _a) => true))
-            assert(true, err_false.error.toString().includes("ReferenceError: mark is not defined"))
+            assert(true, err_false.error.includes("ReferenceError: mark is not defined"))
 
-            assert(false, err_false.error.toString().includes("failed *before* assertion"))
+            assert(false, err_false.error.includes("failed *before* assertion"))
         })
         , test("expects a boolean result", () => {
             const non_boolean = test("_", () => affirm(() => 'truthy'))
@@ -69,6 +69,7 @@ module.exports = (framework) => {
             assert(true, false_affirm.error.includes(fluid))
             assert(true, false_affirm.error.includes(stone))
         })
+        // ,test ("quote wrap shows type in preposition message", false) // todo
     ]
 
     return [affirm_chain_tests, affirm_tests]

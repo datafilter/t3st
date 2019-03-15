@@ -14,13 +14,14 @@ module.exports = (framework) => {
             affirm(() => err_result && !!err_result.description)
             affirm(() => !!err_result.error)
             assert(err_result.description, 'my description')
-            assert(err_result.error, 'Evaluation [true] === [false]')
+            assert(true, err_result.error.startsWith('Evaluation [true] === [false]'))
         })
         , test("Stack is included in ERROR if available", () => {
             const err_result = test("", () => { throw new Error('#20?') })
             affirm(() => typeof err_result.error.stack !== undefined)
-            affirm(err_result.error, () => err_result.error.stack.includes('test_results.js:20'))
+            affirm(err_result.error.stack + '?', (stack) => stack.includes('tests\\test_results.js'))
         })
+        // , test("includes helper available for object errors", false) //todo
     ]
 
     return test_results

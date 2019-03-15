@@ -8,7 +8,7 @@ module.exports = (framework) => {
         , test("chained assert stops at first error", () => {
             const err_third = test("_",
                 () => assert(true, true) && assert(1, 1) && assert(1, 5) && assert(6, 7))
-            assert('Evaluation [1] === [5]', err_third.error)
+            affirm(err_third.error, (e) => e.includes('Evaluation [1] === [5]'))
         })
     ]
 
@@ -28,7 +28,7 @@ module.exports = (framework) => {
         })
         , test("Evaluation is included in error message", () => {
             const error_result_bool = test("err", () => assert(true, false))
-            assert("Evaluation ['text'] === ['other text']", test("err", () => assert("text", `other text`)).error)
+            assert(true, test("err", () => assert("text", `other text`)).error.startsWith("Evaluation ['text'] === ['other text']"))
             affirm(() => error_result_bool.error.includes("Evaluation [true] === [false]"))
             affirm(() => test("err", () => assert(5, true)).error.includes("Evaluation [5] === [true]"))
         })
@@ -36,9 +36,9 @@ module.exports = (framework) => {
             const nullary = test("_", () => assert())
             const unary = test("_", () => assert(undefined))
             const binary = test("_", () => assert(undefined, undefined))
-            assert(nullary.error, unary.error)
-            assert(unary.error, binary.error)
             affirm(() => nullary.error.includes(undefined_argument_error))
+            affirm(() => unary.error.includes(undefined_argument_error))
+            affirm(() => binary.error.includes(undefined_argument_error))
         })
         , test("assert value against undefined returns error", () => {
             const missing_2nd = test("_", () => assert("truthy?"))

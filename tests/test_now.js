@@ -9,6 +9,16 @@ module.exports = (framework) => {
             const non_continue = test("_", () => errr, (_na) => true)
             affirm(non_continue.error + '', (err) => err.includes('errr is not defined'))
         })
+        , test("Error is caught and returned verbatim", () => {
+            const number_error = test("_", () => { throw 7 })
+            assert(number_error.error, 7)
+
+            const ref_brr = {}
+            const ref_thrown = test("_", () => { throw ref_brr })
+
+            assert(true, {} !== {})
+            assert(ref_thrown.error, ref_brr)
+        })
     ]
 
     return now_tests
