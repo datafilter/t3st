@@ -11,7 +11,7 @@
 // todo's
 // Similar naming convention, wrt:
 //    'strings' or "strings"
-//    test names OK, ERRROR ?
+
 // stacktrace from asserts. or rather just name & loc.
 // add filename&loc to error message
 

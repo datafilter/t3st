@@ -14,7 +14,7 @@ module.exports = (framework) => {
             assert(true, !!resumed_test.error)
             assert('~err~', resumed_test.error)
         })
-        , test("Error boolean body stops immediately", () => {
+        , test("ERROR boolean body stops immediately", () => {
             const stopped_test = test("_", false, () => { throw '~err~' })
             assert(true, !!stopped_test.error)
             assert('(false)', stopped_test.error)

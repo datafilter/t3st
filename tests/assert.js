@@ -21,7 +21,7 @@ module.exports = (framework) => {
             assert(true, !!nonstrict_err.error)
             affirm(() => nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
         })
-        , test("Error results for same type doesn't show type error", () => {
+        , test("ERROR results for same type doesn't show type error", () => {
             const nonstrict_err = test("_", () => assert(1, 2))
             assert(true, !!nonstrict_err.error)
             assert(false, nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
