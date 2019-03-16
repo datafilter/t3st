@@ -73,7 +73,7 @@ The tests in the repo are the *real* docs ~ here's a brief incomplete summary:
 * create a complete summary from a group of test results
 
 To create a test script, you could use *require_tests*
-```
+```javascript
 (async () => {
   const { require_tests } = require('t3st')
   console.log('-'.repeat(40))
@@ -83,7 +83,7 @@ To create a test script, you could use *require_tests*
 This picks up all .js files in the `./tests` folder given above, which all export test results.
 
 For example in `error_origin.js`
-```
+```javascript
 module.exports = async ({ test, assert, affirm }) => [
     test("invalid test body type", () => {
         const missing_body = test("_")
@@ -105,7 +105,7 @@ test("You didn't see any droids", () => typeof droids === 'undefined')
 ```
 
 Or just create extra assertions diy
-```
+```javascript
 // maybe, when needed: extra data & fuzzy functions
 const same = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
 const asserty = (assumption, expected) => assert(true, assumption == expected)
