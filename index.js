@@ -11,8 +11,8 @@ const test_file = (file_path) => {
     } catch (err) {
         return {
             description: `Error in file : ${file_path}`,
-            error:
-                `[err] exception occurred outside of tests\n\t--> ${err}`
+            error: `[err] exception occurred outside of tests\n\t--> ${err}`,
+            trace: ` ${err.stack ? err.stack : 'unknown source'}`
         }
     }
 }

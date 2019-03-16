@@ -42,7 +42,7 @@ module.exports = (framework) => {
             const rt = result_text(err_new_error)
             affirm(() => rt.includes('Error'))
             affirm(() => rt.includes('err--msg'))
-            affirm(() => rt.includes('stack'))
+            affirm(() => rt.includes('-->    at'))
             affirm(() => rt.includes('result_text.js:41'))
         })
 

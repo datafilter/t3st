@@ -1,9 +1,8 @@
 const result_text = result => {
     const outcome = result.error ? 'error' : 'ok'
     const maybe_error = result.error ? '\n\t--> ' + result.error : ''
-    const maybe_stack = result.error && result.error.stack ?
-        '\nstack:\n' + result.error.stack : ''
-    return `[${outcome}] ${result.description}${maybe_error}${maybe_stack}`
+    const maybe_trace = result.error && result.trace ? '\n\t-->' + result.trace : ''
+    return `[${outcome}] ${result.description}${maybe_error}${maybe_trace}`
 }
 
 const tally_results = (label = '', ...results) => {

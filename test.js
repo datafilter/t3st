@@ -10,7 +10,9 @@
 
 // todo's
 
-// test error origin : (filename&loc to error messages)
+// complete tests for error origin : (filename&loc to error messages)
+
+// review description/error/trace created directly or via ok/error_result calls.
 
 // test error.includes helper function or create alternative
 

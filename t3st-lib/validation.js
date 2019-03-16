@@ -14,7 +14,7 @@ const error_result = (description, err) => {
 const error_origin = (err = new Error()) => {
     const sources = err.stack.split("\n").slice(1).reverse()
     const validation_frame = sources.filter(src => !src.includes('t3st-lib'))
-    const err_source = validation_frame.reverse()[0]
+    const err_source = validation_frame.reverse().concat([' indeterminate async origin'])[0]
     return err_source
 }
 
@@ -60,6 +60,11 @@ const test_async = (description, promise, then_func) => promise
     .catch(err => {
         if (typeof err !== 'object' || err.constructor.name !== 'Error') {
             err = new Error(`unexpected error [${err}]`)
+            // todo, try to find source if possible
+            // console.log('unex:', err.stack)
+
+            // non-validation errors also enter this block.
+            // err.stack = `${err.message}\n possible (but not certain) (actual !== expected)
         }
         err.message = 'Promise rejected >> ' + err.message
         throw err
