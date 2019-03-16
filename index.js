@@ -1,9 +1,9 @@
-const { test, assert, affirm } = require('./lib/validation')
-const { result_text, tally_results } = require('./lib/text')
+const { test, assert, affirm } = require('./t3st-lib/validation')
+const { result_text, tally_results } = require('./t3st-lib/text')
 
 const framework = { test, assert, affirm, result_text, tally_results }
 
-const io = require('./lib/io')
+const io = require('./t3st-lib/io')
 
 const test_file = (file_path) => {
     try {

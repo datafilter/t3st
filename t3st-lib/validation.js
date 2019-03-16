@@ -13,8 +13,7 @@ const error_result = (description, err) => {
 
 const error_origin = (err = new Error()) => {
     const sources = err.stack.split("\n").slice(1).reverse()
-    // const validation_frame = sources.filter(src => !src.includes('t3st-lib'))
-    const validation_frame = sources.filter(src => !src.includes('validation.js'))
+    const validation_frame = sources.filter(src => !src.includes('t3st-lib'))
     const err_source = validation_frame.reverse()[0]
     return err_source
 }
