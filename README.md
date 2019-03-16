@@ -2,7 +2,7 @@
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
 
-The ~140 lines of test framework code is [here on github](https://github.com/devmachiine/npm-t3st/blob/master/index.js)
+Most of the test framework code is [in this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js)
 
 You can run the tests that test the test framework:
 
@@ -72,10 +72,41 @@ The tests in the repo are the *real* docs ~ here's a brief incomplete summary:
 > [description] {n} test(s) ok [and n tests failed with: etc..]
 * create a complete summary from a group of test results
 
+To create a test script, you could use *require_tests*
+```
+(async () => {
+  const { require_tests } = require('./index')
+  console.log('-'.repeat(40))
+  require_tests('./tests', 'framework')
+})()
+```
+This picks up all .js files in the `./tests` folder given above, which all export test results.
+
+For example in `error_origin.js`
+```
+module.exports = async ({ test, assert, affirm }) => [
+    test("invalid test body type", () => {
+        const missing_body = test("_")
+        affirm(missing_body.trace, (trace) => trace.includes('error_origin.js'))
+    })
+    , test("error in test shows origin", () => {
+        const undefined_dessert = test("_", () => dessert)
+        affirm(undefined_dessert.trace, (trace) => trace.includes('error_origin.js'))
+    })
+]
+```
+
 There's no truthy or undefined tests.
 
 Fuzzy assumptions can be explicitly stated with existing methods:
 ```javascript
 test(`5 and '5' are basically the same thing, right?`, 5 == '5')
 test("You didn't see any droids", () => typeof droids === 'undefined')
+```
+
+Or just create extra assertions diy
+```
+// maybe, when needed: extra data & fuzzy functions
+const same = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
+const asserty = (assumption, expected) => assert(true, assumption == expected)
 ```
