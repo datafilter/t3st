@@ -75,7 +75,7 @@ The tests in the repo are the *real* docs ~ here's a brief incomplete summary:
 To create a test script, you could use *require_tests*
 ```
 (async () => {
-  const { require_tests } = require('./index')
+  const { require_tests } = require('t3st')
   console.log('-'.repeat(40))
   require_tests('./tests', 'framework')
 })()
