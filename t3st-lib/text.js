@@ -12,12 +12,14 @@ const tally_results = (label = '', ...results) => {
     }
     const flat_results = results.flat(99)
 
-    const result_message = (result) =>
-        (!result || !result.description) ? `\nNot a test result: ${result} ${JSON.stringify(result)}`
-            : (result.error) ? `\n${result_text(result)}`
-                : ''
+    const non_error = {}
 
-    const error_messages = flat_results.map(result_message).filter(x => x !== '')
+    const error_result = (result) =>
+        (!result || (typeof result.description === 'undefined')) ?
+            `\nNot a test result: ${result} ${JSON.stringify(result)}`
+            : (result.error) ? `\n${result_text(result)}` : non_error
+
+    const error_messages = flat_results.map(error_result).filter(x => x !== non_error)
     const total_err = error_messages.length
     const total_ok = flat_results.length - total_err
 

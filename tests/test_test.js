@@ -8,6 +8,11 @@ module.exports = (framework) => {
             assert("empty test", nothing.description)
             affirm(() => nothing.error.includes('invalid test'))
         })
+        , test("any description test ok", () => {
+            const any_value = [0, undefined, null, true, false, '', 't3st', f => g(f(x))]
+            assert(true, any_value.every(name =>
+                assert(false, !!test(name, true).error)))
+        })
         , test("without body returns error", () => {
             const detached_head = test("assert truthy")
             assert(true, !!detached_head.error)
@@ -45,17 +50,6 @@ module.exports = (framework) => {
                 const invalid_test = test("_", p)
                 return invalid_test.error.includes(`invalid test body type in test(string, ${typeof p})`)
             }))
-        })
-        , test("description is open for re-use", () => {
-            const person = 'brendan'
-            const fun_test = test(name => `${name} has a plane.`, () => { })
-            assert(fun_test.description(person), 'brendan has a plane.')
-        })
-        , test("error is open for re-use", () => {
-            const err_test = test("_", () => { throw ((y) => y + 8) })
-            assert(!!err_test.error, true)
-            assert(false, typeof err_test.error === 'string')
-            assert(err_test.error(8), 16)
         })
     ]
 

@@ -48,6 +48,21 @@ module.exports = (framework) => {
                 affirm(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
             ))
         })
+        , test("detect non test-results", () => {
+            const valid_results = [
+                { description: "test name" }
+                , { description: "test2", error: "details" }
+                , { description: 3 }
+                , { description: (a) => a * a }
+                , { description: 0, error: 0 }
+            ]
+            assert(true, valid_results.every(c =>
+                affirm(tally_results([c]), (tally) => !tally.includes('Not a test result'))))
+
+            const non_results = [{}, 5, "some", null, { error: "no description" }, Promise.resolve(1)]
+            assert(true, non_results.every(c =>
+                affirm(tally_results([c]), (tally) => tally.includes('Not a test result'))))
+        })
     ]
 
     return tally_results_tests
