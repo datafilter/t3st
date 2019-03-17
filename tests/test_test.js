@@ -43,12 +43,11 @@ module.exports = (framework) => {
         })
         , test("unexpected body returns error result", () => {
             const unexpected_primitives = [null, 0, 1, 'oh, hi mark', Symbol()]
-            // todo shouldn't be:  undefined //different result, see test "without body returns error"
             const some_unexpected_objects = [Date.now(), { stack: 'trace' }, new Object(1), NaN, Infinity, new SyntaxError]
 
             assert(true, [...unexpected_primitives, ...some_unexpected_objects].every(p => {
                 const invalid_test = test("_", p)
-                return invalid_test.error.includes(`invalid test body type in test(string, ${typeof p})`)
+                return invalid_test.error.includes(`unexpected body type in test(string, ${typeof p})`)
             }))
         })
     ]

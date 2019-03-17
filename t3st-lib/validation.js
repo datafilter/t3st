@@ -11,16 +11,16 @@ const error_result = (description, err) => {
 }
 
 const error_origin = (err = new Error()) => {
-    const sources = err.stack.split("\n").slice(1).reverse()
+    const sources = (err.stack || '\n indeterminate origin').split("\n").slice(1).reverse()
     const validation_frame = sources.filter(src => !src.includes('t3st-lib'))
-    const err_source = validation_frame.reverse().concat([' indeterminate origin'])[0] // todo only async?
+    const err_source = validation_frame.reverse()[0] // safe [0] use since -> (err.stack || default)
     return err_source
 }
 
 const id = a => a
 
 const invald_test_message = 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])'
-const missing_body = () => { throw invald_test_message }
+const missing_body = (additional_error = '') => { throw (additional_error + invald_test_message) }
 
 const test = (description = 'empty test', body = missing_body, then_func = id) => {
     switch (typeof body) {
@@ -32,8 +32,8 @@ const test = (description = 'empty test', body = missing_body, then_func = id) =
             if (body && body.constructor.name === 'Promise')
                 return test_async(description, body, then_func)
     }
-    return error_result(description,
-        `invalid test body type in test(string, ${typeof body}). Did you want test(name, () => {.. code ..}) ?`)
+    return test_now(description, () =>
+        missing_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
 }
 
 const function_test = (description, body, then_func) => {
@@ -59,9 +59,6 @@ const test_async = (description, promise, then_func) => promise
     .catch(err => {
         if (typeof err !== 'object' || err.constructor.name !== 'Error') {
             err = new Error(`unexpected error [${err}]`)
-            // todo, try to find async source if possible
-            // non-t3st-validation errors also enter this block:
-            // err.stack = `${err.message}\n possible (but not certain) (actual !== expected)
         }
         err.message = 'Promise rejected >> ' + err.message
         throw err

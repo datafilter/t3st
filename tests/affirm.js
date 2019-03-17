@@ -62,14 +62,16 @@ module.exports = (framework) => {
             const two = 2
             affirm(one, two, (x, y) => x === 1 && x + y === 3)
         })
-        , test("invalid assertion shows each preposition value", () => {
-            const fluid = "paint"
-            const stone = "amethyst"
-            const false_affirm = test("_", () => affirm(fluid, stone, (_na) => false))
-            assert(true, false_affirm.error.includes(fluid))
-            assert(true, false_affirm.error.includes(stone))
+        , test("invalid assertion shows each preposition value with strings quoted", () => {
+            const text = "water"
+            const number = 7
+            const false_affirm = test("_", () => affirm(text, number, {}, 'na', (_na) => false))
+            assert(true, false_affirm.error.includes('water'))
+            assert(true, false_affirm.error.includes(`'water'`))
+            assert(true, false_affirm.error.includes('7'))
+
+            assert(false, false_affirm.error.includes(`'7'`))
         })
-        // ,test ("quote wrap shows type in preposition message", false) // todo
     ]
 
     return [affirm_chain_tests, affirm_tests]

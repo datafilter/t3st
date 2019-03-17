@@ -21,7 +21,6 @@ module.exports = (framework) => {
             affirm(() => typeof err_result.error.stack !== undefined)
             affirm(err_result.error.stack + '?', (stack) => stack.includes('tests\\test_results.js'))
         })
-        // , test("includes helper available for object errors", false) //todo
     ]
 
     return test_results
