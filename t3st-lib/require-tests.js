@@ -7,7 +7,7 @@ module.exports = (io, framework) => async (dir, label = '', func = console.log) 
             return {
                 description: `Error in file : ${file_path}`,
                 error: `[err] exception occurred outside of tests\n\t--> ${err}`,
-                trace: ` ${err.stack ? err.stack : 'unknown source'}`
+                trace: ` ${err.stack || 'unknown source'}`
             }
         }
     }
