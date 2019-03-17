@@ -25,14 +25,14 @@ module.exports = (framework) => {
         , test("includes error message of invalid assertion", () => {
             const err_false = test("_", () => affirm(() => mark))
             assert(true, err_false.error.includes("ReferenceError: mark is not defined"))
-            
+
             assert(true, err_false.error.includes("failed *before* assertion"))
         })
         , test("test catches error in affirm proposition arguments", () => {
             const err_false = test("_", () => affirm(mark, (_n, _a) => true))
-            assert(true, err_false.error.includes("ReferenceError: mark is not defined"))
+            affirm(err_false.error + '', (err) => err.includes("ReferenceError: mark is not defined"))
 
-            assert(false, err_false.error.includes("failed *before* assertion"))
+            affirm(err_false.error + '', (err) => false === err.includes("failed *before* assertion"))
         })
         , test("expects a boolean result", () => {
             const non_boolean = test("_", () => affirm(() => 'truthy'))

@@ -3,7 +3,6 @@ const ok_result = (description) => {
 }
 
 const error_result = (description, err) => {
-    err.includes = (text) => (err + '').includes(text)
     return {
         description: description,
         error: err,
