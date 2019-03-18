@@ -17,4 +17,6 @@ let app_dir = (dir) => path.join(root_dir, dir)
 
 const walk_dir = (dir) => leaves(app_dir(dir), sub_paths).flat(99)
 
-module.exports = { walk_dir }
+const flagExitError = () => require('process').exitCode = 1
+
+module.exports = { walk_dir, flagExitError }

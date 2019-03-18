@@ -23,7 +23,13 @@ module.exports = (io, framework) =>
             .filter(file_filter)
             .map(test_file))
 
-        const summary = framework.tally_results(label, test_results)
+        const flat_results = test_results.flat(99)
+
+        const summary = framework.tally_results(label, flat_results)
+
+        if (flat_results.some(t => typeof t.error !== 'undefined')) {
+            io.flagExitError()
+        }
 
         return process_summary(summary)
     }

@@ -4,6 +4,6 @@
 
   console.log('-'.repeat(40))
 
-  require_tests('./tests')
+  await require_tests('./tests')
 
 })()
