@@ -47,5 +47,6 @@ module.exports = async ({ test, assert, affirm }) => {
         })
     ]
 
-    return [...hello_world, ...fun_validation, ...pinky_promise]
+    // results can be a little bit nested so you don't have to worry about flattening them
+    return [...hello_world, ...fun_validation, [[[pinky_promise]]]]
 }
