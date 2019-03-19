@@ -21,9 +21,10 @@ module.exports = (io, framework) =>
         const test_results = await Promise.all(io
             .walk_dir(dir)
             .filter(file_filter)
-            .map(test_file))
+            .map(test_file)
+        )
 
-        const flat_results = test_results.flat(99)
+        const flat_results = await Promise.all(test_results.flat(99))
 
         const summary = framework.tally_results(label, flat_results)
 
