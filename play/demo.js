@@ -5,7 +5,7 @@ module.exports = async ({ test, assert, affirm }) => {
         , test("doesn't print to console, it just returns a result", !!`truthy made boolean with !!`)
     ]
 
-    const hello_function = [
+    const fun_validation = [
         test("passing in a function runs it", () => console.log('spooky side-effect'))
         , test("assert compares values with ===", () => {
             const five = 2 + 3
@@ -21,7 +21,31 @@ module.exports = async ({ test, assert, affirm }) => {
         })
         , test("assert and affirm return boolean ~ so you can chain them with &&",
             assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
+        , test("there is an additional funciton body available after the first",
+            () => {
+                // throw "The continuation doesn't run if the first function fails"
+                return 'something'
+            },
+            (thing) => assert(thing, 'something'))
     ]
 
-    return [...hello_world, ...hello_function]
+    const pinky_promise = [
+        test("tests can be async", async () => {
+            const foo = await 'important bar()'
+        })
+        , await test("async or promise test is async, but you don't have to await them", async () => { })
+        , test("You can test a promise with a then",
+            Promise.resolve(1).then(x => x === 1))
+        , test("Or, use a continuation of the result like so:",
+            Promise.resolve('bond'),
+            (james) => {
+                assert(james, 'bond')
+            })
+        , test("an async test is a promise", () => {
+            const test_async = test("async", async () => { })
+            affirm(test_async.constructor.name, (name) => name === 'Promise')
+        })
+    ]
+
+    return [...hello_world, ...fun_validation, ...pinky_promise]
 }
