@@ -37,9 +37,9 @@ npm install t3st
 
 Create directory `tests` _(The directory name we passed to the run function)_
 
-Copy paste this code to a file named `demo.js` inside that `tests` directory:
+Inside that `tests` directory, paste this code to a file named `demo.js`:
 
-_( [or download it from here](https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js) )_
+_( [or right-click save-as from here](https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js) )_
 
 ```javascript
 module.exports = async ({ test, assert, affirm }) => [
