@@ -1,9 +1,10 @@
 (async () => {
 
-  const { require_tests } = require('./index')
-
+  const { run } = require('./index')
+  
   console.log('-'.repeat(40))
-
-  await require_tests('./tests')
+  
+  await run('./tests', { label: 'framework' })
+  // await run('./play', { label: 'play' })
 
 })()
