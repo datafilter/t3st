@@ -1,52 +1,49 @@
-module.exports = async ({ test, assert, affirm }) => {
+module.exports = async ({ test, assert, affirm }) => [
 
-    const hello_world = [
-        test("can be a simple boolean expression", 1 > 0)
-        , test("doesn't print to console, it just returns a result", !!`truthy made boolean with !!`)
-    ]
+    // Hello World
+    test("can be a simple boolean expression", 1 > 0)
+    , test("doesn't print to console, it just returns a result", !!`truthy made boolean with !!`)
 
-    const fun_validation = [
-        test("passing in a function runs it", () => console.log('spooky side-effect'))
-        , test("assert compares values with ===", () => {
-            const five = 2 + 3
-            assert(5, five)
+    // Fun Validation
+    , test("passing in a function runs it", () => console.log('spooky side-effect'))
+    , test("assert compares values with ===", () => {
+        const five = 2 + 3
+        assert(5, five)
+    })
+    , test("remove comments to view detailed output using affirm", () => {
+        const a = 'some' //+ '?'
+        const b = 5 //+ 1
+        const c = { name: 'mark' }
+        affirm(a, b, c.name.length, (text, number, name_length) => {
+            return number == 5 && text.length >= name_length
         })
-        , test("remove comments to view detailed output using affirm", () => {
-            const a = 'some' //+ '?'
-            const b = 5 //+ 1
-            const c = { name: 'mark' }
-            affirm(a, b, c.name.length, (text, number, name_length) => {
-                return number == 5 && text.length >= name_length
-            })
-        })
-        , test("assert and affirm return boolean ~ so you can chain them with &&",
-            assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
-        , test("there is an additional funciton body available after the first",
-            () => {
-                // throw "The continuation doesn't run if the first function fails"
-                return 'something'
-            },
-            (thing) => assert(thing, 'something'))
-    ]
+    })
+    , test("assert and affirm return boolean ~ so you can chain them with &&",
+        assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
+    , test("there is an additional funciton body available after the first",
+        () => {
+            // throw "The continuation doesn't run if the first function fails"
+            return 'something'
+        },
+        (thing) => assert(thing, 'something'))
 
-    const pinky_promise = [
-        test("tests can be async", async () => {
-            const foo = await 'important bar()'
+    // Pinky Promise 
+    , test("tests can be async", async () => {
+        const foo = await 'important bar()'
+    })
+    , await test("async or promise test is async, but you don't have to await them", async () => { })
+    , test("You can test a promise with a then",
+        Promise.resolve(1).then(x => x === 1))
+    , test("Or, use a continuation of the result like so:",
+        Promise.resolve('bond'),
+        (james) => {
+            assert(james, 'bond')
         })
-        , await test("async or promise test is async, but you don't have to await them", async () => { })
-        , test("You can test a promise with a then",
-            Promise.resolve(1).then(x => x === 1))
-        , test("Or, use a continuation of the result like so:",
-            Promise.resolve('bond'),
-            (james) => {
-                assert(james, 'bond')
-            })
-        , test("an async test is a promise", () => {
-            const test_async = test("async", async () => { })
-            affirm(test_async.constructor.name, (name) => name === 'Promise')
-        })
-    ]
+    , test("an async test is a promise", () => {
+        const test_async = test("async", async () => { })
+        affirm(test_async.constructor.name, (name) => name === 'Promise')
+    })
 
-    // results can be a little bit nested so you don't have to worry about flattening them
-    return [...hello_world, ...fun_validation, [[[pinky_promise]]]]
-}
+    , [[[[test("results can be a little bit nested", true),
+    [[test("so don't worry about flattening them", true)]]]]]]
+]
