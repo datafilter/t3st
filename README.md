@@ -2,7 +2,13 @@
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
 
-Most of the test framework code is [in this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js)
+# Overview
+
+t3st is a small & light javascript test framework written in ~210 lines of code, tested with ~210 asserts.
+
+70% of the code in the repository is to test the test framework.
+
+The main part is [in this single file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js)
 
 You can run the tests that test the test framework:
 
@@ -12,89 +18,118 @@ cd npm-t3st
 npm test
 ```
 
-Checking out the tests in the repo give the best examples.
+Messing around with the tests in the repo is better than reading any docs imho.
 
-Some extracts:
+# Quickstart
 
-```javascript
-// Lets import
-const { assert, test } = require('t3st')
-```
-Basic happy path test
-```javascript
-test("five is big", 5 > 1)
-```
-Assert compares with ====
-```javascript
-assert(actual, expected)
-// if you are into saying things like: is blue the color of the sky ?   
-// instead of just : is the sky blue ?
-assert(expected, actual)
-```
-Eg.
-```javascript
-test(`2 + 3 = 5`, () => {
-    const sum = 2 + 3
-    assert(sum, 5)
-})
-```
-> [ok] 2 + 3 = 5
-
-Expected failing tests
+Create a test file, say `test.js` with this code:
 
 ```javascript
-test(`show evaluation exception`, () => {
-    undefined_variable
-})
-
-test(`show thrown error`, () => {
-    throw 'ThrownError'
-})
+const { run } = require('t3st')
+run('./tests')
 ```
 
-The tests in the repo are the *real* docs ~ here's a brief incomplete summary:
+Install `t3st` in the same directory
 
-### test
-> test(description, boolean)
-* expects the boolean to be true.
-> test(description, function => boolean)
-* catch assert or other errors, and returns a result: {description [,error]}
-### assert
-> assert(a,b)
-* compare 2 values are ===, throws on false/error
-### affirm
-> affirm(\[...values,\] function => boolean)
-* run a function that throws if an expression is not true.
-### result_text
-> [ok | error] Test name
-* create a message string from a test result
-### tally_results
-> [description] {n} test(s) ok [and n tests failed with: etc..]
-* create a complete summary from a group of test results
-
-To create a test script, you could use *require_tests*
-```javascript
-(async () => {
-  const { require_tests } = require('t3st')
-  console.log('-'.repeat(40))
-  require_tests('./tests', 'framework')
-})()
+```bash
+npm install t3st
 ```
-This picks up all .js files in the `./tests` folder given above, which all export test results.
 
-For example in `error_origin.js`
+Create directory `tests` _(The directory name we passed to the run function)_
+
+Copy paste this code to a file named `demo.js` inside that `tests` directory:
+
+_( [or download it from here](https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js) )_
+
 ```javascript
 module.exports = async ({ test, assert, affirm }) => [
-    test("invalid test body type", () => {
-        const missing_body = test("_")
-        affirm(missing_body.trace, (trace) => trace.includes('error_origin.js'))
+
+    // Hello World
+    test("can be a simple boolean expression", 1 > 0)
+    , test("doesn't print to console, it just returns a result", !!`truthy made boolean with !!`)
+
+    // Fun Validation
+    , test("passing in a function runs it", () => console.log('spooky side-effect'))
+    , test("assert compares values with ===", () => {
+        const five = 2 + 3
+        assert(5, five)
     })
-    , test("error in test shows origin", () => {
-        const undefined_dessert = test("_", () => dessert)
-        affirm(undefined_dessert.trace, (trace) => trace.includes('error_origin.js'))
+    , test("remove comments to view detailed output using affirm", () => {
+        const a = 'some' //+ '?'
+        const b = 5 //+ 1
+        const c = { name: 'mark' }
+        affirm(a, b, c.name.length, (text, number, name_length) => {
+            return number == 5 && text.length >= name_length
+        })
     })
+    , test("assert and affirm return boolean ~ so you can chain them with &&",
+        assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
+    , test("there is an additional funciton body available after the first",
+        () => {
+            // throw "The continuation doesn't run if the first function fails"
+            return 'something'
+        },
+        (thing) => assert(thing, 'something'))
+
+    // Pinky Promise 
+    , test("tests can be async", async () => {
+        const foo = await 'important bar()'
+    })
+    , await test("async or promise test is async, but you don't have to await them", async () => { })
+    , test("You can test a promise with a then",
+        Promise.resolve(1).then(x => x === 1))
+    , test("Or, use a continuation of the result like so:",
+        Promise.resolve('bond'),
+        (james) => {
+            assert(james, 'bond')
+        })
+    , test("an async test is a promise", () => {
+        const test_async = test("async", async () => { })
+        affirm(test_async.constructor.name, (name) => name === 'Promise')
+    })
+
+    , [[[[test("results can be a little bit nested", true),
+    [[test("so don't worry about flattening them", true)]]]]]]
 ]
 ```
+
+Run the tests with [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp)
+
+```bash
+node test.js
+```
+
+You can add more `.js` tests files (and organise them in directories) without extra config.
+
+`run` sets an exit code of 1 if there were any errors.
+
+# Brief summary
+
+The tests in the repo are the *real* docs. But here's to writing practice 🍸
+
+As far as possible, most of the test framework is 'pure functions' that only return data. It's quite flexible, and should be easy if you wanted to pump the test output to something sensible like a message queue instead of writing it to a file like we did back in the ~~70s~~ ~~80s~~ ~~90s~~, oh.. we still do that ?
+
+Aside from `run` in the quickstart, the functions don't do much besides invoke the given functions and catch errors.
+
+---
+#### test-result
+An object with a `description`, and if things went wrong, also an `error` : {description [,error]}
+
+Both description and error can be anything other than string/Error.
+#### test(description, boolean)
+Basic test that expects the boolean to be true.
+#### test(description, function => boolean)
+Run a function that returns a boolean. It catches the first error, and returns a result.
+#### assert(a,b)
+Compare 2 values are ===, throws on false/error.
+#### affirm(\[...values,\] function => boolean)
+Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
+#### result_text : [ok | error] Test name
+Create a message string from a test result.
+#### tally_results : [description] {n} test(s) ok [and n tests failed with: etc..]
+Create a complete summary from a group of test results. Only the interesting bits: Number of tests ran, and info for all errors.
+
+---
 
 There's no truthy or undefined tests.
 
@@ -109,4 +144,10 @@ Or just create extra assertions diy
 // maybe, when needed: extra data & fuzzy functions
 const same = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
 const asserty = (assumption, expected) => assert(true, assumption == expected)
+```
+
+Any feedback, bugs, questions, contributions or money is always welcome :)
+
+```
+PS. Why chrono over semantic versioning? Part of a WIP towards something better..
 ```

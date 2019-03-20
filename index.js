@@ -5,9 +5,9 @@ const framework = { test, assert, affirm, result_text, tally_results }
 
 const io = require('./t3st-lib/io')
 
-const require_tests = require('./t3st-lib/require-tests')(io, framework)
+const run = require('./t3st-lib/run')(io, framework)
 
 module.exports = {
     ...framework
-    , require_tests
+    , run
 }
