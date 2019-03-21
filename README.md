@@ -39,57 +39,13 @@ Create directory `tests` _(The directory name we passed to the run function)_
 
 Inside that `tests` directory, paste this code to a file named `demo.js`:
 
-_( [or right-click save-as from here](https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js) )_
-
 ```javascript
 module.exports = async ({ test, assert, affirm }) => [
-
-    // Hello World
-    test("can be a simple boolean expression", 1 > 0)
-    , test("doesn't print to console, it just returns a result", !!`truthy made boolean with !!`)
-
-    // Fun Validation
-    , test("passing in a function runs it", () => console.log('spooky side-effect'))
+    test("hello world", 1 > 0)
     , test("assert compares values with ===", () => {
         const five = 2 + 3
         assert(5, five)
     })
-    , test("remove comments to view detailed output using affirm", () => {
-        const a = 'some' //+ '?'
-        const b = 5 //+ 1
-        const c = { name: 'mark' }
-        affirm(a, b, c.name.length, (text, number, name_length) => {
-            return number == 5 && text.length >= name_length
-        })
-    })
-    , test("assert and affirm return boolean ~ so you can chain them with &&",
-        assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
-    , test("there is an additional funciton body available after the first",
-        () => {
-            // throw "The continuation doesn't run if the first function fails"
-            return 'something'
-        },
-        (thing) => assert(thing, 'something'))
-
-    // Pinky Promise 
-    , test("tests can be async", async () => {
-        const foo = await 'important bar()'
-    })
-    , await test("async or promise test is async, but you don't have to await them", async () => { })
-    , test("You can test a promise with a then",
-        Promise.resolve(1).then(x => x === 1))
-    , test("Or, use a continuation of the result like so:",
-        Promise.resolve('bond'),
-        (james) => {
-            assert(james, 'bond')
-        })
-    , test("an async test is a promise", () => {
-        const test_async = test("async", async () => { })
-        affirm(test_async.constructor.name, (name) => name === 'Promise')
-    })
-
-    , [[[[test("results can be a little bit nested", true),
-    [[test("so don't worry about flattening them", true)]]]]]]
 ]
 ```
 
@@ -101,17 +57,37 @@ node test.js
 
 You can add more `.js` tests files (and organise them in directories) without extra config.
 
+For examples that use async and promises, see <a href="https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js" download> more examples in this file.</a>
+
 `run` sets an exit code of 1 if there were any errors.
 
 # Brief summary
 
 The tests in the repo are the *real* docs. But here's to writing practice 🍸
 
-As far as possible, most of the test framework is 'pure functions' that only return data. It's quite flexible, and should be easy if you wanted to pump the test output to something sensible like a message queue instead of writing it to a file like we did back in the ~~70s~~ ~~80s~~ ~~90s~~, oh.. we still do that ?
+Aside from `run` in the quickstart, the tests only invoke the given functions, catch errors and returns a result. They don't print to screen or cause other side effects.
 
-Aside from `run` in the quickstart, the functions don't do much besides invoke the given functions and catch errors.
+This makes the codebase quite flexible, and should be easy if you wanted to pump the test output to something sensible like a message queue instead of writing it to a file like we did back in the ~~70s~~ ~~80s~~ ~~90s~~, oh.. we still do that ?
+
+By design, there's no truthy or undefined assertions.
+
+Fuzzy assumptions can be explicitly stated with existing methods:
+```javascript
+test(`5 and '5' are basically the same thing, right?`, 5 == '5')
+test("You didn't see any droids", () => typeof droids === 'undefined')
+```
+
+But you could also easily create fuzzy assertions if you wanted to:
+
+```javascript
+const asserty = (assumption, expected) => assert(true, assumption == expected)
+const same = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
+const truthy = (something) => assert(true, !!something)
+```
+
 
 ---
+
 #### test-result
 An object with a `description`, and if things went wrong, also an `error` : {description [,error]}
 
@@ -131,23 +107,4 @@ Create a complete summary from a group of test results. Only the interesting bit
 
 ---
 
-There's no truthy or undefined tests.
-
-Fuzzy assumptions can be explicitly stated with existing methods:
-```javascript
-test(`5 and '5' are basically the same thing, right?`, 5 == '5')
-test("You didn't see any droids", () => typeof droids === 'undefined')
-```
-
-Or just create extra assertions diy
-```javascript
-// maybe, when needed: extra data & fuzzy functions
-const same = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
-const asserty = (assumption, expected) => assert(true, assumption == expected)
-```
-
 Any feedback, bugs, questions, contributions or money is always welcome :)
-
-```
-PS. Why chrono over semantic versioning? Part of a WIP towards something better..
-```
