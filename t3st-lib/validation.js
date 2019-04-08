@@ -110,10 +110,17 @@ const evaluate = (assumption, propositions) => {
     }
 }
 
+const alike_hint = () => { throw `alike(?,?) missing or undefined argument(s).` }
+
+const unpack = v => '' + (typeof v === 'object' ? Object.entries(v).map(p => '' + p).sort() : v)
+
+const alike = (a = alike_hint(), b = alike_hint()) => assert(unpack(a), unpack(b))
+
 module.exports = {
     test,
     assert,
-    affirm
+    affirm,
+    alike
 }
 
 // maybe, when needed: extra data & fuzzy functions
