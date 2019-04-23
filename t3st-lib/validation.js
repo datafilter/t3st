@@ -102,8 +102,7 @@ const evaluate = (assumption, propositions) => {
     try {
         const ok = assumption(...propositions)
         if (typeof ok === 'boolean') {
-            if (ok) return ''
-            else return '!! false assertion'
+            return ok ? '' : '!! false assertion'
         } else return '!! expected affirm(function => boolean), not affirm(function => truthy)'
     } catch (err) {
         return `!! affirm failed *before* assertion\n\t--> !! ${err}`
