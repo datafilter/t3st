@@ -4,11 +4,11 @@
 
 # Overview
 
-t3st is a small & light javascript test framework written in ~210 lines of code, tested with ~210 asserts.
+t3st is a small & light javascript test framework.
 
-70% of the code in the repository is to test the test framework.
+70% of the code in the repository is to test the test framework. There's roughly an assert for each line of framework code.
 
-The main part is [in this single file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js)
+The main part is [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js)
 
 You can run the tests that test the test framework:
 
