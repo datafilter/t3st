@@ -111,7 +111,10 @@ const evaluate = (assumption, propositions) => {
 
 const alike_hint = () => { throw `alike(?,?) missing or undefined argument(s).` }
 
-const unpack = v => '' + (typeof v === 'object' ? Object.entries(v).map(p => '' + p).sort() : v)
+const unpack = v => '' + (typeof v === 'object' ? Object.entries(v)
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .map(([key, val]) => unpack(key) + unpack(val)) :
+    (typeof v === 'function' ? '' + v : JSON.stringify(v)))
 
 const alike = (a = alike_hint(), b = alike_hint()) => assert(unpack(a), unpack(b))
 

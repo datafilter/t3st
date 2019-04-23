@@ -16,13 +16,13 @@ module.exports = (framework) => {
 
     const alike_equal_tests = [
         test("OK results from equal values", () => alike(true, true) && alike('a', 'a'))
-        , test("OK results form same data values", () => {
+        , test("OK results from same data values", () => {
             const a = { 'type': 'aircraft', 'cost': '$4bn' }
             const b = { 'type': 'aircraft', 'cost': '$4bn' }
             alike(a, b)
         })
         , test("Evaluation is included in error message", () => {
-            affirm(test("err", () => alike("text", `other text`)).error, (e) => e.startsWith(`Evaluation ['text'] === ['other text']`))
+            affirm(test("err", () => alike("text", `other text`)).error, (e) => e.startsWith(`Evaluation ['"text"'] === ['"other text"']`))
             const error_result_bool = test("err", () => alike(true, false))
             affirm(error_result_bool.error, (e) => e.includes("Evaluation ['true'] === ['false']"))
         })
@@ -58,6 +58,9 @@ module.exports = (framework) => {
             const name_then_age = { name: 'mark', age: 70 }
             const age_then_name = { age: 70, name: 'mark' }
             alike(name_then_age, age_then_name)
+        })
+        , test("can't be used for truthy assertions", () => {
+            assert(true, !!test("_", () => { alike(5, '5') }).error)
         })
     ]
 
