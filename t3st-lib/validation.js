@@ -77,9 +77,9 @@ const assert_hint = () => {
 
 const assert = (assumption = assert_hint(), expected = assert_hint()) => {
     if (assumption !== expected) {
-        const tE = typeof assumption
-        const tA = typeof expected
-        const type_error = (tE === tA) ? '' : ` !! Type mismatch: assert(${tE}, ${tA}).`
+        const tA = typeof assumption
+        const tE = typeof expected
+        const type_error = (tA === tE) ? '' : ` !! Type mismatch: assert(${tA}, ${tE}).`
         throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}`
     }
     return true
