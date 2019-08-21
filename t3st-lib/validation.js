@@ -24,10 +24,10 @@ const missing_body = (additional_error = '') => { throw (additional_error + inva
 
 const test = (description = 'empty test', body = missing_body, then_func = id) => {
     switch (typeof body) {
-        case 'boolean':
-            return body ? test_now(description, () => true, then_func) : error_result(description, '(false)')
         case 'function':
             return function_test(description, body, then_func)
+        case 'boolean':
+            return body ? test_now(description, () => true, then_func) : error_result(description, '(false)')
         case 'object':
             if (body && body.constructor.name === 'Promise')
                 return test_async(description, body, then_func)
