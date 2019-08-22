@@ -1,43 +1,34 @@
 <p align="center">
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
-
-# Overview
-
-t3st is a small & light javascript test framework.
-
-70% of the code in the repository is to test the test framework. There's roughly an assert for each line of framework code.
-
-The main part is [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js)
-
-You can run the tests that test the test framework:
-
-```
-git clone https://github.com/devmachiine/npm-t3st.git
-cd npm-t3st
-npm test
-```
-
-Messing around with the tests in the repo is better than reading any docs imho.
+<h1 align="center"> A small & light javascript test framework </h1>
 
 # Quickstart
 
-Create a test file, say `test.js` with this code:
+## 1/4 Install t3st
+
+```bash
+npm install t3st
+```
+
+## 2/4 - Create a test directory & entrypoint file 
+
+Eg. `/tests` and `test.js` in this quickstart. (Choose other names if you like)
+
+```bash
+mkdir tests
+```
+
+Put this in `test.js`
 
 ```javascript
 const { run } = require('t3st')
 run('./tests')
 ```
 
-Install `t3st` in the same directory
+## 3/4 Add a test in the test directory
 
-```bash
-npm install t3st
-```
-
-Create directory `tests` _(The directory name we passed to the run function)_
-
-Inside that `tests` directory, paste this code to a file named `demo.js`:
+Paste this code into `tests/demo.js`:
 
 ```javascript
 module.exports = async ({ test, assert, affirm }) => [
@@ -49,19 +40,38 @@ module.exports = async ({ test, assert, affirm }) => [
 ]
 ```
 
-Run the tests with [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp)
+## 4/4 Run the tests
+
+Call the entrypoint with [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp)
 
 ```bash
 node test.js
 ```
 
-You can add more `.js` tests files (and organise them in directories) without extra config.
+`run` sets an exit code of 1 if there were any errors.
+
+## 5/4 More tests:
+
+You can add more `.js` tests files (and organise them in nested sub-directories) in the tests directory.
 
 For examples that use async and promises, see <a href="https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js" download> more examples in this file.</a>
 
-`run` sets an exit code of 1 if there were any errors.
+For all examples [see the framework tests](https://github.com/devmachiine/npm-t3st/tree/master/tests)
 
-# Brief summary
+
+# Fork / Play
+
+The main part of the test framework is in [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js). Most of the code in the project are tests to test the test framework ~ roughly an assert for each line of framework code. Messing around with the tests beats reading any docs imho.
+
+To run the tests that test the test framework:
+
+```
+git clone https://github.com/devmachiine/npm-t3st.git
+cd npm-t3st
+npm test
+```
+
+# Design docs
 
 The tests in the repo are the *real* docs. But here's to writing practice 🍸
 
@@ -69,7 +79,7 @@ Aside from `run` in the quickstart, the tests only invoke the given functions, c
 
 This makes the codebase quite flexible, and should be easy if you wanted to pump the test output to something sensible like a message queue instead of writing it to a file like we did back in the ~~70s~~ ~~80s~~ ~~90s~~, oh.. we still do that ?
 
-By design, there's no truthy or undefined assertions.
+There are no truthy or undefined assertions.
 
 Fuzzy assumptions can be explicitly stated with existing methods:
 ```javascript
@@ -81,12 +91,12 @@ But you could also easily create fuzzy assertions if you wanted to:
 
 ```javascript
 const asserty = (assumption, expected) => assert(true, assumption == expected)
-const same = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
 const truthy = (something) => assert(true, !!something)
 ```
 
-
 ---
+
+## Types
 
 #### test-result
 An object with a `description`, and if things went wrong, also an `error` : {description [,error]}
@@ -100,6 +110,8 @@ Run a function that returns a boolean. It catches the first error, and returns a
 Compare 2 values are ===, throws on false/error.
 #### affirm(\[...values,\] function => boolean)
 Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
+#### alike(a,b)
+Compare the data of two values. For example `{ name: 'mark' }`. Made to compare DTO's, YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the exact same thing regardless of their shared/separate location(s) in memory.
 #### result_text : [ok | error] Test name
 Create a message string from a test result.
 #### tally_results : [description] {n} test(s) ok [and n tests failed with: etc..]
