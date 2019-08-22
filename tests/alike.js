@@ -21,6 +21,12 @@ module.exports = (framework) => {
             const b = { 'type': 'aircraft', 'cost': '$4bn' }
             alike(a, b)
         })
+        , test("Error results from different data values", () => {
+            const a = { 'type': 'boat', 'cost': '$250k' }
+            const b = { 'type': 'submarine', 'cost': '$8bn' }
+            const error_result = test("err", () => alike(a, b))
+            assert(true, !!error_result.error)
+        })
         , test("Evaluation is included in error message", () => {
             affirm(test("err", () => alike("text", `other text`)).error, (e) => e.startsWith(`Evaluation ['"text"'] === ['"other text"']`))
             const error_result_bool = test("err", () => alike(true, false))
@@ -42,12 +48,13 @@ module.exports = (framework) => {
             assert(missing_2nd.error, undefined_1st.error)
             assert(undefined_1st.error, undefined_2nd.error)
         })
-        , test("functions and data can be compared", () => {
-            const a = x => x
-            const b = x => x
-            alike(a, b)
-            alike({}, {})
-            alike({ name: 'mark', f: a }, { name: 'mark', f: x => x })
+        , test("functions can be compared", () => {
+            const f = x => x
+            const g = x => x
+            alike(f, g)
+            alike(y => y, y => y)
+            const error_result = test("err", () => alike(f, y => y))
+            assert(true, !!error_result.error)
         })
         , test("function comparisons are character sensitive", () => {
             const a = () => 'a'

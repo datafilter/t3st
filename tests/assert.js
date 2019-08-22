@@ -55,19 +55,6 @@ module.exports = (framework) => {
             const test_err = test("_", () => not_defined)
             affirm(test_err.error + '', err_assert.error + '', (t, e) => t === e)
         })
-        , test("functions and data can be compared", () => {
-            const same = (assumption, expected) => {
-                var sa = typeof assumption === 'function' ? assumption + '' : JSON.stringify(assumption)
-                var sb = typeof expected === 'function' ? expected + '' : JSON.stringify(expected)
-                assert(sa, sb)
-            }
-            const a = x => x
-            const b = x => x
-            same(a, b)
-            same({}, {})
-            // note f is discarded (mixing of function & data ~ bhrr)
-            same({ name: 'mark', f: a }, { name: 'mark', f: b })
-        })
     ]
 
     return [assert_chain_tests, assert_equal_tests]
