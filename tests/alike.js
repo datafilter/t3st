@@ -49,10 +49,19 @@ module.exports = (framework) => {
             alike({}, {})
             alike({ name: 'mark', f: a }, { name: 'mark', f: x => x })
         })
-        , test("function comparisons are spacing sensitive", () => {
+        , test("function comparisons are character sensitive", () => {
             const a = () => 'a'
-            const b = () => '' + 'a' // x=>x !=== x => x , however auto-format kills this as a test.
-            assert(true, !!test("_", () => { alike(a, b) }).error)
+            const _a = () => '' + 'a'
+            assert(a(), 'a')
+            assert(a(), _a())
+            assert(true, !!test("_", () => { alike(a, _a) }).error)
+        })
+        , test("function comparisons are spacing sensitive", () => {
+            const id = new Function('x', 'return x')
+            const id_nospace = new Function('x', 'return x ')
+            const r1 = id(2), r2 = id_nospace(1 + 1)
+            assert(r1, r2)
+            assert(true, !!test("_", () => { alike(id, id_nospace) }).error)
         })
         , test("order of object members do not matter", () => {
             const name_then_age = { name: 'mark', age: 70 }
