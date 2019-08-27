@@ -125,6 +125,5 @@ module.exports = {
     alike
 }
 
-// maybe, when needed: extra data & fuzzy functions
-// const same = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
-// const asserty = (assumption, expected) => assert(true, assumption == expected)
+// maybe
+// const same_dto = (assumption, expected) => assert(JSON.stringify(assumption), JSON.stringify(expected))
