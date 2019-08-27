@@ -1,34 +1,37 @@
 <p align="center">
   <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
 </p>
-<h1 align="center"> A small & light javascript test framework </h1>
+<h2 align="center"> A small & light javascript test framework </h2>
 
 # Quickstart
 
-## 1/4 Install t3st
+### (1/4) Install
+
+Install [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp)
 
 ```bash
 npm install t3st
 ```
 
-## 2/4 - Create a test directory & entrypoint file 
+### (2/4) - Create an entrypoint file & test directory
 
-Eg. `/tests` and `test.js` in this quickstart. (Choose other names if you like)
+Eg. `test.js` and `/tests` in this quickstart. (Choose other names if you like)
 
-```bash
-mkdir tests
-```
-
-Put this in `test.js`
+Put this in a new file called `test.js`
 
 ```javascript
 const { run } = require('t3st')
 run('./tests')
 ```
+and create the directory
 
-## 3/4 Add a test in the test directory
+```bash
+mkdir tests
+```
 
-Paste this code into `tests/demo.js`:
+### (3/4) Add a test in the test directory
+
+Paste this code into a new file under `tests/demo.js`:
 
 ```javascript
 module.exports = async ({ test, assert, affirm }) => [
@@ -40,9 +43,9 @@ module.exports = async ({ test, assert, affirm }) => [
 ]
 ```
 
-## 4/4 Run the tests
+### (4/4) Run the tests
 
-Call the entrypoint with [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp)
+Call the entrypoint
 
 ```bash
 node test.js
@@ -50,18 +53,18 @@ node test.js
 
 `run` sets an exit code of 1 if there were any errors.
 
-## 5/4 More tests:
+### (5/4) More tests:
 
 You can add more `.js` tests files (and organise them in nested sub-directories) in the tests directory.
 
-For examples that use async and promises, see <a href="https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js" download> more examples in this file.</a>
+For more examples like async and promises, see <a href="https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js" download> this file.</a>
 
 For all examples [see the framework tests](https://github.com/devmachiine/npm-t3st/tree/master/tests)
 
 
 # Fork / Play
 
-The main part of the test framework is in [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js). Most of the code in the project are tests to test the test framework ~ roughly an assert for each line of framework code. Messing around with the tests beats reading any docs imho.
+The main part of the test framework is in [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js). Most of the code in the project are tests to test the test framework ~ roughly an assert for each line of framework code. Tests beats docs imho.
 
 To run the tests that test the test framework:
 
@@ -75,9 +78,9 @@ npm test
 
 The tests in the repo are the *real* docs. But here's to writing practice 🍸
 
-Aside from `run` in the quickstart, the tests only invoke the given functions, catch errors and returns a result. They don't print to screen or cause other side effects.
+Aside from `run` in the quickstart, the tests only invoke the given functions, catch errors and return a result. They don't print to screen or cause other side effects.
 
-This makes the codebase quite flexible, and should be easy if you wanted to pump the test output to something sensible like a message queue instead of writing it to a file like we did back in the ~~70s~~ ~~80s~~ ~~90s~~, oh.. we still do that ?
+This makes the codebase quite flexible, and it should be easy if you wanted to pump the test output to something other than display. Eg a message queue or a file.
 
 There are no truthy or undefined assertions.
 
@@ -87,11 +90,11 @@ test(`5 and '5' are basically the same thing, right?`, 5 == '5')
 test("You didn't see any droids", () => typeof droids === 'undefined')
 ```
 
-But you could also easily create fuzzy assertions if you wanted to:
+Or you can create fuzzy assertions if you want:
 
 ```javascript
-const asserty = (assumption, expected) => assert(true, assumption == expected)
 const truthy = (something) => assert(true, !!something)
+const asserty = (assumption, expected) => assert(true, assumption == expected)
 ```
 
 ---
