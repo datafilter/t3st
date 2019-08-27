@@ -7,7 +7,7 @@
 
 ### (1/4) Install
 
-Install [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp)
+Install [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp) and t3st
 
 ```bash
 npm install t3st
@@ -51,11 +51,11 @@ Call the entrypoint
 node test.js
 ```
 
-`run` sets an exit code of 1 if there were any errors.
+`run` sets an exit code of 1 if there were any failed tests.
 
 ### (5/4) More tests:
 
-You can add more `.js` tests files (and organise them in nested sub-directories) in the tests directory.
+You can add more `.js` test files (and organise them in nested sub-directories) in the tests directory.
 
 For more examples like async and promises, see <a href="https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js" download> this file.</a>
 
