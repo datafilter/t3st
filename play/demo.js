@@ -1,4 +1,4 @@
-module.exports = async ({ test, assert, affirm }) => [
+module.exports = async ({ test, assert, affirm, alike }) => [
 
     // Hello World
     test("can be a simple boolean expression", 1 > 0)
@@ -17,6 +17,11 @@ module.exports = async ({ test, assert, affirm }) => [
         affirm(a, b, c.name.length, (text, number, name_length) => {
             return number == 5 && text.length >= name_length
         })
+    })
+    , test("compare data transfer objects with alike", () => {
+        const a = { 'type': 'aircraft', 'cost': '$4bn' }
+        const b = { 'type': 'aircraft', 'cost': '$4bn' }
+        alike(a, b)
     })
     , test("assert and affirm return boolean ~ so you can chain them with &&",
         assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
@@ -43,7 +48,6 @@ module.exports = async ({ test, assert, affirm }) => [
         const test_async = test("async", async () => { })
         affirm(test_async.constructor.name, (name) => name === 'Promise')
     })
-
     , [[[[test("results can be a little bit nested", true),
     [[test("so don't worry about flattening them", true)]]]]]]
 ]
