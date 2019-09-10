@@ -55,6 +55,14 @@ module.exports = (framework) => {
             const test_err = test("_", () => not_defined)
             affirm(test_err.error + '', err_assert.error + '', (t, e) => t === e)
         })
+        , test("failed assert object compare suggests alike function", () => {
+            const mark1 = { name: 'mark' }
+            const mark2 = { name: 'mark' }
+            assert(mark1, mark1)
+            assert(mark2, mark2)
+            const err_assert = test("_", () => assert(mark1, mark2))
+            affirm(() => err_assert.error.includes('use : alike(data, data'))
+        })
     ]
 
     return [assert_chain_tests, assert_equal_tests]

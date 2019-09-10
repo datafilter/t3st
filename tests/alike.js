@@ -16,7 +16,7 @@ module.exports = (framework) => {
 
     const alike_equal_tests = [
         test("OK results from equal values", () => alike(true, true) && alike('a', 'a'))
-        , test("OK results from same data values", () => {
+        , test("OK results from same data values for different objects", () => {
             const a = { 'type': 'aircraft', 'cost': '$4bn' }
             const b = { 'type': 'aircraft', 'cost': '$4bn' }
             alike(a, b)

@@ -69,18 +69,21 @@ const test_async = (description, promise, then_func) => promise
 
 const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
 
-const assert_hint = () => {
+const assert_hint_argument = () => {
     throw `assert(?,?) missing or undefined argument(s).
         You could explicitly state : assert(true, typeof something === 'undefined')
         ~ Or did you intend to use : affirm([...propositions,] function => boolean) ?`
 }
 
-const assert = (assumption = assert_hint(), expected = assert_hint()) => {
+const assert_hint_alike = `\n\t\t~ To compare value objects use : alike(data, data)`
+
+const assert = (assumption = assert_hint_argument(), expected = assert_hint_argument()) => {
     if (assumption !== expected) {
         const tA = typeof assumption
         const tE = typeof expected
         const type_error = (tA === tE) ? '' : ` !! Type mismatch: assert(${tA}, ${tE}).`
-        throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}`
+        const suggest_alike = tA === 'object' ? `${assert_hint_alike}` : ''
+        throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}${suggest_alike}`
     }
     return true
 }
