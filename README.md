@@ -114,7 +114,7 @@ Compare 2 values are ===, throws on false/error.
 #### affirm(\[...values,\] function => boolean)
 Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
 #### alike(a,b)
-Compare the data of two values. For example `{ name: 'mark' }`. Made to compare DTO's, YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the exact same thing regardless of their shared/separate location(s) in memory.
+Compare the data of two values. For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the exact same thing regardless of their shared/separate location(s) in memory.
 #### result_text : [ok | error] Test name
 Create a message string from a test result.
 #### tally_results : [description] {n} test(s) ok [and n tests failed with: etc..]
