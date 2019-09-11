@@ -1,13 +1,12 @@
-const { test, assert, affirm, alike } = require('./t3st-lib/validation')
-const { result_text, tally_results } = require('./t3st-lib/text')
+const validation = require('./t3st-lib/validation')
 
-const framework = { test, assert, affirm, alike, result_text, tally_results }
+const { tally_results } = require('./t3st-lib/text')
 
 const io = require('./t3st-lib/io')
 
-const run = require('./t3st-lib/run')(io, framework)
+const run = require('./t3st-lib/run')(io, validation, tally_results)
 
 module.exports = {
-    ...framework
+    ...validation
     , run
 }

@@ -1,4 +1,4 @@
-module.exports = (io, framework) =>
+module.exports = (io, validation, tally_results) =>
     async (dir,
         {
             label = '',
@@ -8,7 +8,7 @@ module.exports = (io, framework) =>
 
         const test_file = (file_path) => {
             try {
-                return require(file_path)(framework)
+                return require(file_path)(validation)
             } catch (err) {
                 return {
                     description: `Error in file : ${file_path}`,
@@ -26,7 +26,7 @@ module.exports = (io, framework) =>
 
         const flat_results = await Promise.all(test_results.flat(99))
 
-        const summary = framework.tally_results(label, flat_results)
+        const summary = tally_results(label, flat_results)
 
         if (flat_results.some(t => typeof t.error !== 'undefined')) {
             io.flagExitError()

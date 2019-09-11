@@ -1,6 +1,8 @@
 module.exports = (framework) => {
 
-    const { test, assert, affirm, result_text } = framework
+    const { test, assert, affirm } = framework
+
+    const { result_text } = require('../t3st-lib/text')
 
     const nop = () => { }
 
@@ -27,7 +29,7 @@ module.exports = (framework) => {
             affirm(() => rt.includes('Error'))
             affirm(() => rt.includes('err--msg'))
             affirm(() => rt.includes('-->    at'))
-            affirm(rt, () => rt.includes('result_text.js:25'))
+            affirm(rt, () => rt.includes('result_text.js:'))
         })
         , test("OK test description is verbatim : *not* converted to string", () => {
             assert(true, nonstring_names.every(name => {
