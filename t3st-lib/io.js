@@ -1,8 +1,10 @@
 const fs = require('fs')
 const path = require('path')
 
-const sub_paths = (dir) => fs.statSync(dir).isFile() ? []
-    : fs.readdirSync(dir).map(sub_path => path.join(dir, sub_path))
+const sub_paths = (dir) =>
+    fs.statSync(dir).isFile()
+        ? []
+        : fs.readdirSync(dir).map(sub_path => path.join(dir, sub_path))
 
 const leaves = (node, node_children) => {
     const ls = (node) => {
