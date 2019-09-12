@@ -12,8 +12,8 @@ const leaves = (node, node_children) => {
     return ls(node)
 }
 
-let root_dir = path.dirname(require.main.filename)
-let app_dir = (dir) => path.join(root_dir, dir)
+const root_dir = path.dirname(require.main.filename)
+const app_dir = (dir) => path.join(root_dir, dir)
 
 const walk_dir = (dir) => leaves(app_dir(dir), sub_paths).flat(99)
 
