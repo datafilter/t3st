@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2019.9.11",
+  "version": "2019.9.12",
   "description": "tiny test module for npm",
   "files": [
     "/t3st-lib",
