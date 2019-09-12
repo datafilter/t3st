@@ -1,4 +1,4 @@
-module.exports = (io, validation, tally_results) =>
+module.exports = (validation, io, tally_results) =>
     async (dir,
         {
             label = '',
