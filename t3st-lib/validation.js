@@ -71,7 +71,7 @@ const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
 
 const assert_hint_argument = () => {
     throw `assert(?,?) missing or undefined argument(s).
-        You could explicitly state : assert(true, typeof something === 'undefined')
+        You could explicitly state : assert(typeof something, 'undefined') or assert(true, !something)
         ~ Or did you intend to use : affirm([...propositions,] function => boolean) ?`
 }
 
