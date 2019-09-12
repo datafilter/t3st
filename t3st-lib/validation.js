@@ -1,14 +1,11 @@
-const ok_result = (description) => {
-    return { description: description }
-}
+const ok_result = (description) => ({ description })
 
-const error_result = (description, err) => {
-    return {
-        description: description,
-        error: err,
-        trace: err.stack ? error_origin(err) : error_origin()
-    }
-}
+const error_result = (description, error) =>
+    ({
+        description,
+        error,
+        trace: error.stack ? error_origin(error) : error_origin()
+    })
 
 const error_origin = (err = new Error()) => {
     const sources = (err.stack || '\n indeterminate origin').split("\n").slice(1).reverse()
