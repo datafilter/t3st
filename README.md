@@ -78,6 +78,8 @@ npm test
 
 The tests in the repo are the *real* docs. But here's to writing practice 🍸
 
+`run` runs tests in the given path. It only yields individual tests when errors occur, as showing which tests passed on each run just becomes noisy information after a while.
+
 Aside from `run` in the quickstart, the tests only invoke the given functions, catch errors and return a result. They don't print to screen or cause other side effects.
 
 This makes the codebase quite flexible, and it should be easy if you wanted to pump the test output to something other than display. Eg a message queue or a file.
