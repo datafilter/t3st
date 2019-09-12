@@ -28,9 +28,10 @@ const test = (description = 'empty test', body = missing_body, then_func = id) =
         case 'object':
             if (body && body.constructor.name === 'Promise')
                 return test_async(description, body, then_func)
+        default:
+            return test_now(description, () =>
+                missing_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
     }
-    return test_now(description, () =>
-        missing_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
 }
 
 const function_test = (description, body, then_func) => {
@@ -39,6 +40,8 @@ const function_test = (description, body, then_func) => {
             return test_now(description, body, then_func)
         case 'AsyncFunction':
             return test_async(description, body(), then_func)
+        default:
+            throw 't3st::function_test constructor neither Function nor AsyncFunction'
     }
 }
 
