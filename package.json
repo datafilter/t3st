@@ -1,12 +1,14 @@
 {
   "name": "t3st",
-  "version": "2019.9.12",
+  "version": "2019.9.23",
   "description": "tiny test module for npm",
   "files": [
+    "/bin/cli.js",
     "/t3st-lib",
     "index.js"
   ],
   "main": "index.js",
+  "bin": "./bin/cli.js",
   "scripts": {
     "test": "node test.js"
   },
