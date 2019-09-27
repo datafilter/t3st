@@ -14,10 +14,7 @@ const leaves = (node, node_children) => {
     return ls(node)
 }
 
-const root_dir = path.dirname(require.main.filename)
-const app_dir = (dir) => path.join(root_dir, dir)
-
-const walk_dir = (dir) => leaves(app_dir(dir), sub_paths).flat(99)
+const walk_dir = (dir) => leaves(dir, sub_paths).flat(99)
 
 const flagExitError = () => require('process').exitCode = 1
 

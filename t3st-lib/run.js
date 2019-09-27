@@ -1,6 +1,10 @@
+const path = require('path')
+
 module.exports = (validation, io, tally_results) =>
-    async (dir,
+    async (
         {
+            entrypoint_dir = path.dirname(require.main.filename),
+            dir = 'tests',
             label = '',
             process_summary = console.log,
             file_filter = x => x.endsWith('.js')
@@ -18,8 +22,10 @@ module.exports = (validation, io, tally_results) =>
             }
         }
 
+        const test_dir = path.join(entrypoint_dir, dir)
+
         const test_results = await Promise.all(io
-            .walk_dir(dir)
+            .walk_dir(test_dir)
             .filter(file_filter)
             .map(test_file)
         )
