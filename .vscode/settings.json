@@ -6,6 +6,10 @@
                 "match": "\\.js$",
                 "cmd": "node ${workspaceRoot}/test.js"
             }
+            // , {
+            //     "match": "\\.js$",
+            //     "cmd": "node ${workspaceRoot}/bin/cli.js"
+            // }
         ]
     }
 }
