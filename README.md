@@ -55,6 +55,19 @@ If you have a different path for tests, add additional path parameter
 npx t3st my-tests
 ```
 
+To use `npm test` instead of npx, add a script to package.json
+
+```json
+"scripts": {
+  "test": "t3st"
+}
+```
+
+Or install t3st globally:
+```bash
+npm install t3st -g
+```
+
 If you are using globally installed t3st cli, point to the tests path directly
 
 ```bash
