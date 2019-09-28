@@ -5,7 +5,7 @@
 
 # Quickstart
 
-### (1/4) Install
+#### (1/3) Install
 
 Install [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp) and t3st
 
@@ -13,23 +13,13 @@ Install [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp) and t3st
 npm install t3st
 ```
 
-### (2/4) - Create an entrypoint file & test directory
+#### (2/3) Create test directory & test file
 
-Eg. `test.js` and `/tests` in this quickstart. (Choose other names if you like)
-
-Put this in a new file called `test.js`
-
-```javascript
-const { run } = require('t3st')
-run('./tests')
-```
-and create the directory
+Create the `tests` directory
 
 ```bash
 mkdir tests
 ```
-
-### (3/4) Add a test in the test directory
 
 Paste this code into a new file under `tests/demo.js`:
 
@@ -43,23 +33,33 @@ module.exports = async ({ test, assert, affirm }) => [
 ]
 ```
 
-### (4/4) Run the tests
-
-Call the entrypoint
+#### (3/3) Run the tests
 
 ```bash
-node test.js
+npx t3st
 ```
 
-`run` sets an exit code of 1 if there were any failed tests.
+Sets an exit code of 1 if there were any failed tests.
 
-### (5/4) More tests:
+#### (4/3) More tests:
 
 You can add more `.js` test files (and organise them in nested sub-directories) in the tests directory.
 
 For more examples like async and promises, see <a href="https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js" download> this file.</a>
 
 For all examples [see the framework tests](https://github.com/devmachiine/npm-t3st/tree/master/tests)
+
+If you have a different path for tests, add additional path parameter
+
+```bash
+npx t3st my-tests
+```
+
+If you are using globally installed t3st cli, point to the tests path directly
+
+```bash
+t3st project-name/tests
+```
 
 
 # Fork / Play
