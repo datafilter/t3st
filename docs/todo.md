@@ -1,6 +1,7 @@
 # Features/Bugs
 
 - Missing tests folder and/or better discovery/errors wrt tests
+- Mixed mode parameter, eg: -mix (defaults to .t3.js) or -mix:spec.js -> tests project dir with endswith filter.
 
 # Refactor
 
