@@ -14,12 +14,11 @@ const error_origin = (err = new Error()) => {
     return err_source
 }
 
-const id = a => a
+const invalid_body = (additional_error = '') => {
+    throw additional_error + 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])'
+}
 
-const invald_test_message = 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])'
-const missing_body = (additional_error = '') => { throw (additional_error + invald_test_message) }
-
-const test = (description = 'empty test', body = missing_body, then_func = id) => {
+const test = (description = 'empty test', body = invalid_body, then_func = i => i) => {
     switch (typeof body) {
         case 'function':
             return function_test(description, body, then_func)
@@ -30,7 +29,7 @@ const test = (description = 'empty test', body = missing_body, then_func = id) =
                 return test_async(description, body, then_func)
         default:
             return test_now(description, () =>
-                missing_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
+                invalid_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
     }
 }
 
