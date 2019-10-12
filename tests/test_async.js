@@ -7,20 +7,22 @@ module.exports = async (framework) => {
             Promise.resolve()
         )
         , await test("await non-async function is ok", () => { })
-        , await test("happy path - basic, awaited basic, and awaited async tests are equivalent after await",
-            Promise.resolve((async () => {
+        , await test("Promise.resolve constructor can be replaced with async keyword", async () => { })
+        , test("not needed to await async test on creation", async () => { })
+        , test("happy path - basic, awaited basic, and awaited async tests are equivalent after await",
+            async () => {
                 const basic = test("_", () => { })
-                const basic_async = await test("_", () => { })
+                const basic_async = await test("_", async () => { })
                 const async_promise = await test("_", Promise.resolve())
                 assert(basic.description, basic_async.description)
                 assert(basic_async.description, async_promise.description)
                 assert(false, !!basic.error)
                 affirm(() => basic.error === basic_async.error)
                 affirm(() => basic_async.error === async_promise.error)
-            })())
+            }
         )
-        , await test("rejected promise returns error result",
-            Promise.resolve((async () => {
+        , test("rejected promise returns error result",
+            async () => {
                 const assert_error = async (rejected_promise, error_message = '?') => {
                     const async_error = await test("_", rejected_promise)
                     return assert(true, !!async_error.error)
@@ -31,15 +33,23 @@ module.exports = async (framework) => {
                 const e3 = await assert_error(Promise.reject(new Error("oh my")), 'Promise rejected >> oh my')
 
                 return e1 && e2 && e3
-            })()), (resolved) => {
+            }, (resolved) => {
                 assert(true, resolved)
             }
         )
-        , await test("async test can run with async function", async () => {
-            return 'proof'
-        }, (async_ran) => {
-            assert('proof', async_ran)
+        , test("async test runs continuation", async () => {
+            const confirm_continue = (compare) =>
+                test("continuation",
+                    async () => 'expected'
+                    , (async_ran) => assert(compare, async_ran)
+                )
+            const continue_ok = await confirm_continue('expected')
+            const continue_err = await confirm_continue('something else')
+            assert('undefined', typeof continue_ok.error)
+            affirm(continue_err.error, (err) =>
+                err.includes('something else') && err.includes('expected'))
         })
+
     ]
 
     return async_tests
