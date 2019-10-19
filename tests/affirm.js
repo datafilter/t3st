@@ -72,6 +72,18 @@ module.exports = (framework) => {
 
             assert(false, false_affirm.error.includes(`'7'`))
         })
+        , test("affirm error includes preposition object properties", () => {
+            const test_object = {
+                name: 'mark',
+                cars: [{ year: 1976 }, {}]
+            }
+            const false_affirm = test("_", () => affirm(test_object, () => false))
+
+            affirm(false_affirm.error, (err) =>
+                err.includes('mark') &&
+                err.includes(1976) &&
+                err.includes(JSON.stringify({})))
+        })
     ]
 
     return [affirm_chain_tests, affirm_tests]

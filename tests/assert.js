@@ -27,10 +27,14 @@ module.exports = (framework) => {
             assert(false, nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
         })
         , test("Evaluation is included in error message", () => {
-            const error_result_bool = test("err", () => assert(true, false))
-            assert(true, test("err", () => assert("text", `other text`)).error.startsWith("Evaluation ['text'] === ['other text']"))
-            affirm(() => error_result_bool.error.includes("Evaluation [true] === [false]"))
-            affirm(() => test("err", () => assert(5, true)).error.includes("Evaluation [5] === [true]"))
+            affirm(test("err", () => assert(true, false)).error, (err) =>
+                err.includes("Evaluation [true] === [false]"))
+            affirm(test("err", () => assert(true, 'true')).error, (err) =>
+                err.includes("Evaluation [true] === ['true']"))
+            affirm(test("err", () => assert("text", `other text`)).error, (err) =>
+                err.startsWith("Evaluation ['text'] === ['other text']"))
+            affirm(test("err", () => assert(5, true)).error, (err) =>
+                err.includes("Evaluation [5] === [true]"))
         })
         , test("assert nothing or undefined returns error", () => {
             const nullary = test("_", () => assert())

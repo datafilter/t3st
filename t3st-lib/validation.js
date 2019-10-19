@@ -66,7 +66,7 @@ const test_async = (description, promise, then_func) => promise
     .then(_ => ok_result(description))
     .catch(err => error_result(description, err))
 
-const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : value
+const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : JSON.stringify(value)
 
 const assert_hint_argument = () => {
     throw `assert(?,?) missing or undefined argument(s).
