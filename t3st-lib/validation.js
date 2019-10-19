@@ -113,15 +113,14 @@ const evaluate = (assumption, propositions) => {
 
 const alike_hint = () => { throw `alike(?,?) missing or undefined argument(s).` }
 
-const unpack = v => '' +
-    (typeof v === 'object'
-        ? Object.entries(v)
+const unpack = v =>
+    typeof v === 'object' && v !== null
+        ? `{${Object.entries(v)
             .sort(([a_key, _a], [b_key, _b]) => a_key.localeCompare(b_key))
-            .map(([key, val]) => unpack(key) + unpack(val))
+            .map(([key, val]) => unpack(key) + ':' + unpack(val))}}`
         : typeof v === 'function'
-            ? v
+            ? '' + v
             : JSON.stringify(v)
-    )
 
 const alike = (a = alike_hint(), b = alike_hint()) => assert(unpack(a), unpack(b))
 

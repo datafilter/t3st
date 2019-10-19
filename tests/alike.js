@@ -76,7 +76,16 @@ module.exports = (framework) => {
             alike(name_then_age, age_then_name)
         })
         , test("can't be used for truthy assertions", () => {
-            assert(true, !!test("_", () => { alike(5, '5') }).error)
+            assert(true, !!test("_", () => alike(5, '5')).error)
+        })
+        , test("can compare against null", () => {
+            alike(null, null)
+            alike({ nested: { prop: null } }, { nested: { prop: null } })
+
+            assert(true, !!test(`not an empty string`, () => alike('', null)).error)
+            assert(true, !!test(`not a 'null' string`, () => alike('null', null)).error)
+            assert(true, !!test("not an empty object", () => alike({}, null)).error)
+            assert(true, !!test("not an empty array", () => alike([], null)).error)
         })
     ]
 
