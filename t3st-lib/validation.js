@@ -95,8 +95,8 @@ const affirm = (...factors) => {
 
     const error_message = evaluate(assumption, propositions)
     if (error_message) {
-        const precondition = propositions.reduce((xs, s) => `${xs}\n\t--> ${quote_wrap(s)}`, error_message) + '\n\t-->'
-        throw `${precondition} Evaluation [${assumption}]`
+        const precondition = propositions.reduce((xs, s) => `${xs}\n\t--> ${quote_wrap(s)}`, error_message)
+        throw `${precondition}\n\t--> Evaluation [${assumption}]`
     } else return true
 }
 
