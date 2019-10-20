@@ -8,7 +8,7 @@ module.exports = (framework) => {
         , test("chained alike stops at first error", () => {
             const err_third = test("_",
                 () => alike(true, true) && alike(1, 1) && alike(1, 5) && alike(6, 7))
-            affirm(err_third.error, (e) => e.includes("Evaluation ['1'] === ['5']"))
+            affirm(err_third.error, (e) => e.includes("Evaluation [1] === [5]"))
         })
     ]
 
@@ -17,20 +17,33 @@ module.exports = (framework) => {
     const alike_equal_tests = [
         test("OK results from equal values", () => alike(true, true) && alike('a', 'a'))
         , test("OK results from same data values for different objects", () => {
-            const a = { 'type': 'aircraft', 'cost': '$4bn' }
-            const b = { 'type': 'aircraft', 'cost': '$4bn' }
+            const a = { type: 'aircraft', 'cost': '$4bn' }
+            const b = { 'type': 'aircraft', cost: '$4bn' }
             alike(a, b)
         })
         , test("Error results from different data values", () => {
             const a = { 'type': 'boat', 'cost': '$250k' }
-            const b = { 'type': 'submarine', 'cost': '$8bn' }
+            const b = {
+                'type': 'submarine',
+                'cost': '$8bn',
+                add: (x, y) => x + y, num: 4, bool: false, boolstring: 'false',
+                'sub-thing': {
+                    subby: {
+                        sub: {
+                            a: 1,
+                            'b-x2': 'two'
+                        }
+                    }
+                }
+            }
             const error_result = test("err", () => alike(a, b))
             assert(true, !!error_result.error)
         })
         , test("Evaluation is included in error message", () => {
-            affirm(test("err", () => alike("text", `other text`)).error, (e) => e.startsWith(`Evaluation ['"text"'] === ['"other text"']`))
-            const error_result_bool = test("err", () => alike(true, false))
-            affirm(error_result_bool.error, (e) => e.includes("Evaluation ['true'] === ['false']"))
+            affirm(test("err", () => alike("text", `other text`)).error,
+                (e) => e.startsWith(`Evaluation ['text'] === ['other text']`))
+            affirm(test("err", () => alike(true, false)).error,
+                (e) => e.includes("Evaluation [true] === [false]"))
         })
         , test("alike nothing or undefined returns error", () => {
             const nullary = test("_", () => alike())
@@ -76,7 +89,8 @@ module.exports = (framework) => {
             alike(name_then_age, age_then_name)
         })
         , test("can't be used for truthy assertions", () => {
-            assert(true, !!test("_", () => alike(5, '5')).error)
+            affirm(test("_", () => alike(5, '5')).error, (err) =>
+                err.includes(`[5] === ['5']`))
         })
         , test("can compare against null", () => {
             alike(null, null)
