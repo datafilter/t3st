@@ -115,12 +115,12 @@ const alike_hint = () => { throw `alike(?,?) missing or undefined argument(s).` 
 
 const obj_string = (v) =>
     typeof v === 'object' && v !== null
-        ? `{\n${
+        ? `{${
         Object.entries(v)
             .sort(([a_key, _a], [b_key, _b]) => a_key.localeCompare(b_key))
-            .map(([key, val]) => `${key} : ${quote_wrap(obj_string(val))}`)
-            .join(',\n')
-        }}\n`
+            .map(([key, val]) => `${key}:${quote_wrap(obj_string(val))}`)
+            .join(', ')
+        }}`
         : typeof v === 'function'
             ? `${v}`
             : v
