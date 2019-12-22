@@ -23,6 +23,13 @@
 # Notes
 
 ```js
+test("alternative/addition to top level import framework in each tests file, use test function input as reference(s)", (a, [,,zzz]) => {
+    zzz(this, that)
+    a.confirm(some, thing)
+})
+```
+
+```js
 const maybe_json = (v, to_json) => to_json ? JSON.stringify(v, null, 2) : v
 const objectify_functional = (obj, [k, v]) => ({ ...obj, [k]: v })
 const objectify = (obj, [k, v]) => (obj[k] = v, obj) //non-functional, more performant.
@@ -51,3 +58,9 @@ const obj_string = (v, to_json = true) =>
   const runtime = process.hrtime(before_test)
   console.log('runtime: %ds %dms', runtime[0], runtime[1] / 1000000)
   ```
+
+To use nodemon instead of run-on-save
+```
+npm install -D nodemon
+npx nodemon --exec node test // and some flags to make nodemon less verbose
+```
