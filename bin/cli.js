@@ -4,6 +4,11 @@
     const [_node_exec_path, _cli_file_path, target_dir, ...args] = process.argv
     //todo test each dir passed in args
 
+    //todo man/help output
+
+    //todo extra arg for mixed mode
+    
+
     const entry_dir = process.cwd()
     const test_dir = target_dir
 
