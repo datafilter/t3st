@@ -10,14 +10,24 @@ module.exports = (validation, io, tally_results) =>
             file_filter = x => x.endsWith('.js')
         } = {}) => {
 
+        const trim_styntax_error_stack = (err, stack) =>
+            !stack.includes("SyntaxError: ") ?
+                stack
+                : stack
+                    .split("\n")
+                    .filter(line => !line.includes("internal/modules/"))
+                    .filter(line => !line.includes(" (vm.js:"))
+                    .filter(line => !line.includes(err))
+                    .join("\n")
+
         const test_file = (file_path) => {
             try {
                 return require(file_path)(validation)
             } catch (err) {
                 return {
                     description: `Error in file : ${file_path}`,
-                    error: `[err] exception occurred outside of tests\n\t--> ${err}`,
-                    trace: ` ${err.stack || 'unknown source'}`
+                    error: `exception occurred *outside* of tests\n\t--> ${err}`,
+                    trace: ` ${trim_styntax_error_stack(err, err.stack || 'unknown source')}`
                 }
             }
         }
