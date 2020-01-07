@@ -22,6 +22,13 @@
 
 # Notes
 
+- experiment: have assertion failures cause error result without throwing exception by calling internal function in test() func.
+
+ ```js
+    const result = test(_ => true)
+    // test gets description 'unnamed test'
+ ```
+
 ```js
 test("alternative/addition to top level import framework in each tests file, use test function input as reference(s)", (a, [,,zzz]) => {
     zzz(this, that)
