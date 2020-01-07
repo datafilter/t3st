@@ -83,16 +83,12 @@ const assert = (assumption = assert_hint_argument(), expected = assert_hint_argu
         const type_error = (tA === tE) ? '' : ` !! Type mismatch: assert(${tA}, ${tE}).`
         const suggest_alike = tA === 'object' ? `${assert_hint_alike}` : ''
         throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}${suggest_alike}`
-    }
-    return true
+    } else return true
 }
 
-assert.undefined = u => {
-    if (typeof u !== 'undefined') {
-        throw `Evaluation assert.undefined -> ${typeof u} [${quote_wrap(u)}]`
-    }
-    else return true
-}
+assert.undefined = u => (typeof u === 'undefined')
+    ? true
+    : (() => { throw `Evaluation assert.undefined -> ${typeof u} [${quote_wrap(u)}]` })()
 
 const affirm = (...factors) => {
     if (factors.length === 0)

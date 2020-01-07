@@ -23,7 +23,7 @@ module.exports = async (framework) => {
         )
         , test("rejected promise returns error result",
             async () => {
-                const assert_error = async (rejected_promise, error_message = '?') => {
+                const assert_error = async (rejected_promise, error_message = '_some_error') => {
                     const async_error = await test("_", rejected_promise)
                     return assert(true, !!async_error.error)
                         && affirm(async_error.error, (err) => err.message.includes(error_message))

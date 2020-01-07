@@ -101,7 +101,7 @@ There are no truthy or undefined assertions.
 
 Fuzzy assumptions can be explicitly stated with existing methods:
 ```javascript
-test(`5 and '5' are basically the same thing, right?`, 5 == '5')
+test(`5 and '5' are basically the same thing`, 5 == '5')
 test("You didn't see any droids", () => typeof droids === 'undefined')
 ```
 

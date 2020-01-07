@@ -45,9 +45,9 @@ module.exports = (framework) => {
             affirm(() => binary.error.includes(undefined_argument_error))
         })
         , test("assert value against undefined returns error", () => {
-            const missing_2nd = test("_", () => assert("truthy?"))
-            const undefined_1st = test("_", () => assert(undefined, "truthy?"))
-            const undefined_2nd = test("_", () => assert("truthy?", undefined))
+            const missing_2nd = test("_", () => assert("truthy"))
+            const undefined_1st = test("_", () => assert(undefined, "truthy"))
+            const undefined_2nd = test("_", () => assert("truthy", undefined))
             affirm(() => missing_2nd.error.includes(undefined_argument_error))
             affirm(() => undefined_1st.error.includes(undefined_argument_error))
             affirm(() => undefined_2nd.error.includes(undefined_argument_error))

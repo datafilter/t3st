@@ -54,9 +54,9 @@ module.exports = (framework) => {
             assert(unary.error, binary.error)
         })
         , test("alike value against undefined returns error", () => {
-            const missing_2nd = test("_", () => alike("truthy?"))
-            const undefined_1st = test("_", () => alike(undefined, "truthy?"))
-            const undefined_2nd = test("_", () => alike("truthy?", undefined))
+            const missing_2nd = test("_", () => alike("truthy"))
+            const undefined_1st = test("_", () => alike(undefined, "truthy"))
+            const undefined_2nd = test("_", () => alike("truthy", undefined))
             assert(undefined_argument_error, missing_2nd.error)
             assert(missing_2nd.error, undefined_1st.error)
             assert(undefined_1st.error, undefined_2nd.error)

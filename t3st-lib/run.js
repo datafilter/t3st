@@ -11,8 +11,8 @@ module.exports = (validation, io, tally_results) =>
         } = {}) => {
 
         const trim_styntax_error_stack = (err, stack) =>
-            !stack.includes("SyntaxError: ") ?
-                stack
+            !stack.includes("SyntaxError: ")
+                ? stack
                 : stack
                     .split("\n")
                     .filter(line => !line.includes("internal/modules/"))

@@ -11,7 +11,7 @@ module.exports = async ({ test, assert, affirm, alike }) => [
         assert(5, five)
     })
     , test("remove comments to view detailed output using affirm", () => {
-        const a = 'some' //+ '?'
+        const a = 'some' //+ ' thing'
         const b = 5 //+ 1
         const c = { name: 'mark' }
         affirm(a, b, c.name.length, (text, number, name_length) => {
