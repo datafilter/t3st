@@ -70,7 +70,7 @@ const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : JSON.st
 
 const assert_hint_argument = () => {
     throw `assert(?,?) missing or undefined argument(s).
-        You could explicitly state : assert(typeof something, 'undefined') or assert(true, !something)
+        You can test for an undefined x via : assert.undefined(x)
         ~ Or did you intend to use : affirm([...propositions,] function => boolean) ?`
 }
 
@@ -85,6 +85,15 @@ const assert = (assumption = assert_hint_argument(), expected = assert_hint_argu
         throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}${suggest_alike}`
     }
     return true
+}
+
+const undefined_hint = () => { throw 'assert.undefined(x) expected argument x' }
+
+assert.undefined = (u = undefined_hint()) => {
+    if (typeof u !== 'undefined') {
+        throw `Evaluation assert.undefined -> ${typeof u} [${quote_wrap(u)}]`
+    }
+    else return true
 }
 
 const affirm = (...factors) => {
