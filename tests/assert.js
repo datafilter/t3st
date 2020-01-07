@@ -52,11 +52,6 @@ module.exports = (framework) => {
             affirm(() => undefined_1st.error.includes(undefined_argument_error))
             affirm(() => undefined_2nd.error.includes(undefined_argument_error))
         })
-        , test("assert undefined can be done via typeof or !!", () => {
-            const not_assigned = (() => { })() //iife with no return value = undefined.
-            assert(typeof not_assigned, 'undefined')
-            assert(true, !not_assigned)
-        })
         , test("error in assert is caught in test before it's passed to assert", () => {
             const err_assert = test("_", () => assert(1, not_defined))
             affirm(err_assert.error + '', (e) => e.includes('not_defined is not defined'))

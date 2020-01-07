@@ -56,6 +56,7 @@ module.exports = (framework) => {
             const err_test = test("_", () => { throw ((y) => y + 8) })
             assert(!!err_test.error, true)
             assert(false, typeof err_test.error === 'string')
+            assert('function', typeof err_test.error)
             assert(err_test.error(8), 16)
         })
 

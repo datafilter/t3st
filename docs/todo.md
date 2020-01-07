@@ -14,6 +14,7 @@
 
 - Remove index.js, only export validation.js
 - Sub-organise tests folder into validation, io, run, text and other t3st-lib.
+- Replace typeof and !! checks with test against text-sensitive value, eg mistyping doesnt give false positive/fail.
 
 # Test
 

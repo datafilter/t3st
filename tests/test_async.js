@@ -43,9 +43,11 @@ module.exports = async (framework) => {
                     async () => 'expected'
                     , (async_ran) => assert(compare, async_ran)
                 )
+
             const continue_ok = await confirm_continue('expected')
+            assert.undefined(continue_ok.error)
+
             const continue_err = await confirm_continue('something else')
-            assert('undefined', typeof continue_ok.error)
             affirm(continue_err.error, (err) =>
                 err.includes('something else') && err.includes('expected'))
         })

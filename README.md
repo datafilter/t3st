@@ -97,12 +97,11 @@ Aside from `run` in the quickstart, the tests only invoke the given functions, c
 
 This makes the codebase quite flexible, and it should be easy if you wanted to pump the test output to something other than display. Eg a message queue or a file.
 
-There are no truthy or undefined assertions.
+There are no truthy assertions.
 
 Fuzzy assumptions can be explicitly stated with existing methods:
 ```javascript
 test(`5 and '5' are basically the same thing`, 5 == '5')
-test("You didn't see any droids", () => typeof droids === 'undefined')
 ```
 
 Or you can create fuzzy assertions if you want:
