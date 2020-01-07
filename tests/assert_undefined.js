@@ -7,13 +7,15 @@ module.exports = ({ test, assert, affirm }) => [
         affirm(undefined_error.error, (e) => e.includes("assert.undefined"))
     })
     , test("ok from undefined values", _ => {
+        const u = {}.nothing
         const r = test('', _ => {
-            assert.undefined()
+            assert.undefined(u)
         })
-        affirm(r.error, (e) => e.includes('argument'))
+        assert(false, !!r.error)
+        assert.undefined()
     })
     , test("error from defined values includes type", _ => {
-        let u = 1
+        const u = 1
         const num = test('', _ => assert.undefined(u))
         affirm(num.error, (e) => e.includes('number') && e.includes(1))
 

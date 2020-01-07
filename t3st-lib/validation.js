@@ -87,9 +87,7 @@ const assert = (assumption = assert_hint_argument(), expected = assert_hint_argu
     return true
 }
 
-const undefined_hint = () => { throw 'assert.undefined(x) expected argument x' }
-
-assert.undefined = (u = undefined_hint()) => {
+assert.undefined = u => {
     if (typeof u !== 'undefined') {
         throw `Evaluation assert.undefined -> ${typeof u} [${quote_wrap(u)}]`
     }

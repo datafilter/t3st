@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2020.01.07",
+  "version": "2020.01.08",
   "description": "tiny test module for npm",
   "files": [
     "/bin/cli.js",
