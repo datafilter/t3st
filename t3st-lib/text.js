@@ -1,7 +1,7 @@
 const result_text = result => {
     const outcome = result.error ? 'error' : 'ok'
     const maybe_error = result.error ? '\n\t--> ' + result.error : ''
-    const maybe_trace = result.error && result.trace ? '\n\t-->' + result.trace : ''
+    const maybe_trace = result.trace ? '\n\t-->' + result.trace : ''
     return `[${outcome}] ${result.description}${maybe_error}${maybe_trace}`
 }
 
