@@ -1,5 +1,8 @@
 # Features/Bugs
 
+- cli generate test file/framework:
+    t3st path/bla --> no tests found, print usage
+    t3st touch /tests/bla.js --> create bla.js with module.exports (test,assert..) [ test(...)]
 - Missing tests folder and/or better discovery/errors wrt tests
 - Mixed mode parameter, eg: -mix (defaults to .t3.js) or -mix:spec.js -> tests project dir with endswith filter.
 - Add optional runtime stats arg, eg: -time, -time:avg, -time:total,avg,slowest
