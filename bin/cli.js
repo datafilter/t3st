@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 (async () => {
 
-    const [_node_exec_path, _cli_file_path, target_dir, ...args] = process.argv
+    const [_node_exec_path, _cli_file_path, ...cli_args] = process.argv
+
+    const [target_dir, ..._other_args] = cli_args
+
     //todo test each dir passed in args
 
     //todo man/help output
