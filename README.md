@@ -79,12 +79,17 @@ t3st project-name/tests
 
 The main part of the test framework is in [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js). Most of the code in the project are tests to test the test framework ~ roughly an assert for each line of framework code. Tests beats docs imho.
 
-To run the tests that test the test framework:
+Run the tests that test the test framework:
 
 ```
 git clone https://github.com/devmachiine/npm-t3st.git
 cd npm-t3st
 npm test
+```
+
+Show live tests: Open with a terminal in the project dir and run:
+```
+npx nodemon -x "clear;date;npm test"
 ```
 
 # Design docs
