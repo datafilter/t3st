@@ -12,10 +12,15 @@
     {name : 'mark', age : 40, awake : true}
   show: age[20/40], location['there',] awake[,true]
 - Perf
+- Throw erorr, not string, in validation. (might help with stack in async origin also)
+- cli args: [dir], [filter], eg `tests *origin*`
+
+# Document
+- run.js error: `exception occurred *outside* of tests\n\t--> ${err}`, // todo explain its user error eg. typo
 
 # Refactor
 
-- Remove index.js, only export validation.js
+- Remove index.js, only export validation.js ?
 - Sub-organise tests folder into validation, io, run, text and other t3st-lib.
 - Replace typeof and !! checks with test against text-sensitive value, eg mistyping doesnt give false positive/fail.
 

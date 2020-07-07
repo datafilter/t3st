@@ -1,6 +1,6 @@
 module.exports = async (framework) => {
 
-    const { test, assert, affirm } = framework
+    const { test, assert, affirm, alike } = framework
 
     const async_tests = [
         await test("Promised task runs async",
@@ -37,6 +37,13 @@ module.exports = async (framework) => {
                 assert(true, resolved)
             }
         )
+        , test("thrown error has the same result as rejected promise",
+            async () => {
+                const failed_test = await test("_", async () => { throw 3 })
+                const rejected_test = await test("_", Promise.reject(3))
+                assert(true, !!failed_test.error)
+                alike(failed_test.error, rejected_test.error)
+            })
         , test("async test runs continuation", async () => {
             const confirm_continue = (compare) =>
                 test("continuation",
@@ -51,6 +58,21 @@ module.exports = async (framework) => {
             affirm(continue_err.error, (err) =>
                 err.includes('something else') && err.includes('expected'))
         })
+        , test("expected failures are equivalent",
+            async () => {
+                const test_basic = test("_", () => { throw 'fail' })
+                const test_async = await test("_", async () => { throw 'fail' })
+                const test_promise = await test("_", Promise.reject('fail'))
+
+                assert(test_basic.description, test_async.description)
+                assert(test_async.description, test_promise.description)
+
+                assert(true, !!test_basic.error && !!test_async.error && !!test_promise.error)
+
+                affirm(test_basic.error + '', test_async.error + '', (be, ae) => be !== ae)
+                affirm(test_async.error + '', test_promise.error + '', (ae, pe) => ae === pe)
+            }
+        )
 
     ]
 
