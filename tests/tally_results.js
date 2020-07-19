@@ -65,6 +65,16 @@ module.exports = (framework) => {
             assert(true, non_results.every(c =>
                 affirm(tally_results([c]), (tally) => tally.includes('Not a test result'))))
         })
+        , test("Tests with errors from thrown falsey values are tallied as errors", () => {
+            const falseys = [false, '', 0, NaN, null, undefined]
+            const falsey_results = falseys.map(v => test('', () => { throw v }))
+            const mixed_results = [...falsey_results, { description: '' }]
+            const mixed_2_ok = [...mixed_results, { description: 'na' }]
+
+            affirm(tally_results(falsey_results), o => o.includes('0 tests [ok] ..and 6 [errors]'))
+            affirm(tally_results(mixed_results), o => o.includes('1 test [ok] ..and 6 [errors]'))
+            affirm(tally_results(mixed_2_ok), o => o.includes('2 tests [ok] ..and 6 [errors]'))
+        })
     ]
 
     return tally_results_tests

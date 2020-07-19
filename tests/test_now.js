@@ -19,6 +19,19 @@ module.exports = (framework) => {
             assert(true, {} !== {})
             assert(ref_thrown.error, ref_brr)
         })
+        , test("Falsey thrown values are caught as errors", () => {
+            const falseys = [false, '', 0, NaN, null, undefined]
+            assert(true, falseys.every(f => !f))
+
+            const tests = falseys.map(v => { return test("_", () => { throw v }) })
+
+            assert(true, tests.every(result => ('error' in result)))
+            assert(true, tests.every(result => result.hasOwnProperty('error')))
+
+            // invalid assert example:
+            // comparing .error to undefined is invalid, when a thrown error is 'undefined'
+            // assert(true, tests.every(result => typeof (result.error) !== 'undefined'))
+        })
     ]
 
     return now_tests

@@ -3,7 +3,7 @@ module.exports = (framework) => {
     const { test, assert, affirm } = framework
 
     const test_tests = [
-        test("nothing returns error", () => {
+        test("empty returns error", () => {
             const nothing = test()
             assert("empty test", nothing.description)
             affirm(() => nothing.error.includes('invalid test'))

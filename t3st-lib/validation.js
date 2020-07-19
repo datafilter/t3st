@@ -3,13 +3,16 @@ const ok_result = (description) => ({ description })
 const error_result = (description, error) =>
     ({
         description,
-        error,
-        trace: error.stack ? error_origin(error) : error_origin()
+        error, // TODO !!result.error isn't safe way to check for error
+        trace: error && error.stack ? error_origin(error) : error_origin()
     })
 
-const error_origin = (err = new Error()) => {
+const error_origin = (err = Error()) => {
     const sources = (err.stack || '\n indeterminate origin').split("\n").slice(1).reverse()
-    const validation_frame = sources.filter(src => !src.includes('t3st-lib'))
+    // TODO test behaviour if non-standard Error.prototype.stack is undefined
+    const validation_frame = sources
+        .filter(src => !src.includes('t3st-lib'))
+        .filter(src => !src.includes('at processTicksAndRejections'))
     const err_source = validation_frame.reverse()[0] // safe [0] use since -> (err.stack || default)
     return err_source
 }
@@ -53,18 +56,23 @@ const test_now = (description, func, then_func) => {
     }
 }
 
-const test_async = (description, promise, then_func) => promise
-    .then(result => result)
-    .catch(err => {
-        if (typeof err !== 'object' || err.constructor.name !== 'Error') {
-            err = new Error(`unexpected error [${err}]`)
+const test_async = async (description, promise, then_func, stack) => {
+    try {
+        const result = await promise
+        then_func(result)
+        return ok_result(description)
+    } catch (err) {
+        if (typeof err === 'object' && err.constructor.name === 'Error') {
+            err.message = `Error: (${'' + err.message})`
+        } else {
+            err = Error('' + err)
+            err.stack = stack || err.stack
         }
-        err.message = 'Promise rejected >> ' + err.message
-        throw err
-    })
-    .then((result) => then_func(result))
-    .then(_ => ok_result(description))
-    .catch(err => error_result(description, err))
+        err.message = `Promise rejected: (${'' + err.message})`
+        err.stack = err.stack || stack
+        return error_result(description, err)
+    }
+}
 
 const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : JSON.stringify(value)
 

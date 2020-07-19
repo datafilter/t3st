@@ -24,17 +24,13 @@ module.exports = async (framework) => {
         , test("rejected promise returns error result",
             async () => {
                 const assert_error = async (rejected_promise, error_message = '_some_error') => {
-                    const async_error = await test("_", rejected_promise)
+                    const async_error = await test(error_message, rejected_promise)
                     return assert(true, !!async_error.error)
-                        && affirm(async_error.error, (err) => err.message.includes(error_message))
+                        && affirm(async_error.error + '', error_message, (msg, expected) => msg.includes(expected))
                 }
-                const e1 = await assert_error(Promise.reject(), 'Promise rejected >> unexpected error [undefined]')
-                const e2 = await assert_error(Promise.reject(3), 'Promise rejected >> unexpected error [3]')
-                const e3 = await assert_error(Promise.reject(new Error("oh my")), 'Promise rejected >> oh my')
-
-                return e1 && e2 && e3
-            }, (resolved) => {
-                assert(true, resolved)
+                await assert_error(Promise.reject(), 'Promise rejected: (undefined)')
+                await assert_error(Promise.reject(3), 'Promise rejected: (3)')
+                await assert_error(Promise.reject(Error("oh my")), 'Promise rejected: (Error: (oh my))')
             }
         )
         , test("thrown error has the same result as rejected promise",
@@ -55,8 +51,8 @@ module.exports = async (framework) => {
             assert.undefined(continue_ok.error)
 
             const continue_err = await confirm_continue('something else')
-            affirm(continue_err.error, (err) =>
-                err.includes('something else') && err.includes('expected'))
+            affirm(continue_err.error.message, (msg) =>
+                msg.includes('something else') && msg.includes('expected'))
         })
         , test("expected failures are equivalent",
             async () => {

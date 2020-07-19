@@ -24,11 +24,11 @@ module.exports = (framework) => {
             const err_string = test("_", () => { throw 'err-msg' })
             affirm(() => result_text(err_string).includes('err-msg'))
 
-            const err_new_error = test("_", () => { throw new Error('err--msg') })
+            const err_new_error = test("_", () => { throw Error('err--msg') })
             const rt = result_text(err_new_error)
             affirm(() => rt.includes('Error'))
             affirm(() => rt.includes('err--msg'))
-            affirm(() => rt.includes('-->    at'))
+            affirm(rt, s => s.includes('    at'))
             affirm(rt, () => rt.includes('result_text.js:'))
         })
         , test("OK test description is verbatim : *not* converted to string", () => {

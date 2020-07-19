@@ -17,7 +17,7 @@ module.exports = (framework) => {
             assert(true, err_result.error.startsWith('Evaluation [true] === [false]'))
         })
         , test("Stack is included in ERROR if available", () => {
-            const err_result = test("_", () => { throw new Error('#20') })
+            const err_result = test("_", () => { throw Error('#20') })
             affirm(() => typeof err_result.error.stack !== undefined)
             affirm(err_result.error.stack + '', (stack) => stack.includes('test_results.js'))
         })

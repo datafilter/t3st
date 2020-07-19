@@ -6,7 +6,7 @@ module.exports = (validation, io, tally_results) =>
             entrypoint_dir = path.dirname(require.main.filename),
             dir = 'tests',
             label = '',
-            process_summary = console.log,
+            output_summary = console.log,
             file_filter = x => x.endsWith('.js')
         } = {}) => {
 
@@ -48,5 +48,5 @@ module.exports = (validation, io, tally_results) =>
             io.flagExitError()
         }
 
-        return process_summary(summary)
+        return output_summary(summary)
     }
