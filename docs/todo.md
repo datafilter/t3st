@@ -12,8 +12,11 @@
     {name : 'mark', age : 40, awake : true}
   show: age[20/40], location['there',] awake[,true]
 - Perf
-- Throw erorr, not string, in validation. (might help with stack in async origin also)
+- Throw erorr, not string, in validation. (might help with stack in async origin also) <- consider .isError/.hasError prop
 - cli args: [dir], [filter], eg `tests *origin*`
+- replace printed \[value\] with less ambiguous (value)
+- document affirm only prints varargs before last fuction
+- improve affirm output, if possible also show all binded key/value pairs even when not passed in varargs.
 
 # Document
 - run.js error: `exception occurred *outside* of tests\n\t--> ${err}`, // todo explain its user error eg. typo
