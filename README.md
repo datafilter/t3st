@@ -6,7 +6,7 @@
 ### What makes it different from other test frameworks?
 
 * Get started with a single command
-* Small self-evident codebase (~330 loc total)
+* Small self-evident codebase (~330 lines of code)
 * Clear brief output
 
 # Quickstart
@@ -76,26 +76,19 @@ npm install t3st -g
 `t3st` sets an exit code of `0` if all tests succeeded,
 and an exit code of `1` if any tests failed.
 
-# Fork / Play
+# Functions
 
-The main part of the test framework is in [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js). Most of the code in the project are tests to test the test framework ~ roughly an assert for each line of framework code. Tests beats docs imho.
-
-Run the tests that test the test framework:
-
-```
-git clone https://github.com/devmachiine/npm-t3st.git
-cd npm-t3st
-npm test
-```
-
-Show live tests: Open with a terminal in the project dir and run:
-```
-npx nodemon -x "clear;date;npm test"
-```
-or if `t3st` is installed globally
-```
-nodemon -x "clear;date;t3st && t3st play"
-```
+<!-- TODO examples -->
+#### test(description, boolean)
+Basic test that expects the boolean to be true.
+#### test(description, (function) => { ..code ..})
+Run a function runs a piece of code. It catches and error, the test fails.
+#### assert(a,b)
+Compare that two values are ===, throws on false/error.
+#### affirm(\[...values,\] function => boolean)
+Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
+#### alike(a,b)
+Compare the data of two values. For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the exact same thing regardless of their shared/separate location(s) in memory.
 
 # Design
 
@@ -121,6 +114,27 @@ const truthy = (something) => assert(true, !!something)
 const asserty = (assumption, expected) => assert(true, assumption == expected)
 ```
 
+# Fork / Play
+
+The main part of the test framework is in [this file on github](https://github.com/devmachiine/npm-t3st/blob/master/t3st-lib/validation.js). Most of the code in the project are tests to test the test framework ~ roughly an assert for each line of framework code. Tests beats docs imho.
+
+Run the tests that test the test framework:
+
+```
+git clone https://github.com/devmachiine/npm-t3st.git
+cd npm-t3st
+npm test
+```
+
+Show live tests: Open with a terminal in the project dir and run:
+```
+npx nodemon -x "clear;date;npm test"
+```
+or if `t3st` is installed globally
+```
+nodemon -x "clear;date;t3st && t3st play"
+```
+
 ---
 
 ## Types
@@ -129,16 +143,7 @@ const asserty = (assumption, expected) => assert(true, assumption == expected)
 An object with a `description`, and if things went wrong, also an `error` : {description [,error]}
 
 Both description and error can be anything other than string/Error.
-#### test(description, boolean)
-Basic test that expects the boolean to be true.
-#### test(description, function => boolean)
-Run a function that returns a boolean. It catches the first error, and returns a result.
-#### assert(a,b)
-Compare 2 values are ===, throws on false/error.
-#### affirm(\[...values,\] function => boolean)
-Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
-#### alike(a,b)
-Compare the data of two values. For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the exact same thing regardless of their shared/separate location(s) in memory.
+
 #### result_text : [ok | error] Test name
 Create a message string from a test result.
 #### tally_results : [description] {n} test(s) ok [and n tests failed with: etc..]
@@ -147,3 +152,10 @@ Create a complete summary from a group of test results. Only the interesting bit
 ---
 
 Any feedback, bugs, questions, contributions or money is always welcome :)
+
+<!-- Todo Metrics
+[![Build Status](https://img.shields.io/npm/t3st/one.svg)](https://npmjs.com/one)
+[![Snyk](https://img.shields.io/npm/t3st/two.svg)](https://npmjs.com/two)
+[![License](https://img.shields.io/npm/t3st/three.svg)](https://npmjs.com/three)
+[![Coverage](https://img.shields.io/npm/t3st/four.svg)](https://npmjs.com/four)
+-->

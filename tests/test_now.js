@@ -4,6 +4,7 @@ module.exports = (framework) => {
 
     const now_tests = [
         test("OK test passed with empty body", () => { })
+        , test("Function that returns false is OK test", () => false)
         , test("OK runs continuation", () => 'five', (f) => assert('five', f))
         , test("ERROR stops continuation", () => {
             const non_continue = test("_", () => errr, (_na) => true)
