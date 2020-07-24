@@ -1,37 +1,52 @@
 #!/usr/bin/env node
 (async () => {
 
-    const [_node_exec_path, _cli_file_path, ...cli_args] = process.argv
+    const [_node_exec_path, _cli_file_path, maybe_cli_dir, _other_cli_args] = process.argv
 
-    const [target_dir, ..._other_args] = cli_args
+    // todo if(not -s or --silent args)
+    console.time('elapsed')
 
-    //todo test each dir passed in args
+    const fs = require('fs')
+    const path = require('path')
+    const { run } = require('../index.js')
 
     //todo man/help output
 
     //todo extra arg for mixed mode
-    
 
-    const entry_dir = process.cwd()
-    const test_dir = target_dir
+    const target_dir = maybe_cli_dir || 'tests'
 
-    const { run } = require('../index.js')
+    const entry = process.cwd()
+
+    const test_dir = target_dir.startsWith(entry) ? target_dir : path.join(entry, target_dir)
+
+    const run_dir = fs.existsSync(path.join(test_dir, 'package.json'))
+        ? path.join(test_dir, 'tests')
+        : test_dir
+
+    // todo if(not -s or --silent args)
+    console.log(`testing ${run_dir}`)
     console.log('-'.repeat(40))
-    await run({ entrypoint_dir: entry_dir, dir: test_dir })
+
+    if (fs.existsSync(run_dir)) {
+        await run({ test_dir: run_dir })
+    } else {
+        require('../t3st-lib/io').flagExitError()
+        // todo if(not -s or --silent args)
+        console.log('no tests found in ' + run_dir)
+    }
+
+    // todo if(not -s or --silent args)
+    console.timeEnd('elapsed')
 })()
 
-// IN PROJECT DIR
-// t3st
-// --> run(root/tests) [OK]
-// t3st folder
-// --> run(root/folder) [OK]
-
-// OUTSIDE PROJECT DIR
-// t3st
-// --> no tests found.
-// t3st folder
-// --> run (cwd/folder/tests)
-// t3st folder/tests
-// --> run (cwd/folder/tests) [OK]
-
-//TODO Walk.dir no dir found.
+// TODO, don't recursively walk dir if any have package.json, stop going down that path.
+// for example
+// projects         <- here, stop
+// |
+// | - zest         <- t3st zest/tests
+// |   | - tests    <- t3st zest/tests
+// |   | - stuff
+// | - other
+// |   | - tests
+// |   | - stuff

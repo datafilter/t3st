@@ -3,25 +3,25 @@
 </p>
 <h2 align="center"> A small & light javascript test framework </h2>
 
+### What makes it different from other test frameworks?
+
+* Get started with a single command
+* Small self-evident codebase (~330 loc total)
+* [Modular](#Design)
+
 # Quickstart
 
-#### (1/3) Install
+#### (1/2) Create test directory & test file
 
-Install [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp) and t3st
+In a [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp) project directory
 
-```bash
-npm install t3st
-```
-
-#### (2/3) Create test directory & test file
-
-Create the `tests` directory
+Create a new directory called `tests` 
 
 ```bash
 mkdir tests
 ```
 
-Paste this code into a new file under `tests/demo.js`:
+Paste this test code into a new file under `tests/demo.js`:
 
 ```javascript
 module.exports = async ({ test, assert, affirm }) => [
@@ -33,7 +33,7 @@ module.exports = async ({ test, assert, affirm }) => [
 ]
 ```
 
-#### (3/3) Run the tests
+#### (2/2) Run the tests
 
 ```bash
 npx t3st
@@ -41,15 +41,15 @@ npx t3st
 
 Sets an exit code of 1 if there were any failed tests.
 
-#### (4/3) More tests:
+#### (3/2) More tests:
 
-You can add more `.js` test files (and organise them in nested sub-directories) in the tests directory.
+You can add more `.js` test files (and organise them in nested sub-directories) within your tests directory.
 
 For more examples like async and promises, see <a href="https://raw.githubusercontent.com/devmachiine/npm-t3st/master/play/demo.js" download> this file.</a>
 
 For all examples [see the framework tests](https://github.com/devmachiine/npm-t3st/tree/master/tests)
 
-If you have a different path for tests, add additional path parameter
+If you have a different path for tests than  the current working directory, add additional path parameter
 
 ```bash
 npx t3st my-tests
@@ -59,21 +59,21 @@ To use `npm test` instead of npx, add a script to package.json
 
 ```json
 "scripts": {
-  "test": "t3st"
+  "test": "npx t3st"
 }
 ```
 
-Or install t3st globally:
+To save a second you can install t3st locally:
 ```bash
 npm install t3st -g
 ```
-
-If you are using globally installed t3st cli, point to the tests path directly
-
+or globally
 ```bash
-t3st project-name/tests
+npm install t3st
 ```
 
+t3st sets an exit code of o if all tests succeeded,
+and an exit code of 1 if any tests failed.
 
 # Fork / Play
 
@@ -91,8 +91,12 @@ Show live tests: Open with a terminal in the project dir and run:
 ```
 npx nodemon -x "clear;date;npm test"
 ```
+or if `t3st` is installed globally
+```
+nodemon -x "clear;date;t3st && t3st play"
+```
 
-# Design docs
+# Design
 
 The tests in the repo are the *real* docs. But here's to writing practice 🍸
 
