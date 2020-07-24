@@ -7,7 +7,7 @@
 
 * Get started with a single command
 * Small self-evident codebase (~330 loc total)
-* [Modular](#Design)
+* Clear brief output
 
 # Quickstart
 
