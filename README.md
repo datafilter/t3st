@@ -49,13 +49,13 @@ For more examples like async and promises, see <a href="https://raw.githubuserco
 
 For all examples [see the framework tests](https://github.com/devmachiine/npm-t3st/tree/master/tests)
 
-If you have a different path for tests than  the current working directory, add additional path parameter
+If you have a different path for tests than  the current working directory, add an additional path parameter
 
 ```bash
 npx t3st my-tests
 ```
 
-To use `npm test` instead of npx, add a script to package.json
+To use `npm test` in you project, add a script to package.json
 
 ```json
 "scripts": {
@@ -65,15 +65,16 @@ To use `npm test` instead of npx, add a script to package.json
 
 To save a second you can install t3st locally:
 ```bash
-npm install t3st -g
+npm install t3st
 ```
 or globally
 ```bash
-npm install t3st
+npm install t3st -g
 ```
 
-t3st sets an exit code of o if all tests succeeded,
-and an exit code of 1 if any tests failed.
+#### Use with scripts / build servers:
+`t3st` sets an exit code of `0` if all tests succeeded,
+and an exit code of `1` if any tests failed.
 
 # Fork / Play
 
