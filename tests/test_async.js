@@ -1,8 +1,5 @@
-module.exports = async (framework) => {
-
-    const { test, assert, affirm, alike } = framework
-
-    const async_tests = [
+module.exports = async ({ test, assert, affirm, alike }) => {
+    return [
         await test("Promised task runs async",
             Promise.resolve()
         )
@@ -71,6 +68,4 @@ module.exports = async (framework) => {
         )
 
     ]
-
-    return async_tests
 }

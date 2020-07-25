@@ -1,6 +1,4 @@
-module.exports = (framework) => {
-
-    const { test, assert, affirm } = framework
+module.exports = ({ test, assert, affirm }) => {
 
     const affirm_chain_tests = [
         test("true assert returns true", () =>

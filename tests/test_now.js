@@ -1,8 +1,5 @@
-module.exports = (framework) => {
-
-    const { test, assert, affirm } = framework
-
-    const now_tests = [
+module.exports = ({ test, assert, affirm }) => {
+    return [
         test("OK test passed with empty body", () => { })
         , test("Function that returns false is OK test", () => false)
         , test("OK runs continuation", () => 'five', (f) => assert('five', f))
@@ -34,6 +31,4 @@ module.exports = (framework) => {
             // assert(true, tests.every(result => typeof (result.error) !== 'undefined'))
         })
     ]
-
-    return now_tests
 }

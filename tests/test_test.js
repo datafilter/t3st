@@ -1,8 +1,5 @@
-module.exports = (framework) => {
-
-    const { test, assert, affirm } = framework
-
-    const test_tests = [
+module.exports = ({ test, assert, affirm }) => {
+    return [
         test("empty returns error", () => {
             const nothing = test()
             assert("empty test", nothing.description)
@@ -51,6 +48,4 @@ module.exports = (framework) => {
             }))
         })
     ]
-
-    return test_tests
 }

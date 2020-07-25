@@ -1,8 +1,5 @@
-module.exports = (framework) => {
-
-    const { test, assert } = framework
-
-    const test_tests = [
+module.exports = ({ test, assert }) => {
+    return [
         test("OK boolean body returns true result", 500 !== 43 && '5' == 5)
         , test("ERROR boolean body returns result", () => {
             const err_bool = test("_", NaN === NaN)
@@ -20,6 +17,4 @@ module.exports = (framework) => {
             assert('(false)', stopped_test.error)
         })
     ]
-
-    return test_tests
 }

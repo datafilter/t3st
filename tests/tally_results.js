@@ -1,6 +1,4 @@
-module.exports = (framework) => {
-
-    const { test, assert, affirm } = framework
+module.exports = ({ test, assert, affirm }) => {
 
     const { tally_results } = require('../t3st-lib/text')
 

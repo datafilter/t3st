@@ -1,6 +1,4 @@
-module.exports = (framework) => {
-
-    const { test, assert, affirm, alike } = framework
+module.exports = ({ test, assert, alike, affirm }) => {
 
     const alike_chain_tests = [
         test("true alike returns true",

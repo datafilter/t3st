@@ -1,8 +1,5 @@
-module.exports = (framework) => {
-
-    const { test, assert, affirm } = framework
-
-    const test_results = [
+module.exports = ({ test, assert, affirm }) => {
+    return [
         test("OK test returns it's own description, without error", () => {
             const ok_result = test("my description", () => { })
             affirm(() => ok_result && !!ok_result.description)
@@ -22,6 +19,4 @@ module.exports = (framework) => {
             affirm(err_result.error.stack + '', (stack) => stack.includes('test_results.js'))
         })
     ]
-
-    return test_results
 }
