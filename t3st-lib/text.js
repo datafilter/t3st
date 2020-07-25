@@ -18,7 +18,7 @@ const tally_results = (label = '', ...results) => {
     const error_result = (result) =>
         (!result || (typeof result.description === 'undefined'))
             // TODO if JSON.stringify == [Object object], quote wrap and/or toString that works with class objects
-            ? `\nNot a test result: ${result} ${JSON.stringify(result)}`
+            ? `\nNot a test result: ${result} ${JSON.stringify(result)}\n-> Possibly missing test function, eg:\n-> test("description", () => {..code..})`
             : (result.hasOwnProperty('error'))
             // TODO add test insted of this comment:
             // Safer, but not needed as result does not have property called hasOwnProperty
