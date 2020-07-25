@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2020.07.24",
+  "version": "2020.07.25",
   "description": "small & light javascript test framework",
   "files": [
     "/bin/cli.js",
