@@ -17,7 +17,16 @@
     "url": "git+https://github.com/devmachiine/npm-t3st.git"
   },
   "keywords": [
-    "test"
+    "testing",
+    "test",
+    "tests",
+    "test framework",
+    "unit test",
+    "unit testing",
+    "tdd",
+    "bdd",
+    "assert",
+    "assertion"
   ],
   "author": "devmachiine",
   "license": "MIT",
