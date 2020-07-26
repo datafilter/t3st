@@ -48,6 +48,8 @@ module.exports = async ({ test, assert, affirm, alike }) => {
             assert.undefined(continue_ok.trace)
 
             const continue_err = await confirm_continue('something else')
+            // TODO Test and/or change/document : Anything thrown async converts to error
+            // therefore (currently/correctly?) *not* open for re-use like sync result errors.
             affirm(continue_err.error.message, (msg) =>
                 msg.includes('something else') && msg.includes('expected'))
         })
@@ -66,6 +68,5 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 affirm(test_async.error + '', test_promise.error + '', (ae, pe) => ae === pe)
             }
         )
-
     ]
 }

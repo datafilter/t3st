@@ -8,13 +8,15 @@ const error_result = (description, error) =>
     })
 
 const error_origin = (err = Error()) => {
-    const sources = (err.stack || '\n indeterminate origin').split("\n").slice(1).reverse()
+    const sources = (err.stack || (new Error().stack)).split("\n").slice(1).reverse()
     // TODO test behaviour if non-standard Error.prototype.stack is undefined
     const validation_frame = sources
         .filter(src => !src.includes('t3st-lib'))
         .filter(src => !src.includes('at processTicksAndRejections'))
-    const err_source = validation_frame.reverse()[0] // safe [0] use since -> (err.stack || default)
-    return err_source
+    const err_source = validation_frame.reverse()[0] // safe [0] use since -> [][0] === undefined
+    return (typeof err_source === 'undefined')
+        ? `Unknown error origin.\n\t > Possible missing 'await' statement before an async test:\n\t > await test(.., async () => {..})`
+        : err_source
 }
 
 const invalid_body = (additional_error = '') => {
@@ -30,6 +32,7 @@ const test = (description = 'empty test', body = invalid_body, then_func = i => 
         case 'object':
             if (body && body.constructor.name === 'Promise')
                 return test_async(description, body, then_func)
+        // else fall through
         default:
             return test_now(description, () =>
                 invalid_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
@@ -98,6 +101,7 @@ assert.undefined = u => (typeof u === 'undefined')
     ? true
     : (() => { throw `Evaluation assert.undefined -> ${typeof u} [${quote_wrap(u)}]` })()
 
+// TODO (also in alike): Highlight first difference with ^^^ in error output
 const affirm = (...factors) => {
     if (factors.length === 0)
         throw 'affirm expected (...values, function => boolean)'
