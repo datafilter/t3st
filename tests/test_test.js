@@ -42,10 +42,13 @@ module.exports = ({ test, assert, affirm }) => {
             const unexpected_primitives = [null, 0, 1, 'oh, hi mark', Symbol()]
             const some_unexpected_objects = [Date.now(), { stack: 'trace' }, new Object(1), NaN, Infinity, new SyntaxError]
 
-            assert(true, [...unexpected_primitives, ...some_unexpected_objects].every(p => {
+            const unexpecteds = [...unexpected_primitives, ...some_unexpected_objects]
+
+            unexpecteds.every(p => {
                 const invalid_test = test("_", p)
-                return invalid_test.error.includes(`unexpected body type in test(string, ${typeof p})`)
-            }))
+                const expected = `unexpected body type in test(string, ${typeof p})`
+                affirm(invalid_test.error, expected, (e, msg) => e.includes(msg))
+            })
         })
     ]
 }

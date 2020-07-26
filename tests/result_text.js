@@ -5,7 +5,7 @@ module.exports = ({ test, assert, affirm }) => {
     const nop = () => { }
 
     const nonstring_names = [
-        x => b => 5
+        _x => _b => 5
         , function (some) {
             return some + 1
         }
