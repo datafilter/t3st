@@ -34,7 +34,8 @@ module.exports = async ({ test, assert, affirm, alike }) => [
 
     // Pinky Promise 
     , test("tests can be async", async () => {
-        const foo = await 'important bar()'
+        const foo = await 'bar'
+        assert(3, foo.length)
     })
     , await test("async or promise test is async, but you don't have to await them", async () => { })
     , test("You can test a promise with a then",

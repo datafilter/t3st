@@ -35,7 +35,7 @@ module.exports = ({ test, assert, alike, affirm }) => {
                 }
             }
             const error_result = test("err", () => alike(a, b))
-            assert(true, !!error_result.error)
+            assert(true, !!error_result.trace)
         })
         , test("Evaluation is included in error message", () => {
             affirm(test("err", () => alike("text", `other text`)).error,
@@ -65,21 +65,21 @@ module.exports = ({ test, assert, alike, affirm }) => {
             alike(f, g)
             alike(y => y, y => y)
             const error_result = test("err", () => alike(f, y => y))
-            assert(true, !!error_result.error)
+            assert(true, !!error_result.trace)
         })
         , test("function comparisons are character sensitive", () => {
             const a = () => 'a'
             const _a = () => '' + 'a'
             assert(a(), 'a')
             assert(a(), _a())
-            assert(true, !!test("_", () => { alike(a, _a) }).error)
+            assert(true, !!test("_", () => { alike(a, _a) }).trace)
         })
         , test("function comparisons are spacing sensitive", () => {
             const id = new Function('x', 'return x')
             const id_nospace = new Function('x', 'return x ')
             const r1 = id(2), r2 = id_nospace(1 + 1)
             assert(r1, r2)
-            assert(true, !!test("_", () => { alike(id, id_nospace) }).error)
+            assert(true, !!test("_", () => { alike(id, id_nospace) }).trace)
         })
         , test("order of object members do not matter", () => {
             const name_then_age = { name: 'mark', age: 70 }
@@ -94,10 +94,10 @@ module.exports = ({ test, assert, alike, affirm }) => {
             alike(null, null)
             alike({ nested: { prop: null } }, { nested: { prop: null } })
 
-            assert(true, !!test(`not an empty string`, () => alike('', null)).error)
-            assert(true, !!test(`not a 'null' string`, () => alike('null', null)).error)
-            assert(true, !!test("not an empty object", () => alike({}, null)).error)
-            assert(true, !!test("not an empty array", () => alike([], null)).error)
+            assert(true, !!test(`not an empty string`, () => alike('', null)).trace)
+            assert(true, !!test(`not a 'null' string`, () => alike('null', null)).trace)
+            assert(true, !!test("not an empty object", () => alike({}, null)).trace)
+            assert(true, !!test("not an empty array", () => alike([], null)).trace)
         })
     ]
 

@@ -39,7 +39,7 @@ module.exports = (validation, io, tally_results) =>
 
         const summary = tally_results(label, flat_results)
 
-        if (flat_results.some(t => typeof t.error !== 'undefined')) {
+        if (flat_results.some(t => t.trace)) {
             io.flagExitError()
         }
 

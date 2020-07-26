@@ -13,7 +13,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 const async_promise = await test("_", Promise.resolve())
                 assert(basic.description, basic_async.description)
                 assert(basic_async.description, async_promise.description)
-                assert(false, !!basic.error)
+                assert(false, !!basic.trace)
                 affirm(() => basic.error === basic_async.error)
                 affirm(() => basic_async.error === async_promise.error)
             }
@@ -22,7 +22,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
             async () => {
                 const assert_error = async (rejected_promise, error_message = '_some_error') => {
                     const async_error = await test(error_message, rejected_promise)
-                    return assert(true, !!async_error.error)
+                    return assert(true, !!async_error.trace)
                         && affirm(async_error.error + '', error_message, (msg, expected) => msg.includes(expected))
                 }
                 await assert_error(Promise.reject(), 'Promise rejected: (undefined)')
@@ -34,7 +34,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
             async () => {
                 const failed_test = await test("_", async () => { throw 3 })
                 const rejected_test = await test("_", Promise.reject(3))
-                assert(true, !!failed_test.error)
+                assert(true, !!failed_test.trace)
                 alike(failed_test.error, rejected_test.error)
             })
         , test("async test runs continuation", async () => {
@@ -45,7 +45,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 )
 
             const continue_ok = await confirm_continue('expected')
-            assert.undefined(continue_ok.error)
+            assert.undefined(continue_ok.trace)
 
             const continue_err = await confirm_continue('something else')
             affirm(continue_err.error.message, (msg) =>
@@ -60,7 +60,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 assert(test_basic.description, test_async.description)
                 assert(test_async.description, test_promise.description)
 
-                assert(true, !!test_basic.error && !!test_async.error && !!test_promise.error)
+                assert(true, !!test_basic.trace && !!test_async.trace && !!test_promise.trace)
 
                 affirm(test_basic.error + '', test_async.error + '', (be, ae) => be !== ae)
                 affirm(test_async.error + '', test_promise.error + '', (ae, pe) => ae === pe)

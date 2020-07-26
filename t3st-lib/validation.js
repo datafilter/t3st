@@ -3,7 +3,7 @@ const ok_result = (description) => ({ description })
 const error_result = (description, error) =>
     ({
         description,
-        error, // TODO !!result.error isn't safe way to check for error
+        error,
         trace: error && error.stack ? error_origin(error) : error_origin()
     })
 

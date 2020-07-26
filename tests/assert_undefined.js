@@ -11,7 +11,7 @@ module.exports = ({ test, assert, affirm }) => [
         const r = test('', _ => {
             assert.undefined(u)
         })
-        assert(false, !!r.error)
+        assert(false, !!r.trace)
         assert.undefined()
     })
     , test("error from defined values includes type", _ => {

@@ -34,9 +34,9 @@ module.exports = ({ test, assert, affirm }) => {
         })
         , test("expects a boolean result", () => {
             const non_boolean = test("_", () => affirm(() => 'truthy'))
-            assert(true, !!non_boolean.error)
-            affirm(non_boolean.error, () =>
-                non_boolean.error.includes('expected affirm(function => boolean)'))
+            assert(true, !!non_boolean.trace)
+            affirm(non_boolean.error, (err) =>
+                err.includes('expected affirm(function => boolean)'))
 
             assert(false, non_boolean.error.includes("failed *before* assertion"))
         })

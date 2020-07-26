@@ -33,7 +33,7 @@ module.exports = ({ test, assert, affirm }) => {
             assert(true, nonstring_names.every(name => {
                 const ok_test = test(name, nop)
                 return assert(ok_test.description, name)
-                    && assert(!!ok_test.error, false)
+                    && assert(!!ok_test.trace, false)
                     && assert(result_text(ok_test), '[ok] ' + name)
             }))
         })
@@ -41,7 +41,7 @@ module.exports = ({ test, assert, affirm }) => {
             assert(true, nonstring_names.every(name => {
                 const err_test = test(name, () => assert(false, true))
                 return assert(err_test.description, name)
-                    && assert(!!err_test.error, true)
+                    && assert(!!err_test.trace, true)
                     && affirm(() => result_text(err_test).includes('[error] ' + name))
             }))
         })
@@ -52,7 +52,7 @@ module.exports = ({ test, assert, affirm }) => {
         })
         , test("error is open for re-use", () => {
             const err_test = test("_", () => { throw ((y) => y + 8) })
-            assert(!!err_test.error, true)
+            assert(!!err_test.trace, true)
             assert(false, typeof err_test.error === 'string')
             assert('function', typeof err_test.error)
             assert(err_test.error(8), 16)

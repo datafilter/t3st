@@ -14,7 +14,7 @@ module.exports = async ({ test, assert, affirm }) => [
     })
     , test("inner fail should still fail", async () => {
         const tr = await test("?>", async () => await assert(false, true))
-        assert(true, !!tr.error)
+        assert(true, !!tr.trace)
     })
     // best-attempt with async caught exceptions
     , await test("Find async error origin", async () => {

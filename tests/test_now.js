@@ -24,11 +24,7 @@ module.exports = ({ test, assert, affirm }) => {
             const tests = falseys.map(v => { return test("_", () => { throw v }) })
 
             assert(true, tests.every(result => ('error' in result)))
-            assert(true, tests.every(result => result.hasOwnProperty('error')))
-
-            // invalid assert example:
-            // comparing .error to undefined is invalid, when a thrown error is 'undefined'
-            // assert(true, tests.every(result => typeof (result.error) !== 'undefined'))
+            assert(true, tests.every(result => !!result.trace))
         })
     ]
 }

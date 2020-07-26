@@ -8,11 +8,11 @@ module.exports = ({ test, assert, affirm }) => {
         , test("any description test ok", () => {
             const any_value = [0, undefined, null, true, false, '', 't3st', f => g(f(x))]
             assert(true, any_value.every(name =>
-                assert(false, !!test(name, true).error)))
+                assert(false, !!test(name, true).trace)))
         })
         , test("without body returns error", () => {
             const detached_head = test("assert truthy")
-            assert(true, !!detached_head.error)
+            assert(true, !!detached_head.trace)
             affirm(() => detached_head.error.includes('invalid test'))
         })
         , test("function body returns immediate result", () => {
