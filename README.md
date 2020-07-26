@@ -107,7 +107,7 @@ Fuzzy assumptions can be explicitly stated with existing methods:
 test(`5 and '5' are basically the same thing`, 5 == '5')
 ```
 
-Or you can create fuzzy assertions if you want:
+You can create and use your own fuzzy assertion functions if you want:
 
 ```javascript
 const truthy = (something) => assert(true, !!something)
@@ -151,7 +151,11 @@ Create a complete summary from a group of test results. Only the interesting bit
 
 ---
 
-Any feedback, bugs, questions, contributions or money is always welcome :)
+[![Dependencies](https://img.shields.io/badge/dependencies-0-green)](https://img.shields.io/badge/dependencies-0-green)
+[![License](https://img.shields.io/badge/license-MIT-black)](https://img.shields.io/badge/license-MIT-black)
+ <!-- Todo make dynamic, eg update via Github actions on PR: -->
+[![License](https://img.shields.io/badge/core%20LOC-~330-brightgreen)](https://img.shields.io/badge/core%20LOC-~330-brightgreen)
+[![License](https://img.shields.io/badge/tests%20LOC-~750-lightgrey)](https://img.shields.io/badge/tests%20LOC-~750-lightgrey)
 
 <!-- Todo Metrics
 [![Build Status](https://img.shields.io/npm/t3st/one.svg)](https://npmjs.com/one)
@@ -159,3 +163,5 @@ Any feedback, bugs, questions, contributions or money is always welcome :)
 [![License](https://img.shields.io/npm/t3st/three.svg)](https://npmjs.com/three)
 [![Coverage](https://img.shields.io/npm/t3st/four.svg)](https://npmjs.com/four)
 -->
+
+Any feedback, bugs, questions, contributions or money is always welcome :)
