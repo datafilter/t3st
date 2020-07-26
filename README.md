@@ -6,7 +6,7 @@
 ### What makes it different from other test frameworks?
 
 * Get started with a single command
-* Small self-evident codebase (~330 lines of code)
+* Small self-evident codebase
 * Clear brief output
 
 # Quickstart
@@ -154,8 +154,8 @@ Create a complete summary from a group of test results. Only the interesting bit
 [![Dependencies](https://img.shields.io/badge/dependencies-0-green)](https://img.shields.io/badge/dependencies-0-green)
 [![License](https://img.shields.io/badge/license-MIT-black)](https://img.shields.io/badge/license-MIT-black)
  <!-- Todo make dynamic, eg update via Github actions on PR: -->
-[![License](https://img.shields.io/badge/core%20LOC-~330-brightgreen)](https://img.shields.io/badge/core%20LOC-~330-brightgreen)
-[![License](https://img.shields.io/badge/tests%20LOC-~750-lightgrey)](https://img.shields.io/badge/tests%20LOC-~750-lightgrey)
+[![License](https://img.shields.io/badge/core%20LOC-~317-brightgreen)](https://img.shields.io/badge/core%20LOC-~330-brightgreen)
+[![License](https://img.shields.io/badge/tests%20LOC-~703-lightgrey)](https://img.shields.io/badge/tests%20LOC-~750-lightgrey)
 
 <!-- Todo Metrics
 [![Build Status](https://img.shields.io/npm/t3st/one.svg)](https://npmjs.com/one)

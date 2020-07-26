@@ -83,3 +83,16 @@ To use nodemon instead of run-on-save
 npm install -D nodemon
 npx nodemon --exec node test // and some flags to make nodemon less verbose
 ```
+
+alias t3x='npx nodemon -q -x "clear; date; node /workspaces/node/npm-t3st/bin/cli.js /workspaces/node/npm-t3st"'
+alias t3x='npx nodemon -q -x "clear; date; t3st "$@"'
+
+TODO get LoC with script
+ * core
+wc -l < index.js # 12
+wc -l bin/cli.js # 51
+find t3st-lib/ -name '*.js' | xargs wc -l # 254
+* tests
+find tests -name '*.js' | xargs wc -l # 685
+wc -l < test.js # 18
+  
