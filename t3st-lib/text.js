@@ -1,7 +1,8 @@
 const result_text = result => {
-    const outcome = result.trace ? 'error' : 'ok'
-    const maybe_error = result.trace ? '\n\t--> caught: ' + result.error : ''
-    const maybe_trace = result.trace ? '\n\t--> trace:' + result.trace : ''
+    const isError = Object.prototype.hasOwnProperty.call(result, 'error')
+    const outcome = isError ? 'error' : 'ok'
+    const maybe_error = isError ? '\n\t--> caught: ' + result.error : ''
+    const maybe_trace = isError ? '\n\t--> trace: ' + result.trace : ''
     return `[${outcome}] ${result.description}${maybe_error}${maybe_trace}`
 }
 
@@ -18,7 +19,7 @@ const tally_results = (label = '', ...results) => {
         (!result || (typeof result.description === 'undefined'))
             // TODO if JSON.stringify == [Object object], quote wrap and/or toString that works with class objects
             ? `\nNot a test result: ${result} ${JSON.stringify(result)}\n-> Possibly missing test function, eg:\n-> test("description", () => {..code..})`
-            : (result.trace)
+            : Object.prototype.hasOwnProperty.call(result, 'error')
                 ? `\n${result_text(result)}`
                 : non_error
 
