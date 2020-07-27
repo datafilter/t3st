@@ -24,22 +24,24 @@ const invalid_body = (additional_error = '') => {
 }
 
 const test = (description = 'empty test', body = invalid_body, then_func = i => i) => {
-    switch (typeof body) {
-        case 'function':
-            return function_test(description, body, then_func)
-        case 'boolean':
-            return body ? test_now(description, () => true, then_func) : error_result(description, '(false)')
-        case 'object':
-            if (body && body.constructor.name === 'Promise')
-                return test_async(description, body, then_func)
-        // else fall through
-        default:
-            return test_now(description, () =>
-                invalid_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
-    }
+    const t = typeof body
+    const test_option = 
+        t === 'function' && test_function ||
+        t === 'boolean' && test_boolean ||
+        t === 'object' && body !== null && body.constructor.name === 'Promise' && test_async ||
+        test_invalid_body
+    return test_option(description, body, then_func)
 }
 
-const function_test = (description, body, then_func) => {
+const test_invalid_body = (description, body) =>
+    test_now(description, () =>
+        invalid_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
+
+const test_boolean = (description, body, then_func) =>
+    test_now(description, () =>
+        assert(true, body), then_func)
+
+const test_function = (description, body, then_func) => {
     switch (body.constructor.name) {
         case 'Function':
             return test_now(description, body, then_func)

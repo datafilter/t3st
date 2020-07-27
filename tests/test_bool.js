@@ -4,7 +4,7 @@ module.exports = ({ test, assert }) => {
         , test("ERROR boolean body returns result", () => {
             const err_bool = test("_", NaN === NaN)
             assert(true, !!err_bool.trace)
-            assert(err_bool.error, '(false)')
+            assert(err_bool.error, 'Evaluation [true] === [false]')
         })
         , test("OK boolean body runs continuation", () => {
             const resumed_test = test("_", true, () => { throw '~err~' })
@@ -14,7 +14,7 @@ module.exports = ({ test, assert }) => {
         , test("ERROR boolean body stops immediately", () => {
             const stopped_test = test("_", false, () => { throw '~err~' })
             assert(true, !!stopped_test.trace)
-            assert('(false)', stopped_test.error)
+            assert(stopped_test.error, 'Evaluation [true] === [false]')
         })
     ]
 }

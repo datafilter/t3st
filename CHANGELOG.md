@@ -4,9 +4,10 @@
 * **m**aintenance
 * **p**erformance
 
-### 2020
+### 2020.07.27
 
 * **x** Add null check to async error catch
+* **m** Change bool test message
 
 ### 2020.07.26
 
