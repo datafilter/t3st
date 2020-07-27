@@ -30,4 +30,8 @@ module.exports = async ({ test, assert, affirm }) => [
     // , (async () => test("Async test without await gives await hint on error", async () => {
     //     throw 'err'
     // }))()
+    // Output 'clean' failures. To test, parse standard output for 0 tests [ok] .. and n [errors]
+    // Ie, don't only check exit status 1, as t3st suite can break by changes.
+    // Also check that output doesn't have unhandled promise rejection warnings, only valid t3st output.
+    // , await test("bah", Promise.reject(null))
 ]

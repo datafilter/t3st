@@ -65,7 +65,7 @@ const test_async = async (description, promise, then_func, stack) => {
         then_func(result)
         return ok_result(description)
     } catch (err) {
-        if (typeof err === 'object' && err.constructor.name === 'Error') {
+        if (typeof err === 'object' && err !== null && err.constructor.name === 'Error') {
             err.message = `Error: (${'' + err.message})`
         } else {
             err = Error('' + err)

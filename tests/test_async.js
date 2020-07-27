@@ -67,6 +67,9 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 affirm(test_basic.error + '', test_async.error + '', (be, ae) => be !== ae)
                 affirm(test_async.error + '', test_promise.error + '', (ae, pe) => ae === pe)
             }
-        )
+        ), test("async test gives expected error on null body", async () => {
+            const result = await test("_", Promise.reject(null) )
+            affirm(result.error.message, (msg) => msg.includes('Promise rejected: (null)'))
+        })
     ]
 }
