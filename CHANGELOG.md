@@ -4,6 +4,10 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020
+
+* **x** Add null check to async error catch
+
 ### 2020.07.26
 
  * **f** Add hint: missing await for async test
