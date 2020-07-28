@@ -16,22 +16,19 @@ module.exports = async ({ test, assert, affirm }) => [
         const tr = await test("?>", async () => await assert(false, true))
         assert(true, !!tr.trace)
     })
-    // best-attempt with async caught exceptions
     , await test("Find async error origin", async () => {
         const tr = await test("?>", async () => assert(false, true))
         affirm(tr.trace, (trace) => trace.includes('error_origin.js'))
     })
-    // // TODO for tests that cannot be validated within run.js scope:
-    // // create [fail tests] folder with expected failurures & call them via shell
-    // // Manual tests (uncomment to see errors):
-    // , (async () => test("Sync test without await gives correct error", () => {
-    //     throw 'err'
-    // }))()
-    // , (async () => test("Async test without await gives await hint on error", async () => {
-    //     throw 'err'
-    // }))()
-    // Output 'clean' failures. To test, parse standard output for 0 tests [ok] .. and n [errors]
-    // Ie, don't only check exit status 1, as t3st suite can break by changes.
-    // Also check that output doesn't have unhandled promise rejection warnings, only valid t3st output.
-    // , await test("bah", Promise.reject(null))
+    , await test("async test without await gives await hint", async () => {
+        const inner_awaited = await (async () => await test("async test without await", Promise.reject(null)))()
+        const non_awaited = await (async () => test("async test without await", Promise.reject(null)))()
+
+        const missing_async_msg = "Possible missing 'await' statement before an async test"
+
+        affirm(inner_awaited.trace, t => !t.includes(missing_async_msg))
+        affirm(inner_awaited.trace, t => t.includes('error_origin.js'))
+        affirm(non_awaited.trace, t => t.includes(missing_async_msg))
+        affirm(non_awaited.trace, t => !t.includes('error_origin.js'))
+    })
 ]

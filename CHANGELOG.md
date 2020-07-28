@@ -8,6 +8,7 @@
 
 * **f** Give verbose stacktrace, not only origin
 * **m** Assertion errors throw with stack
+* **m** Remove optional results label
 
 ### 2020.07.27
 
