@@ -6,7 +6,7 @@ module.exports = ({ test, assert, alike, affirm }) => {
         , test("chained alike stops at first error", () => {
             const err_third = test("_",
                 () => alike(true, true) && alike(1, 1) && alike(1, 5) && alike(6, 7))
-            affirm(err_third.error, (e) => e.includes("Evaluation [1] === [5]"))
+            affirm(err_third.error, (e) => e.message.includes("Evaluation [1] === [5]"))
         })
     ]
 
@@ -39,25 +39,25 @@ module.exports = ({ test, assert, alike, affirm }) => {
         })
         , test("Evaluation is included in error message", () => {
             affirm(test("err", () => alike("text", `other text`)).error,
-                (e) => e.startsWith(`Evaluation ['text'] === ['other text']`))
+                (e) => e.message.startsWith(`Evaluation ['text'] === ['other text']`))
             affirm(test("err", () => alike(true, false)).error,
-                (e) => e.includes("Evaluation [true] === [false]"))
+                (e) => e.message.includes("Evaluation [true] === [false]"))
         })
         , test("alike nothing or undefined returns error", () => {
             const nullary = test("_", () => alike())
             const unary = test("_", () => alike(undefined))
             const binary = test("_", () => alike(undefined, undefined))
-            assert(undefined_argument_error, nullary.error)
-            assert(nullary.error, unary.error)
-            assert(unary.error, binary.error)
+            assert(undefined_argument_error, nullary.error.message)
+            assert(nullary.error.message, unary.error.message)
+            assert(unary.error.message, binary.error.message)
         })
         , test("alike value against undefined returns error", () => {
             const missing_2nd = test("_", () => alike("truthy"))
             const undefined_1st = test("_", () => alike(undefined, "truthy"))
             const undefined_2nd = test("_", () => alike("truthy", undefined))
-            assert(undefined_argument_error, missing_2nd.error)
-            assert(missing_2nd.error, undefined_1st.error)
-            assert(undefined_1st.error, undefined_2nd.error)
+            assert(undefined_argument_error, missing_2nd.error.message)
+            assert(missing_2nd.error.message, undefined_1st.error.message)
+            assert(undefined_1st.error.message, undefined_2nd.error.message)
         })
         , test("functions can be compared", () => {
             const f = x => x
@@ -87,8 +87,8 @@ module.exports = ({ test, assert, alike, affirm }) => {
             alike(name_then_age, age_then_name)
         })
         , test("can't be used for truthy assertions", () => {
-            affirm(test("_", () => alike(5, '5')).error, (err) =>
-                err.includes(`[5] === ['5']`))
+            affirm(test("_", () => alike(5, '5')).error.message, (m) =>
+                m.includes(`[5] === ['5']`))
         })
         , test("can compare against null", () => {
             alike(null, null)

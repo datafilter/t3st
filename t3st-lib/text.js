@@ -2,7 +2,7 @@ const result_text = result => {
     const isError = Object.prototype.hasOwnProperty.call(result, 'error')
     const outcome = isError ? 'error' : 'ok'
     const maybe_error = isError ? '\n\t--> caught: ' + result.error : ''
-    const maybe_trace = isError ? '\n\t--> trace: ' + result.trace : ''
+    const maybe_trace = isError ? '\n\t--> trace:\n\t' + result.trace : ''
     return `[${outcome}] ${result.description}${maybe_error}${maybe_trace}`
 }
 

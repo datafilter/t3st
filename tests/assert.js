@@ -6,7 +6,7 @@ module.exports = ({ test, assert, affirm }) => {
         , test("chained assert stops at first error", () => {
             const err_third = test("_",
                 () => assert(true, true) && assert(1, 1) && assert(1, 5) && assert(6, 7))
-            affirm(err_third.error, (e) => e.includes('Evaluation [1] === [5]'))
+            affirm(err_third.error.message, (m) => m.includes('Evaluation [1] === [5]'))
         })
     ]
 
@@ -17,42 +17,42 @@ module.exports = ({ test, assert, affirm }) => {
         , test("strict assert shows type mismatch error", () => {
             const nonstrict_err = test("_", () => assert('5', 5))
             assert(true, !!nonstrict_err.trace)
-            affirm(() => nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
+            affirm(nonstrict_err.error.message, (m) => m.includes('Type mismatch: assert(string, number)'))
         })
         , test("ERROR results for same type doesn't show type error", () => {
             const nonstrict_err = test("_", () => assert(1, 2))
             assert(true, !!nonstrict_err.trace)
-            assert(false, nonstrict_err.error.includes('Type mismatch: assert(string, number)'))
+            assert(false, nonstrict_err.error.message.includes('Type mismatch: assert(string, number)'))
         })
         , test("Evaluation is included in error message", () => {
-            affirm(test("err", () => assert(true, false)).error, (err) =>
-                err.includes("Evaluation [true] === [false]"))
-            affirm(test("err", () => assert(true, 'true')).error, (err) =>
-                err.includes("Evaluation [true] === ['true']"))
-            affirm(test("err", () => assert("text", `other text`)).error, (err) =>
-                err.startsWith("Evaluation ['text'] === ['other text']"))
-            affirm(test("err", () => assert(5, true)).error, (err) =>
-                err.includes("Evaluation [5] === [true]"))
+            affirm(test("err", () => assert(true, false)).error.message, (m) =>
+                m.includes("Evaluation [true] === [false]"))
+            affirm(test("err", () => assert(true, 'true')).error.message, (m) =>
+                m.includes("Evaluation [true] === ['true']"))
+            affirm(test("err", () => assert("text", `other text`)).error.message, (m) =>
+                m.startsWith("Evaluation ['text'] === ['other text']"))
+            affirm(test("err", () => assert(5, true)).error.message, (m) =>
+                m.includes("Evaluation [5] === [true]"))
         })
         , test("assert nothing or undefined returns error", () => {
             const nullary = test("_", () => assert())
             const unary = test("_", () => assert(undefined))
             const binary = test("_", () => assert(undefined, undefined))
-            affirm(() => nullary.error.includes(undefined_argument_error))
-            affirm(() => unary.error.includes(undefined_argument_error))
-            affirm(() => binary.error.includes(undefined_argument_error))
+            affirm(() => nullary.error.message.includes(undefined_argument_error))
+            affirm(() => unary.error.message.includes(undefined_argument_error))
+            affirm(() => binary.error.message.includes(undefined_argument_error))
         })
         , test("assert value against undefined returns error", () => {
             const missing_2nd = test("_", () => assert("truthy"))
             const undefined_1st = test("_", () => assert(undefined, "truthy"))
             const undefined_2nd = test("_", () => assert("truthy", undefined))
-            affirm(() => missing_2nd.error.includes(undefined_argument_error))
-            affirm(() => undefined_1st.error.includes(undefined_argument_error))
-            affirm(() => undefined_2nd.error.includes(undefined_argument_error))
+            affirm(() => missing_2nd.error.message.includes(undefined_argument_error))
+            affirm(() => undefined_1st.error.message.includes(undefined_argument_error))
+            affirm(() => undefined_2nd.error.message.includes(undefined_argument_error))
         })
         , test("error in assert is caught in test before it's passed to assert", () => {
             const err_assert = test("_", () => assert(1, not_defined))
-            affirm(err_assert.error + '', (e) => e.includes('not_defined is not defined'))
+            affirm(err_assert.error.message, (m) => m.includes('not_defined is not defined'))
 
             const test_err = test("_", () => not_defined)
             affirm(test_err.error + '', err_assert.error + '', (t, e) => t === e)
@@ -63,7 +63,7 @@ module.exports = ({ test, assert, affirm }) => {
             assert(mark1, mark1)
             assert(mark2, mark2)
             const err_assert = test("_", () => assert(mark1, mark2))
-            affirm(() => err_assert.error.includes('use : alike(data, data'))
+            affirm(() => err_assert.error.message.includes('use : alike(data, data'))
         })
     ]
 

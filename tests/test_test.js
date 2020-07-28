@@ -3,7 +3,7 @@ module.exports = ({ test, assert, affirm }) => {
         test("empty returns error", () => {
             const nothing = test()
             assert("empty test", nothing.description)
-            affirm(() => nothing.error.includes('invalid test'))
+            affirm(() => nothing.error.message.includes('invalid test'))
         })
         , test("any description test ok", () => {
             const any_value = [0, undefined, null, true, false, '', 't3st', f => g(f(x))]
@@ -13,7 +13,7 @@ module.exports = ({ test, assert, affirm }) => {
         , test("without body returns error", () => {
             const detached_head = test("assert truthy")
             assert(true, !!detached_head.trace)
-            affirm(() => detached_head.error.includes('invalid test'))
+            affirm(() => detached_head.error.message.includes('invalid test'))
         })
         , test("function body returns immediate result", () => {
             const test_complete = test("_", () => { })
@@ -46,8 +46,8 @@ module.exports = ({ test, assert, affirm }) => {
 
             unexpecteds.every(p => {
                 const invalid_test = test("_", p)
-                const expected = `unexpected body type in test(string, ${typeof p})`
-                affirm(invalid_test.error, expected, (e, msg) => e.includes(msg))
+                affirm(invalid_test.error, `unexpected body type in test(string, ${typeof p})`, (err, expected) =>
+                    err.message.includes(expected))
             })
         })
     ]

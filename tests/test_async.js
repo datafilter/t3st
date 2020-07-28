@@ -5,7 +5,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
         )
         , await test("await non-async function is ok", () => { })
         , await test("Promise.resolve constructor can be replaced with async keyword", async () => { })
-        , test("not needed to await async test on creation", async () => { })
+        , test("not needed to await async test on creation for passing tests", async () => { })
         , test("happy path - basic, awaited basic, and awaited async tests are equivalent after await",
             async () => {
                 const basic = test("_", () => { })
@@ -18,16 +18,16 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 affirm(() => basic_async.error === async_promise.error)
             }
         )
-        , test("rejected promise returns error result",
+        , test("rejected promise returns error result verbatim",
             async () => {
-                const assert_error = async (rejected_promise, error_message = '_some_error') => {
+                const assert_error = async (rejected_promise, error_message) => {
                     const async_error = await test(error_message, rejected_promise)
                     return assert(true, !!async_error.trace)
-                        && affirm(async_error.error + '', error_message, (msg, expected) => msg.includes(expected))
+                        && affirm(async_error.error + '', error_message + '', (msg, expected) => msg.includes(expected))
                 }
-                await assert_error(Promise.reject(), 'Promise rejected: (undefined)')
-                await assert_error(Promise.reject(3), 'Promise rejected: (3)')
-                await assert_error(Promise.reject(Error("oh my")), 'Promise rejected: (Error: (oh my))')
+                await assert_error(Promise.reject(), undefined)
+                await assert_error(Promise.reject(3), 3)
+                await assert_error(Promise.reject(Error("oh my")), 'oh my')
             }
         )
         , test("thrown error has the same result as rejected promise",
@@ -37,7 +37,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 assert(true, !!failed_test.trace)
                 alike(failed_test.error, rejected_test.error)
             })
-        , test("async test runs continuation", async () => {
+        , await test("async test runs continuation", async () => {
             const confirm_continue = (compare) =>
                 test("continuation",
                     async () => 'expected'
@@ -53,7 +53,7 @@ module.exports = async ({ test, assert, affirm, alike }) => {
             affirm(continue_err.error.message, (msg) =>
                 msg.includes('something else') && msg.includes('expected'))
         })
-        , test("expected failures are equivalent",
+        , await test("expected failures are equivalent",
             async () => {
                 const test_basic = test("_", () => { throw 'fail' })
                 const test_async = await test("_", async () => { throw 'fail' })
@@ -64,12 +64,13 @@ module.exports = async ({ test, assert, affirm, alike }) => {
 
                 assert(true, !!test_basic.trace && !!test_async.trace && !!test_promise.trace)
 
-                affirm(test_basic.error + '', test_async.error + '', (be, ae) => be !== ae)
+                affirm(test_basic.error + '', test_async.error + '', (be, ae) => be === ae)
                 affirm(test_async.error + '', test_promise.error + '', (ae, pe) => ae === pe)
             }
-        ), test("async test gives expected error on null body", async () => {
-            const result = await test("_", Promise.reject(null) )
-            affirm(result.error.message, (msg) => msg.includes('Promise rejected: (null)'))
+        )
+        , await test("async test gives expected error on null body", async () => {
+            const result = await test("_", Promise.reject(null))
+            assert(null, result.error)
         })
     ]
 }

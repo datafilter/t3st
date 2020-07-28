@@ -4,7 +4,7 @@ module.exports = ({ test, assert, affirm }) => [
             const u = {}.nothing
             assert(1, u)
         })
-        affirm(undefined_error.error, (e) => e.includes("assert.undefined"))
+        affirm(undefined_error.error.message, (m) => m.includes("assert.undefined"))
     })
     , test("ok from undefined values", _ => {
         const u = {}.nothing
@@ -17,12 +17,12 @@ module.exports = ({ test, assert, affirm }) => [
     , test("error from defined values includes type", _ => {
         const u = 1
         const num = test('', _ => assert.undefined(u))
-        affirm(num.error, (e) => e.includes('number') && e.includes(1))
+        affirm(num.error.message, (m) => m.includes('number') && m.includes(1))
 
         const str = test('', _ => assert.undefined('undefined'))
-        affirm(str.error, (e) => e.includes('string') && e.includes(`'undefined'`))
+        affirm(str.error.message, (m) => m.includes('string') && m.includes(`'undefined'`))
 
         const obj = test('', _ => assert.undefined({ name: 'mark' }))
-        affirm(obj.error, (e) => e.includes('object') && e.includes(`"name":"mark"`))
+        affirm(obj.error.message, (m) => m.includes('object') && m.includes(`"name":"mark"`))
     })
 ]

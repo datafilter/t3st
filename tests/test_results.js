@@ -11,7 +11,7 @@ module.exports = ({ test, assert, affirm }) => {
             affirm(() => err_result && !!err_result.description)
             affirm(() => !!err_result.trace)
             assert(err_result.description, 'my description')
-            assert(true, err_result.error.startsWith('Evaluation [true] === [false]'))
+            assert(true, err_result.error.message.startsWith('Evaluation [true] === [false]'))
         })
         , test("Stack is included in ERROR if available", () => {
             const err_result = test("_", () => { throw Error('#20') })

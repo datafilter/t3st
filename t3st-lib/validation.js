@@ -10,22 +10,23 @@ const error_result = (description, error) =>
 const error_origin = (err = Error()) => {
     const sources = (err.stack || (new Error().stack)).split("\n").slice(1).reverse()
     // TODO test behaviour if non-standard Error.prototype.stack is undefined
-    const validation_frame = sources
+    const more_helpful_frames = sources
         .filter(src => !src.includes('t3st-lib'))
         .filter(src => !src.includes('at processTicksAndRejections'))
-    const err_source = validation_frame.reverse()[0] // safe [0] use since -> [][0] === undefined
-    return (typeof err_source === 'undefined')
+        .filter(src => !src.includes('t3st/bin/cli.js'))
+        .reverse().join("\n\t")
+    return more_helpful_frames === ''
         ? `Unknown error origin.\n\t > Possible missing 'await' statement before an async test:\n\t > await test(.., async () => {..})`
-        : err_source
+        : more_helpful_frames
 }
 
 const invalid_body = (additional_error = '') => {
-    throw additional_error + 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])'
+    throw Error(additional_error + 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])')
 }
 
 const test = (description = 'empty test', body = invalid_body, then_func = i => i) => {
     const t = typeof body
-    const test_option = 
+    const test_option =
         t === 'function' && test_function ||
         t === 'boolean' && test_boolean ||
         t === 'object' && body !== null && body.constructor.name === 'Promise' && test_async ||
@@ -48,7 +49,7 @@ const test_function = (description, body, then_func) => {
         case 'AsyncFunction':
             return test_async(description, body(), then_func)
         default:
-            throw 't3st::function_test constructor neither Function nor AsyncFunction'
+            throw Error('t3st::function_test constructor neither Function nor AsyncFunction')
     }
 }
 
@@ -61,20 +62,12 @@ const test_now = (description, func, then_func) => {
     }
 }
 
-const test_async = async (description, promise, then_func, stack) => {
+const test_async = async (description, promise, then_func) => {
     try {
         const result = await promise
         then_func(result)
         return ok_result(description)
     } catch (err) {
-        if (typeof err === 'object' && err !== null && err.constructor.name === 'Error') {
-            err.message = `Error: (${'' + err.message})`
-        } else {
-            err = Error('' + err)
-            err.stack = stack || err.stack
-        }
-        err.message = `Promise rejected: (${'' + err.message})`
-        err.stack = err.stack || stack
         return error_result(description, err)
     }
 }
@@ -82,9 +75,9 @@ const test_async = async (description, promise, then_func, stack) => {
 const quote_wrap = (value) => typeof value === 'string' ? `'${value}'` : JSON.stringify(value)
 
 const assert_hint_argument = () => {
-    throw `assert(?,?) missing or undefined argument(s).
+    throw Error(`assert(?,?) missing or undefined argument(s).
         You can test for an undefined x via : assert.undefined(x)
-        ~ Or did you intend to use : affirm([...propositions,] function => boolean) ?`
+        ~ Or did you intend to use : affirm([...propositions,] function => boolean) ?`)
 }
 
 const assert_hint_alike = `\n\t\t~ To compare value objects use : alike(data, data)`
@@ -95,25 +88,25 @@ const assert = (assumption = assert_hint_argument(), expected = assert_hint_argu
         const tE = typeof expected
         const type_error = (tA === tE) ? '' : ` !! Type mismatch: assert(${tA}, ${tE}).`
         const suggest_alike = tA === 'object' ? `${assert_hint_alike}` : ''
-        throw `Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}${suggest_alike}`
+        throw Error(`Evaluation [${quote_wrap(assumption)}] === [${quote_wrap(expected)}]${type_error}${suggest_alike}`)
     } else return true
 }
 
 assert.undefined = u => (typeof u === 'undefined')
     ? true
-    : (() => { throw `Evaluation assert.undefined -> ${typeof u} [${quote_wrap(u)}]` })()
+    : (() => { throw Error(`Evaluation assert.undefined -> ${typeof u} [${quote_wrap(u)}]`) })()
 
 // TODO (also in alike): Highlight first difference with ^^^ in error output
 const affirm = (...factors) => {
     if (factors.length === 0)
-        throw 'affirm expected (...values, function => boolean)'
+        throw Error('affirm expected (...values, function => boolean)')
     const [assumption, ...reversed_propositions] = factors.reverse()
     const propositions = reversed_propositions.reverse()
 
     const error_message = evaluate(assumption, propositions)
     if (error_message) {
         const precondition = propositions.reduce((xs, s) => `${xs}\n\t--> ${quote_wrap(s)}`, error_message)
-        throw `${precondition}\n\t--> Evaluation [${assumption}]`
+        throw Error(`${precondition}\n\t--> Evaluation [${assumption}]`)
     } else return true
 }
 
@@ -128,7 +121,7 @@ const evaluate = (assumption, propositions) => {
     }
 }
 
-const alike_hint = () => { throw `alike(?,?) missing or undefined argument(s).` }
+const alike_hint = () => { throw Error(`alike(?,?) missing or undefined argument(s).`) }
 
 const obj_string = (v) =>
     typeof v === 'object' && v !== null

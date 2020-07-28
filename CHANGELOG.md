@@ -4,6 +4,11 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.
+
+* **f** Give verbose stacktrace, not only origin
+* **m** Assertion errors throw with stack
+
 ### 2020.07.27
 
 * **x** Add null check to async error catch
