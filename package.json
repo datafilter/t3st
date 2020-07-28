@@ -10,7 +10,7 @@
   "main": "index.js",
   "bin": "./bin/cli.js",
   "scripts": {
-    "test": "node bin/cli.js && clear && npx eslint ."
+    "test": "(npx eslint .);node bin/cli.js"
   },
   "repository": {
     "type": "git",
