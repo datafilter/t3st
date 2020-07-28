@@ -2,7 +2,6 @@ module.exports = (validation, io, tally_results) =>
     async (
         {
             test_dir,
-            label = '',
             output_summary = console.log,
             file_filter = x => x.endsWith('.js')
         } = {}) => {
@@ -37,7 +36,7 @@ module.exports = (validation, io, tally_results) =>
 
         const flat_results = await Promise.all(test_results.flat(99))
 
-        const summary = tally_results(label, flat_results)
+        const summary = tally_results(flat_results)
 
         if (flat_results.some(t => t.trace)) {
             io.flagExitError()

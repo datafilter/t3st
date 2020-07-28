@@ -6,11 +6,8 @@ const result_text = result => {
     return `[${outcome}] ${result.description}${maybe_error}${maybe_trace}`
 }
 
-const tally_results = (label = '', ...results) => {
-    if (typeof label !== 'string') {
-        results = results.concat(label)
-        label = ''
-    }
+const tally_results = (...results) => {
+
     const flat_results = results.flat(99)
 
     const non_error = {}
@@ -30,7 +27,7 @@ const tally_results = (label = '', ...results) => {
     const ss = n => n == 1 ? '' : 's'
     const total_errors_or_green = total_err > 0 ? `..and ${total_err} [error${ss(total_err)}] ⚔️🔥` : '🥦'
     const overview = `${total_ok} test${ss(total_ok)} [ok] ${total_errors_or_green}`
-    return `${label}${label ? ' ' : ''}${overview}\n${error_messages.join('')}`
+    return `${overview}\n${error_messages.join('')}`
 }
 
 module.exports = {

@@ -13,39 +13,21 @@ module.exports = ({ test, assert, affirm }) => {
                 , tally_results([])
                 , tally_results([[]])
                 , tally_results([[[]]])
-                , tally_results('')
                 , tally_results(results_empty)
-                , tally_results('', results_empty)
                 , tally_results(...results_empty)
-                , tally_results('', ...results_empty)
             ]
-            assert(true, test_cases.every(c =>
-                affirm(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
-            ))
+
+            assert(true, test_cases.every(report =>
+                affirm(report, expected_start, (r, e) => r.startsWith(e))))
         })
         , test("tally_results single OK result", () => {
             const expected_start = "1 test [ok] 🥦"
             const test_cases = [
                 tally_results(results_single_success)
-                , tally_results('', results_single_success)
                 , tally_results(...results_single_success)
-                , tally_results('', ...results_single_success)
             ]
             assert(true, test_cases.every(c =>
                 affirm(c, expected_start, (c, expected_start) => c.startsWith(expected_start))
-            ))
-        })
-        , test("tally_results adds label", () => {
-            const expected_start = "Label test"
-            const test_cases = [
-                tally_results('Label test')
-                , tally_results('Label test', results_empty)
-                , tally_results('Label test', results_single_success)
-                , tally_results('Label test', ...results_empty)
-                , tally_results('Label test', ...results_single_success)
-            ]
-            assert(true, test_cases.every(c =>
-                affirm(`{{${c}}}.startWith{{${expected_start}}}`, () => c.startsWith(expected_start))
             ))
         })
         , test("detect non test-results", () => {
