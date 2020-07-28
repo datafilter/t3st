@@ -6,7 +6,7 @@ module.exports = ({ test, assert, affirm }) => {
             affirm(() => nothing.error.message.includes('invalid test'))
         })
         , test("any description test ok", () => {
-            const any_value = [0, undefined, null, true, false, '', 't3st', f => g(f(x))]
+            const any_value = [0, undefined, null, true, false, '', 't3st', f => g => x => g(f(x))]
             assert(true, any_value.every(name =>
                 assert(false, !!test(name, true).trace)))
         })

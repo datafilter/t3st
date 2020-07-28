@@ -1,11 +1,11 @@
-module.exports = ({ test, assert, affirm }) => {
+module.exports = ({ test, assert }) => {
     return [
         test("OK test passed with empty body", () => { })
         , test("Function that returns false is OK test", () => false)
         , test("OK runs continuation", () => 'five', (f) => assert('five', f))
         , test("ERROR stops continuation", () => {
-            const non_continue = test("_", () => errr, (_na) => true)
-            affirm(non_continue.error + '', (err) => err.includes('errr is not defined'))
+            const non_continue = test("_", () => { throw 'err' }, (_na) => true)
+            assert(non_continue.error + '', 'err')
         })
         , test("Error is caught and returned verbatim", () => {
             const number_error = test("_", () => { throw 7 })

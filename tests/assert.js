@@ -51,10 +51,10 @@ module.exports = ({ test, assert, affirm }) => {
             affirm(() => undefined_2nd.error.message.includes(undefined_argument_error))
         })
         , test("error in assert is caught in test before it's passed to assert", () => {
-            const err_assert = test("_", () => assert(1, not_defined))
-            affirm(err_assert.error.message, (m) => m.includes('not_defined is not defined'))
+            const err_assert = test("_", () => assert(1, (() => { throw 'iife throw'})()))
+            assert(err_assert.error + '', 'iife throw')
 
-            const test_err = test("_", () => not_defined)
+            const test_err = test("_", () => (() => { throw 'iife throw'})())
             affirm(test_err.error + '', err_assert.error + '', (t, e) => t === e)
         })
         , test("failed assert object compare suggests alike function", () => {

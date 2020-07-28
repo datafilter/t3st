@@ -21,13 +21,17 @@ module.exports = ({ test, assert, affirm }) => {
             assert(true, nullary_affirm.error.message.includes('expected (...values, function => boolean'))
         })
         , test("includes error message of invalid assertion", () => {
-            const err_false = test("_", () => affirm(() => mark))
-            affirm(err_false.error.message, (m) => m.includes("ReferenceError: mark is not defined"))
+            /* eslint-disable no-undef */
+            const err_false = test("_", () => affirm(() => _undefined))
+            /* eslint-enable no-undef */
+            affirm(err_false.error.message, (m) => m.includes("ReferenceError: _undefined is not defined"))
             affirm(err_false.error.message, (m) => m.includes("failed *before* assertion"))
         })
         , test("test catches error in affirm proposition arguments", () => {
-            const err_false = test("_", () => affirm(mark, (_n, _a) => true))
-            affirm(err_false.error + '', (err) => err.includes("ReferenceError: mark is not defined"))
+            /* eslint-disable no-undef */
+            const err_false = test("_", () => affirm(_undefined, (_n, _a) => true))
+            /* eslint-enable no-undef */
+            affirm(err_false.error + '', (err) => err.includes("ReferenceError: _undefined is not defined"))
 
             affirm(err_false.error + '', (err) => false === err.includes("failed *before* assertion"))
         })
@@ -82,6 +86,7 @@ module.exports = ({ test, assert, affirm }) => {
                 m.includes(1976) &&
                 m.includes(JSON.stringify({})))
         })
+
     ]
 
     return [affirm_chain_tests, affirm_tests]

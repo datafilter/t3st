@@ -5,7 +5,7 @@ module.exports = async ({ test, assert, affirm }) => [
         affirm(missing_body.trace, (trace) => trace.includes('error_origin.js'))
     })
     , test("interpreted error in test shows origin", () => {
-        const undefined_dessert = test("_", () => dessert)
+        const undefined_dessert = test("_", () => { throw 1 })
         affirm(undefined_dessert.trace, (trace) => trace.includes('error_origin.js'))
     })
     , test("thrown error in test shows origin", () => {

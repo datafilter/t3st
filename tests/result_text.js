@@ -16,8 +16,10 @@ module.exports = ({ test, assert, affirm }) => {
 
     const result_tests = [
         test("error is included in error message", () => {
-            const err_undefined = test("_", () => { not_defined })
-            affirm(() => result_text(err_undefined).includes('ReferenceError: not_defined is not defined'))
+            /* eslint-disable no-undef */
+            const err_undefined = test("_", () => { _undefined })
+            /* eslint-disable no-undef */
+            affirm(() => result_text(err_undefined).includes('ReferenceError: _undefined is not defined'))
 
             const err_string = test("_", () => { throw 'err-msg' })
             affirm(() => result_text(err_string).includes('err-msg'))
