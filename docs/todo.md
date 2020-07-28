@@ -91,8 +91,8 @@ TODO get LoC with script
  * core
 wc -l < index.js # 12
 wc -l bin/cli.js # 51
-find t3st-lib/ -name '*.js' | xargs wc -l # 254
+find t3st-lib/ -name '*.js' | xargs wc -l # 245
 * tests
-find tests -name '*.js' | xargs wc -l # 685
-wc -l < test.js # 18
+find tests -name '*.js' | xargs wc -l # 679
+find tests-external -name '*.js' | xargs wc -l # 44
   
