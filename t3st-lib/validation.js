@@ -24,48 +24,46 @@ const invalid_body = (additional_error = '') => {
     throw Error(additional_error + 'invalid test !! expected test(string, { [async] function || promise || boolean } [,function])')
 }
 
-const test = (description = 'empty test', body = invalid_body, then_func = i => i) => {
+const test = (description = 'empty test', body = invalid_body) => {
     const t = typeof body
     const test_option =
         t === 'function' && test_function ||
         t === 'boolean' && test_boolean ||
         t === 'object' && body !== null && body.constructor.name === 'Promise' && test_async ||
         test_invalid_body
-    return test_option(description, body, then_func)
+    return test_option(description, body)
 }
 
 const test_invalid_body = (description, body) =>
     test_now(description, () =>
         invalid_body(`unexpected body type in test(string, ${typeof body})\n\t--> `))
 
-const test_boolean = (description, body, then_func) =>
-    test_now(description, () =>
-        assert(true, body), then_func)
+const test_boolean = (description, body) =>
+    test_now(description, () => assert(true, body))
 
-const test_function = (description, body, then_func) => {
+const test_function = (description, body) => {
     switch (body.constructor.name) {
         case 'Function':
-            return test_now(description, body, then_func)
+            return test_now(description, body)
         case 'AsyncFunction':
-            return test_async(description, body(), then_func)
+            return test_async(description, body())
         default:
             throw Error('t3st::function_test constructor neither Function nor AsyncFunction')
     }
 }
 
-const test_now = (description, func, then_func) => {
+const test_now = (description, func) => {
     try {
-        then_func(func())
+        func()
         return ok_result(description)
     } catch (err) {
         return error_result(description, err)
     }
 }
 
-const test_async = async (description, promise, then_func) => {
+const test_async = async (description, promise) => {
     try {
-        const result = await promise
-        then_func(result)
+        await promise
         return ok_result(description)
     } catch (err) {
         return error_result(description, err)

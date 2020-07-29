@@ -25,30 +25,16 @@ module.exports = async ({ test, assert, affirm, alike }) => [
     })
     , test("assert and affirm return boolean ~ so you can chain them with &&",
         assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
-    , test("there is an additional funciton body available after the first",
-        () => {
-            // throw "The continuation doesn't run if the first function fails"
-            return 'something'
-        },
-        (thing) => assert(thing, 'something'))
 
     // Pinky Promise 
-    , test("tests can be async", async () => {
-        const foo = await 'bar'
-        assert(3, foo.length)
+    , await test("tests can be async", async () => {
+        const james = await Promise.resolve('bond')
+        assert(james, 'bond')
     })
-    , await test("async or promise test is async, but you don't have to await them", async () => { })
-    , test("You can test a promise with a then",
+    , await test("You can use a promise chaining instead of await",
         Promise.resolve(1).then(x => x === 1))
-    , test("Or, use a continuation of the result like so:",
-        Promise.resolve('bond'),
-        (james) => {
-            assert(james, 'bond')
-        })
-    , test("an async test is a promise", () => {
-        const test_async = test("async", async () => { })
-        affirm(test_async.constructor.name, (name) => name === 'Promise')
-    })
+
+    // It can handle nesting test results
     , [[[[test("results can be a little bit nested", true),
     [[test("so don't worry about flattening them", true)]]]]]]
 ]

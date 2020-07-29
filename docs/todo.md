@@ -1,5 +1,6 @@
 # Features/Bugs
 
+- tag this this like changeset with x/f/m etc..
 - cli generate test file/framework:
     t3st path/bla --> no tests found, print usage
     t3st touch /tests/bla.js --> create bla.js with module.exports (test,assert..) [ test(...)]
@@ -17,6 +18,7 @@
 - replace printed \[value\] with less ambiguous (value)
 - document affirm only prints varargs before last fuction
 - improve affirm output, if possible also show all binded key/value pairs even when not passed in varargs.
+- add result in ok_result = ({description, result}) ?
 
 # Document
 - run.js error: `exception occurred *outside* of tests\n\t--> ${err}`, // todo explain its user error eg. typo

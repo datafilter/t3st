@@ -6,11 +6,6 @@ module.exports = ({ test, assert }) => {
             assert(true, !!err_bool.trace)
             assert(err_bool.error.message, 'Evaluation [true] === [false]')
         })
-        , test("OK boolean body runs continuation", () => {
-            const resumed_test = test("_", true, () => { throw '~err~' })
-            assert(true, !!resumed_test.trace)
-            assert('~err~', resumed_test.error)
-        })
         , test("ERROR boolean body stops immediately", () => {
             const stopped_test = test("_", false, () => { throw '~err~' })
             assert(true, !!stopped_test.trace)

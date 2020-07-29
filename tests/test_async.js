@@ -5,6 +5,10 @@ module.exports = async ({ test, assert, affirm, alike }) => {
         )
         , await test("await non-async function is ok", () => { })
         , await test("Promise.resolve constructor can be replaced with async keyword", async () => { })
+        , await test("an async test is a promise", () => {
+            const test_async = test("async", async () => { })
+            affirm(test_async.constructor.name, (name) => name === 'Promise')
+        })
         , test("not needed to await async test on creation for passing tests", async () => { })
         , test("happy path - basic, awaited basic, and awaited async tests are equivalent after await",
             async () => {
@@ -37,22 +41,8 @@ module.exports = async ({ test, assert, affirm, alike }) => {
                 assert(true, !!failed_test.trace)
                 alike(failed_test.error, rejected_test.error)
             })
-        , await test("async test runs continuation", async () => {
-            const confirm_continue = (compare) =>
-                test("continuation",
-                    async () => 'expected'
-                    , (async_ran) => assert(compare, async_ran)
-                )
-
-            const continue_ok = await confirm_continue('expected')
-            assert.undefined(continue_ok.trace)
-
-            const continue_err = await confirm_continue('something else')
-            // TODO Test and/or change/document : Anything thrown async converts to error
-            // therefore (currently/correctly?) *not* open for re-use like sync result errors.
-            affirm(continue_err.error.message, (msg) =>
-                msg.includes('something else') && msg.includes('expected'))
-        })
+        // TODO Test and/or change/document : Anything thrown async converts to error
+        // therefore (currently/correctly?) *not* open for re-use like sync result errors.
         , await test("expected failures are equivalent",
             async () => {
                 const test_basic = test("_", () => { throw 'fail' })

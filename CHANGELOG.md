@@ -4,7 +4,11 @@
 * **m**aintenance
 * **p**erformance
 
-### 2020.
+### 2020.07.29
+
+* **m** Remove optional test continuation function
+
+### 2020.07.28
 
 * **f** Give verbose stacktrace, not only origin
 * **m** Assertion errors throw with stack

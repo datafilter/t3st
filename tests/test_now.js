@@ -2,11 +2,7 @@ module.exports = ({ test, assert }) => {
     return [
         test("OK test passed with empty body", () => { })
         , test("Function that returns false is OK test", () => false)
-        , test("OK runs continuation", () => 'five', (f) => assert('five', f))
-        , test("ERROR stops continuation", () => {
-            const non_continue = test("_", () => { throw 'err' }, (_na) => true)
-            assert(non_continue.error + '', 'err')
-        })
+        , test("Additional arguments are ignored", () => undefined, () => assert(true, false))
         , test("Error is caught and returned verbatim", () => {
             const number_error = test("_", () => { throw 7 })
             assert(number_error.error, 7)
