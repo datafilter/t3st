@@ -19,6 +19,7 @@
 - document affirm only prints varargs before last fuction
 - improve affirm output, if possible also show all binded key/value pairs even when not passed in varargs.
 - add result in ok_result = ({description, result}) ?
+- when any tests fail print summary n tests [ok] and n [error(s)] at beginning and end of message
 
 # Document
 - run.js error: `exception occurred *outside* of tests\n\t--> ${err}`, // todo explain its user error eg. typo
