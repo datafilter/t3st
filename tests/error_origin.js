@@ -24,9 +24,9 @@ module.exports = async ({ test, assert, affirm }) => [
         // const inner_awaited = await (async () => await test("async test with await", Promise.reject(null)))()
         // const non_awaited = await (async () => test("async test without await", Promise.reject(null)))()
 
-        const inner_awaited = await (async () => await test("async test with await", async ()=> {
-            throw 'known?'
-        }))()
+        // const inner_awaited = await (async () => await test("async test with await", async ()=> {
+        //     throw 'known?'
+        // }))()
         const non_awaited = await (async () => test("async test without await", async () =>{
             throw 'unknown?'
         }))()
@@ -36,7 +36,7 @@ module.exports = async ({ test, assert, affirm }) => [
         // fails on ubuntu 18.04.4 node 12.18.3
         // affirm(inner_awaited.trace, t1 => !t1.includes(missing_async_msg))
         // affirm(inner_awaited.trace, t2 => t2.includes('error_origin.js'))
-        console.log(`inner_awaited: ${inner_awaited}\nia-trace: ${inner_awaited.trace}`)
+        // console.log(`inner_awaited: ${JSON.stringify(inner_awaited)}\nia-trace: ${inner_awaited.trace}`)
         affirm(non_awaited.trace, t3 => t3.includes(missing_async_msg))
         affirm(non_awaited.trace, t4 => !t4.includes('error_origin.js'))
     })

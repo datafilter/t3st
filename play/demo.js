@@ -1,11 +1,9 @@
 module.exports = async ({ test, assert, affirm, alike }) => [
 
     // Hello World
-    test("can be a simple boolean expression", 1 > 0)
-    , test("doesn't print to console, it just returns a result", !!`truthy made boolean with !!`)
+    test("passing in a function runs it", () => console.log('spooky side-effect'))
 
     // Fun Validation
-    , test("passing in a function runs it", () => console.log('spooky side-effect'))
     , test("assert compares values with ===", () => {
         const five = 2 + 3
         assert(5, five)
@@ -23,8 +21,6 @@ module.exports = async ({ test, assert, affirm, alike }) => [
         const b = { 'type': 'aircraft', 'cost': '$4bn' }
         alike(a, b)
     })
-    , test("assert and affirm return boolean ~ so you can chain them with &&",
-        assert(true, true) && assert('ab', 'a' + 'b') && affirm(0, (zero, _ignored) => zero === 0))
 
     // Pinky Promise 
     , await test("tests can be async", async () => {
@@ -35,6 +31,6 @@ module.exports = async ({ test, assert, affirm, alike }) => [
         Promise.resolve(1).then(x => x === 1))
 
     // It can handle nesting test results
-    , [[[[test("results can be a little bit nested", true),
-    [[test("so don't worry about flattening them", true)]]]]]]
+    , [[[[test("results can be a little bit nested", () => { }),
+    [[test("so don't worry about flattening them", () => { })]]]]]]
 ]

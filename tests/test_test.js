@@ -8,12 +8,16 @@ module.exports = ({ test, assert, affirm }) => {
         , test("any description test ok", () => {
             const any_value = [0, undefined, null, true, false, '', 't3st', f => g => x => g(f(x))]
             assert(true, any_value.every(name =>
-                assert(false, !!test(name, true).trace)))
+                assert(false, !!test(name, () => true).trace)))
         })
         , test("without body returns error", () => {
             const detached_head = test("assert truthy")
             assert(true, !!detached_head.trace)
             affirm(() => detached_head.error.message.includes('invalid test'))
+        })
+        , test("ERROR body cannot be boolean", () => {
+            const err_bool = test("_", true)
+            affirm(err_bool.trace, t => t.includes('invalid test !! expected test(string, {'))
         })
         , test("function body returns immediate result", () => {
             const test_complete = test("_", () => { })

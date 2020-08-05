@@ -6,6 +6,10 @@
 
 ### 2020.07.29
 
+* **m** Remove boolean test body so that all other tests in file still give feedback.
+
+### 2020.07.29
+
 * **m** Remove optional test continuation function
 
 ### 2020.07.28
