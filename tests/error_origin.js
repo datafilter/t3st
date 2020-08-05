@@ -21,8 +21,15 @@ module.exports = async ({ test, assert, affirm }) => [
         affirm(tr.trace, (trace) => trace.includes('error_origin.js'))
     })
     , await test("async test without await gives await hint", async () => {
-        const inner_awaited = await (async () => await test("async test with await", Promise.reject(null)))()
-        const non_awaited = await (async () => test("async test without await", Promise.reject(null)))()
+        // const inner_awaited = await (async () => await test("async test with await", Promise.reject(null)))()
+        // const non_awaited = await (async () => test("async test without await", Promise.reject(null)))()
+
+        const inner_awaited = await (async () => await test("async test with await", async ()=> {
+            throw 'known?'
+        }))()
+        const non_awaited = await (async () => test("async test without await", async () =>{
+            throw 'unknown?'
+        }))()
 
         const missing_async_msg = "Possible missing 'await' statement before an async test"
 
