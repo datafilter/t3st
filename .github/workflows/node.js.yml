@@ -16,8 +16,10 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        node-version: [12.x, 14.x]
+        os: [ubuntu-latest]
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        node-version: [12.x]
+        # node-version: [12.x, 14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -27,6 +29,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci # - run: npm run build --if-present # n/a
     - run: npm test
-    - run: node .github/scripts/post-status.js
+    - run: node .github/scripts/post-status.js # TODO input context [os,node-version]
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
