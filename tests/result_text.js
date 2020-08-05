@@ -1,6 +1,6 @@
 module.exports = ({ test, assert, affirm }) => {
 
-    const { result_text } = require('../t3st-lib/text')
+    const { result_text } = require('../lib/text')
 
     const nop = () => { }
 

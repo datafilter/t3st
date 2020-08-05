@@ -4,7 +4,7 @@
   "description": "small & light javascript test framework",
   "files": [
     "/bin",
-    "/t3st-lib",
+    "/lib",
     "index.js"
   ],
   "main": "index.js",

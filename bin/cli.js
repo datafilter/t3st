@@ -31,7 +31,7 @@
     if (fs.existsSync(run_dir)) {
         await run({ test_dir: run_dir })
     } else {
-        require('../t3st-lib/io').flagExitError()
+        require('../lib/io').flagExitError()
         // todo if(not -s or --silent args)
         console.log('no tests found in ' + run_dir)
     }

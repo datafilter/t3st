@@ -1,10 +1,10 @@
-const validation = require('./t3st-lib/validation')
+const validation = require('./lib/validation')
 
-const io = require('./t3st-lib/io')
+const io = require('./lib/io')
 
-const { tally_results } = require('./t3st-lib/text')
+const { tally_results } = require('./lib/text')
 
-const run = require('./t3st-lib/run')(validation, io, tally_results)
+const run = require('./lib/run')(validation, io, tally_results)
 
 module.exports = {
     ...validation

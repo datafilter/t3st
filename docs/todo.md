@@ -29,7 +29,7 @@
 # Refactor
 
 - Remove index.js, only export validation.js ?
-- Sub-organise tests folder into validation, io, run, text and other t3st-lib.
+- Sub-organise tests folder into validation, io, run, text and other lib.
 - Replace typeof and !! checks with test against text-sensitive value, eg mistyping doesnt give false positive/fail.
 
 # Test
@@ -96,7 +96,7 @@ TODO get LoC with script
  * core
 wc -l < index.js # 12
 wc -l bin/cli.js # 51
-find t3st-lib/ -name '*.js' | xargs wc -l # 245
+find lib/ -name '*.js' | xargs wc -l # 245
 * tests
 find tests -name '*.js' | xargs wc -l # 679
 find tests-external -name '*.js' | xargs wc -l # 44

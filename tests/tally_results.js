@@ -1,6 +1,6 @@
 module.exports = ({ test, assert, affirm }) => {
 
-    const { tally_results } = require('../t3st-lib/text')
+    const { tally_results } = require('../lib/text')
 
     const results_empty = []
     const results_single_success = [{ description: "mkay fine" }]
