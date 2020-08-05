@@ -59,11 +59,13 @@ There is no need to install t3st anywhere, though doing so might save npx a seco
 npm install t3st -g
 ```
 
-#### Use with scripts / build servers:
-`t3st` sets an exit code of `0` if all tests succeeded,
-and an exit code of `1` if any tests failed.
+## Use with scripts / build servers:
 
-# Functions
+`t3st` sets an exit code of `0` if all tests succeeded, and an exit code of `1` if any tests failed.
+
+Command line argument `-s` or `--silent` supresses printing output, so the only program artifact is the exit code.
+
+## Functions
 
 <!-- TODO examples -->
 #### test(description, (function) => { ..code ..})

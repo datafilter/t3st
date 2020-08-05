@@ -1,6 +1,5 @@
 # Features/Bugs
 
-- tag this this like changeset with x/f/m etc..
 - cli generate test file/framework:
     t3st path/bla --> no tests found, print usage
     t3st touch /tests/bla.js --> create bla.js with module.exports (test,assert..) [ test(...)]

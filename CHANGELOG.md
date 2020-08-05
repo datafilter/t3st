@@ -4,7 +4,11 @@
 * **m**aintenance
 * **p**erformance
 
-### 2020.07.29
+### 2020.08.6
+
+* **f** Add optional cli argument -s or --silent that stops logging to console (only exit code set).
+
+### 2020.08.5
 
 * **m** Remove boolean test body so that all other tests in file still give feedback.
 
