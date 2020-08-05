@@ -20,8 +20,8 @@
 - improve affirm output, if possible also show all binded key/value pairs even when not passed in varargs.
 - add result in ok_result = ({description, result}) ?
 - when any tests fail print summary n tests [ok] and n [error(s)] at beginning and end of message
-- rename repo to t3st (from npm-t3st), update package.json etc
 - add pre-publish step, eg test&lint before publish.
+- only run CI tests if index.js or /lib files updated.
 
 # Document
 - run.js error: `exception occurred *outside* of tests\n\t--> ${err}`, // todo explain its user error eg. typo
