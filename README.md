@@ -25,10 +25,13 @@ Paste this test code into a new file under `tests/demo.js`:
 
 ```javascript
 module.exports = async ({ test, assert, affirm }) => [
-    test("hello world", 1 > 0)
-    , test("assert compares values with ===", () => {
+    test("assert compares values with ===", () => {
         const five = 2 + 3
         assert(5, five)
+    })
+    , await test("tests can be async", async () => {
+        const james = await Promise.resolve('bond')
+        assert(james, 'bond')
     })
 ]
 ```
@@ -63,8 +66,6 @@ and an exit code of `1` if any tests failed.
 # Functions
 
 <!-- TODO examples -->
-#### test(description, boolean)
-Basic test that expects the boolean to be true.
 #### test(description, (function) => { ..code ..})
 Run a function runs a piece of code. It catches and error, the test fails.
 #### assert(a,b)
@@ -77,6 +78,8 @@ Compare the data of two values. For example `{ name: 'mark' }`. Made to compare 
 ## [Design/Contributing](https://github.com/devmachiine/npm-t3st/blob/master/docs/contributing.md)
 
 ---
+
+![CI tests](https://github.com/devmachiine/t3st/workflows/CI%20tests/badge.svg)
 
 [![Dependencies](https://img.shields.io/badge/dependencies-0-green)](https://img.shields.io/badge/dependencies-0-green)
 
