@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devmachiine/npm-t3st.git"
+    "url": "git+https://github.com/devmachiine/t3st.git"
   },
   "keywords": [
     "testing",
@@ -31,7 +31,7 @@
   "author": "devmachiine",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devmachiine/npm-t3st/issues"
+    "url": "https://github.com/devmachiine/t3st/issues"
   },
-  "homepage": "https://github.com/devmachiine/npm-t3st#readme"
+  "homepage": "https://github.com/devmachiine/t3st#readme"
 }

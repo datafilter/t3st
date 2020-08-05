@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/devmachiine/npm-t3st/raw/master/play/t3st.png"/>
+  <img src="https://github.com/devmachiine/t3st/raw/master/play/t3st.png"/>
 </p>
 <h2 align="center"> A small & light javascript test framework </h2>
 
@@ -46,7 +46,7 @@ npx t3st
 
 You can add more `.js` test files within your tests directory and its sub-directories.
 
-For more examples [see the framework tests](https://github.com/devmachiine/npm-t3st/tree/master/tests)
+For more examples [see the framework tests](https://github.com/devmachiine/t3st/tree/master/tests)
 
 If you'd like to specificy a directory for tests, add it as an argument:
 
@@ -75,7 +75,7 @@ Run a function that throws if an expression is not true. It pretty prints given 
 #### alike(a,b)
 Compare the data of two values. For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the exact same thing regardless of their shared/separate location(s) in memory.
 
-## [Design/Contributing](https://github.com/devmachiine/npm-t3st/blob/master/docs/contributing.md)
+## [Design/Contributing](https://github.com/devmachiine/t3st/blob/master/docs/contributing.md)
 
 ---
 

@@ -89,7 +89,7 @@ npm install -D nodemon
 npx nodemon --exec node test // and some flags to make nodemon less verbose
 ```
 
-alias t3x='npx nodemon -q -x "clear; date; node /workspaces/node/npm-t3st/bin/cli.js /workspaces/node/npm-t3st"'
+alias t3x='npx nodemon -q -x "clear; date; node /workspaces/node/t3st/bin/cli.js /workspaces/node/t3st"'
 alias t3x='npx nodemon -q -x "clear; date; t3st "$@"'
 
 TODO get LoC with script
