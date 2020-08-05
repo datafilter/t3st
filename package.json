@@ -10,7 +10,7 @@
   "main": "index.js",
   "bin": "./bin/cli.js",
   "scripts": {
-    "test": "(npx eslint .);node bin/cli.js; node bin/cli.js tests-external/tests"
+    "test": "(npx eslint .) && node bin/cli.js && node bin/cli.js tests-external/tests"
   },
   "repository": {
     "type": "git",
