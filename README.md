@@ -81,7 +81,7 @@ Compare the data of two values. For example `{ name: 'mark' }`. Made to compare 
 
 ---
 
-![CI tests](https://github.com/devmachiine/t3st/workflows/CI%20tests/badge.svg)
+![CI](https://github.com/devmachiine/t3st/workflows/CI/badge.svg)
 
 [![Dependencies](https://img.shields.io/badge/dependencies-0-green)](https://img.shields.io/badge/dependencies-0-green)
 
