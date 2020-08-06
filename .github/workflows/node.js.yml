@@ -8,19 +8,20 @@ on:
     branches: [ master ]
   # pull_request:
   #   branches: [ master ]
-
 jobs:
+  lint:
+    runs-on: ubuntu-latest # any nodejs will do
+    steps:
+    - uses: actions/checkout@v1
+    - run: npm runt lint
   test:
-
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         # os: [ubuntu-latest]
         os: [macos-latest, ubuntu-latest, windows-latest]
         # node-version: [12.x]
         node-version: [12.x, 14.x]
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -33,8 +34,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish:
-    needs: test
-    runs-on: ubuntu-latest # any node will do
+    needs: [lint, test]
+    runs-on: ubuntu-latest # any nodejs will do
     steps:
     - uses: actions/checkout@v1
     - run: (node .github/scripts/npm-version-diff.js && echo yes publish) || echo no dont publish
