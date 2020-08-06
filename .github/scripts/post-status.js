@@ -11,6 +11,8 @@
     // console.log(`env: token ${!!process.env.GITHUB_TOKEN.replace(/./g, '*')} `)
     // console.log(`env: sha ${process.env.GITHUB_SHA} `)
 
+    const [os, node_ver] = process.argv.slice(2);
+
     const https = require('https')
 
     const https_request = ({ body, ...options }) =>
@@ -49,7 +51,7 @@
         body: JSON.stringify({
             state: "success",
             description: "CI-Workflow OK",
-            context: "Github-CI-Workflow/scripts/post-status.js",
+            context: `OS[${os}] Node[${node_ver}] /scripts/post-status.js`,
             target_url: `https://github.com/${process.env.GITHUB_REPOSITORY}/actions?query=ci`
         })
     })
