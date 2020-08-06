@@ -51,7 +51,7 @@
         body: JSON.stringify({
             state: "success",
             description: "CI-Workflow OK",
-            context: `OS[${os}] Node[${node_ver}] /scripts/post-status.js`,
+            context: `OS[${os || 'unknown'}] Node[${node_ver || 'unknown version'}] /scripts/post-status.js`,
             target_url: `https://github.com/${process.env.GITHUB_REPOSITORY}/actions?query=ci`
         })
     })

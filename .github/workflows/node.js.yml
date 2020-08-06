@@ -1,13 +1,13 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: CI tests
+name: CI
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
 
 jobs:
   test:
@@ -29,6 +29,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci # - run: npm run build --if-present # n/a
     - run: npm test
-    - run: node .github/scripts/post-status.js ${{ matrix.os }} ${{ matrix.node-version }} # TODO input context [os,node-version]
+    - run: node .github/scripts/post-status.js ${{ matrix.os }} ${{ matrix.node-version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  publish:
+    needs: test
+    runs-on: ubuntu-latest # any node will do
+    steps:
+    - uses: actions/checkout@v1
+    - run: (node .github/scripts/npm-version-diff.js && echo yes publish) || echo no dont publish
