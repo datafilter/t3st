@@ -7,6 +7,7 @@ parserOptions:
   ecmaVersion: 11
 rules:
   no-unused-vars: ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
+  prefer-const: ["error"]
  
 
 
