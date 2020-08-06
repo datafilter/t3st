@@ -20,26 +20,25 @@ module.exports = async ({ test, assert, affirm }) => [
         const tr = await test("?>", async () => assert(false, true))
         affirm(tr.trace, (trace) => trace.includes('error_origin.js'))
     })
-    // , await test("async test without await gives await hint", async () => {
-    //     // const inner_awaited = await (async () => await test("async test with await", Promise.reject(null)))()
-    //     // const non_awaited = await (async () => test("async test without await", Promise.reject(null)))()
+    , await test("async test without await gives await hint", async () => {
+        // const inner_awaited = await (async () => await test("async test with await", Promise.reject(null)))()
+        // const non_awaited = await (async () => test("async test without await", Promise.reject(null)))()
 
-    //     // const inner_awaited = await (async () => await test("async test with await", async ()=> {
-    //     //     throw 'known?'
-    //     // }))()
-    //     const non_awaited = await (async () => test("async test without await", async () =>{
-    //         throw 'unknown?'
-    //     }))()
+        // const inner_awaited = await (async () => await test("async test with await", async ()=> {
+        //     throw 'known?'
+        // }))()
+        const non_awaited = await (async () => test("async test without await", async () => {
+            throw 'unknown?'
+        }))()
 
-    //     const missing_async_msg = "Possible missing 'await' statement before an async test"
+        const missing_async_msg = "Possible missing 'await' statement before an async test"
 
-    //     // fails on ubuntu 18.04.4 node 12.18.3
-    //     // affirm(inner_awaited.trace, t1 => !t1.includes(missing_async_msg))
-    //     // affirm(inner_awaited.trace, t2 => t2.includes('error_origin.js'))
-    //     // console.log(`inner_awaited: ${JSON.stringify(inner_awaited)}\nia-trace: ${inner_awaited.trace}`)
+        // fails on ubuntu 18.04.4 node 12.18.3
+        // affirm(inner_awaited.trace, t1 => !t1.includes(missing_async_msg))
+        // affirm(inner_awaited.trace, t2 => t2.includes('error_origin.js'))
+        // console.log(`inner_awaited: ${JSON.stringify(inner_awaited)}\nia-trace: ${inner_awaited.trace}`)
 
-    //     // fails on Microsoft Windows Server 2019 10.0.17763 node v12.18.3
-    //     // affirm(non_awaited.trace, t3 => t3.includes(missing_async_msg))
-    //     // affirm(non_awaited.trace, t4 => !t4.includes('error_origin.js'))
-    // })
+        affirm(non_awaited.trace, t3 => t3.includes(missing_async_msg))
+        affirm(non_awaited.trace, t4 => !t4.includes('error_origin.js'))
+    })
 ]
