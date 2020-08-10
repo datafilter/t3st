@@ -34,5 +34,8 @@
   "bugs": {
     "url": "https://github.com/devmachiine/t3st/issues"
   },
-  "homepage": "https://github.com/devmachiine/t3st#readme"
+  "homepage": "https://github.com/devmachiine/t3st#readme",
+  "dependencies": {
+    "clia": "^2020.8.10"
+  }
 }

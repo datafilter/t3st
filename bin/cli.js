@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 (async () => {
 
-    const [_node_exec_path, _cli_file_path, maybe_cli_dir, maybe_option, _other_cli_args] = process.argv
+    const clia = require('clia')
+    const conf = clia(process.argv.slice(2), ['silent'])
 
-    // todo use clia instead, as this logic doesn't account for -stuvwxyz or --silent=true etc
-    const opt_silent = maybe_option === '-s' || maybe_option === '--silent' ||
-        (!maybe_option && (maybe_cli_dir === '-s' || maybe_cli_dir === '--silent'))
+    const nop = () => { }
 
-    if (!opt_silent)
-        console.time('elapsed')
+    const display = !conf.opt.silent && console || {
+        log: nop,
+        time: nop,
+        timeEnd: nop
+    }
+
+    display.time('elapsed')
 
     const fs = require('fs')
     const path = require('path')
@@ -18,8 +22,7 @@
 
     //todo extra arg for mixed mode
 
-    // todo use clia instead, as this logic doesn't account for -stuvwxyz or --silent=true etc
-    const target_dir = maybe_cli_dir !== '-s' && maybe_cli_dir !== '--silent' && maybe_cli_dir || 'tests'
+    const target_dir = conf.plain[0] || 'tests'
 
     const entry = process.cwd()
 
@@ -29,23 +32,18 @@
         ? path.join(test_dir, 'tests')
         : test_dir
 
-    if (!opt_silent) {
-        console.log(`testing ${run_dir}`)
-        console.log('-'.repeat(40))
-    }
+    display.log(`testing ${run_dir}`)
+    display.log('-'.repeat(40))
 
     if (fs.existsSync(run_dir)) {
         const summary = await run({ test_dir: run_dir })
-        if (!opt_silent)
-            console.log(summary)
+        display.log(summary)
     } else {
         require('../lib/io').flagExitError()
-        if (!opt_silent)
-            console.log('no tests found in ' + run_dir)
+        display.log('no tests found in ' + run_dir)
     }
 
-    if (!opt_silent)
-        console.timeEnd('elapsed')
+    display.timeEnd('elapsed')
 })()
 
 // TODO, don't recursively walk dir if any have package.json, stop going down that path.
