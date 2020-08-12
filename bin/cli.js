@@ -1,16 +1,34 @@
 #!/usr/bin/env node
 (async () => {
 
-    const clia = require('clia')
-    const conf = clia(process.argv.slice(2), ['silent'])
+    const parse = require('./parse')
+    const conf = parse(process.argv.slice(2))
+
+    if (conf.errors){
+        console.log('Invalid t3st input')
+        console.log('-'.repeat(18))
+        conf.errors.forEach(e => console.log(e))
+        console.log(`\nSee 't3st help'`)
+        require('process').exitCode = 1
+        return
+    }
+
+    if (conf.opt.help) {
+        const { usage } = require('./help')
+        console.log(usage)
+        return
+    }
 
     const nop = () => { }
 
     const display = !conf.opt.silent && console || {
         log: nop,
         time: nop,
-        timeEnd: nop
+        timeEnd: nop,
+        clear: nop
     }
+
+    conf.opt.clear && display.clear()
 
     display.time('elapsed')
 

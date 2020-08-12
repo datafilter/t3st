@@ -7,12 +7,16 @@ module.exports = async (framework) => {
 
     const { execSync } = require("child_process")
     const shell = (cmd) => execSync(cmd) + ''
-    const t3st = (dir) => shell(`node ${require.main.filename} ${dir}`)
+    const t3st = (cli) => shell(`node ${require.main.filename} ${cli}`)
 
     const cli_tests = [
         test("ok tests print ok", () => {
             const t3st_output = t3st(path.resolve(__dirname, '../all_ok/'))
             affirm(t3st_output, o => o.includes('4 tests [ok]'))
+        })
+        , test("silent prints no output", () => {
+            const t3st_output = t3st(path.resolve(__dirname, '../all_ok/') + ' --silent')
+            affirm(t3st_output, o => o === '')
         })
         , test("missing await in failing test gives hint", () => {
             const fail_t3st = test("_", () => {

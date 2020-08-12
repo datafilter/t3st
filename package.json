@@ -36,6 +36,6 @@
   },
   "homepage": "https://github.com/devmachiine/t3st#readme",
   "dependencies": {
-    "clia": "^2020.8.10"
+    "clia": "^2020.8.11"
   }
 }
