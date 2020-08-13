@@ -13,11 +13,11 @@ const find_closest_command = (command, alias) => {
 
 const build_config = (args) => {
 
-    const alias = ['clear', 'dir', 'filter', 'gen', 'help', 'init', 'silent', 'verbose', 'watch']
+    const alias = ['clear', 'dir', 'filter', 'gen', 'help', 'init', 'silent', 'test', 'verbose', 'watch']
 
     const conf = clia(args, alias)
 
-    if (conf.plain.length) {
+    if (conf.plain.length && !conf.errors) {
         const [command, ...options] = args
 
         const expected_commands = alias.concat(alias.map(a => a[0]))
@@ -28,8 +28,8 @@ const build_config = (args) => {
             const did_you_mean = `Did you mean 't3st ${closest}' ?`
 
             return {
-                errors: (conf.errors || []).concat([
-                    `${command} is not a t3st command.`, `${did_you_mean}`])
+                errors: [`${command} is not a t3st command.`, `${did_you_mean}`],
+                ...conf
             }
         } else return clia([`--${command}`, ...options], alias)
     }
@@ -44,14 +44,18 @@ module.exports = (args) => {
         conf.opt.gen,
         conf.opt.help,
         conf.opt.init,
-        conf.opt.watch
+        conf.opt.test,
+        conf.opt.watch,
     ].filter(c => c).length
 
     if (commands_count > 1)
         return {
             errors: (conf.errors || []).concat([
-                `If you do specify a command, only specify a single one : gen help init watch`])
+                `If you do specify a command, only specify a single one : gen help init test watch`])
         }
+
+    if (commands_count === 0)
+        conf.opt.test = true
 
     return conf
 }

@@ -1,0 +1,1 @@
+module.exports = () => console.log('gen not implemented yet.')

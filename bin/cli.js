@@ -4,18 +4,12 @@
     const parse = require('./parse')
     const conf = parse(process.argv.slice(2))
 
-    if (conf.errors){
+    if (conf.errors) {
         console.log('Invalid t3st input')
         console.log('-'.repeat(18))
         conf.errors.forEach(e => console.log(e))
         console.log(`\nSee 't3st help'`)
         require('process').exitCode = 1
-        return
-    }
-
-    if (conf.opt.help) {
-        const { usage } = require('./help')
-        console.log(usage)
         return
     }
 
@@ -30,38 +24,26 @@
 
     conf.opt.clear && display.clear()
 
-    display.time('elapsed')
+    if (conf.opt.test) {
+        const target_dir = conf.arg.dir || 'tests'
 
-    const fs = require('fs')
-    const path = require('path')
-    const { run } = require('../index.js')
+        const test = require('./commands/test')
 
-    //todo man/help output
-
-    //todo extra arg for mixed mode
-
-    const target_dir = conf.plain[0] || 'tests'
-
-    const entry = process.cwd()
-
-    const test_dir = target_dir.startsWith(entry) ? target_dir : path.join(entry, target_dir)
-
-    const run_dir = fs.existsSync(path.join(test_dir, 'package.json'))
-        ? path.join(test_dir, 'tests')
-        : test_dir
-
-    display.log(`testing ${run_dir}`)
-    display.log('-'.repeat(40))
-
-    if (fs.existsSync(run_dir)) {
-        const summary = await run({ test_dir: run_dir })
-        display.log(summary)
-    } else {
-        require('../lib/io').flagExitError()
-        display.log('no tests found in ' + run_dir)
+        await test(display, target_dir)
+    }
+    else if (conf.opt.watch) {
+        require('./commands/watch')(conf)
+    }
+    else if (conf.opt.help) {
+        require('./commands/help')(conf.arg.help)
+    }
+    else if (conf.opt.gen) {
+        require('./commands/gen')(conf)
+    }
+    else if (conf.opt.init) {
+        require('./commands/init')()
     }
 
-    display.timeEnd('elapsed')
 })()
 
 // TODO, don't recursively walk dir if any have package.json, stop going down that path.

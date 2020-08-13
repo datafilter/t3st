@@ -4,9 +4,15 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.8.12
+
+* **m** Move directory to command line argument: `-d test_dir` *or* `--dir test_dir`
+* **f** Add cli command: `help`
+* **f** Add optional cli argument `-c` or `--clear` that clears console before running.
+
 ### 2020.8.6
 
-* **f** Add optional cli argument -s or --silent that stops logging to console (only exit code set).
+* **f** Add optional cli argument `-s` or `--silent` that stops logging to console (only exit code set).
 
 ### 2020.8.5
 

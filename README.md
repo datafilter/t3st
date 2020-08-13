@@ -51,12 +51,17 @@ For more examples [see the framework tests](https://github.com/devmachiine/t3st/
 If you'd like to specificy a directory for tests, add it as an argument:
 
 ```bash
-npx t3st other_dir
+npx t3st --dir other_dir
 ```
 
 There is no need to install t3st anywhere, though doing so might save npx a second:
 ```bash
 npm install t3st -g
+```
+
+To view all cli options, run:
+```
+npx t3st help
 ```
 
 ## Use with scripts / build servers:
