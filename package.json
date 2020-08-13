@@ -10,7 +10,7 @@
   "main": "index.js",
   "bin": "./bin/cli.js",
   "scripts": {
-    "test": "(node bin/cli.js) && (node bin/cli.js tests-external/tests)",
+    "test": "(node bin/cli.js) && (node bin/cli.js --dir tests-external/tests)",
     "lint": "npx eslint ."
   },
   "repository": {

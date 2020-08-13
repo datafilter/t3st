@@ -11,17 +11,17 @@ module.exports = async (framework) => {
 
     const cli_tests = [
         test("ok tests print ok", () => {
-            const t3st_output = t3st(path.resolve(__dirname, '../all_ok/'))
+            const t3st_output = t3st(`--dir ${path.resolve(__dirname, '../all_ok/')}`)
             affirm(t3st_output, o => o.includes('4 tests [ok]'))
         })
         , test("silent prints no output", () => {
-            const t3st_output = t3st(path.resolve(__dirname, '../all_ok/') + ' --silent')
+            const t3st_output = t3st(`--dir ${path.resolve(__dirname, '../all_ok/')} --silent`)
             affirm(t3st_output, o => o === '')
         })
         , test("missing await in failing test gives hint", () => {
             const fail_t3st = test("_", () => {
                 try {
-                    const _na = t3st(path.resolve(__dirname, '../missing_await'))
+                    const _na = t3st(`--dir ${path.resolve(__dirname, '../missing_await')}`)
                 } catch (err) {
                     throw {
                         'status': err.status,
