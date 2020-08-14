@@ -4,6 +4,9 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.8.
+* **f** Add optional cli argument `-v` or `--verbose` to display noisy test run info.
+
 ### 2020.8.12
 
 * **m** Move directory to command line argument: `-d test_dir` *or* `--dir test_dir`

@@ -1,4 +1,4 @@
-module.exports = async (display, target_dir) => {
+module.exports = async (display, target_dir, verbose) => {
 
     display.time('elapsed')
 
@@ -18,8 +18,9 @@ module.exports = async (display, target_dir) => {
     display.log('-'.repeat(40))
 
     if (fs.existsSync(run_dir)) {
-        const summary = await run({ test_dir: run_dir })
+        const summary = await run({ test_dir: run_dir, verbose })
         display.log(summary)
+        verbose && display.log('-'.repeat(40))
     } else {
         require('../../lib/io').flagExitError()
         display.log('no tests found in ' + run_dir)

@@ -29,7 +29,7 @@
 
         const test = require('./commands/test')
 
-        await test(display, target_dir)
+        await test(display, target_dir, conf.opt.verbose || false)
     }
     else if (conf.opt.watch) {
         require('./commands/watch')(conf)
