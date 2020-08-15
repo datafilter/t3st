@@ -4,19 +4,17 @@ const usage =
 
 A small and light javascript test framework.
 
-['clear', 'dir', 'filter', 'gen', 'help', 'init', 'silent', 'test', 'verbose', 'watch'])
+['clear', 'dir', 'filter', 'gen', 'help', 'silent', 'test', 'verbose', 'watch'])
 
 Commands:
-    gen <path(s)>   Generate a new file and/or test file for a given path.
-                        With only test target, file creates /tests/<path> file
-                            t3st gen /lib/text.js 
-                            # creates test file @ /tests/lib/text.js
-                        Or specify both test and target file paths
-                            t3st gen /lib/io.js /other/dir/input.js
+    gen <path>      Generate a new test file:
+                        t3st gen test.js
+                        t3st gen sub/path/test.js
+
+                    Generate a new file, and a new test file:
+                        t3st gen --ref /lib/feature.js
 
     help            Display this help message.
-
-    init            Initialize a tests and lib directory, with a demo test.
 
     test            Run the tests. This is the default if you don't specify any commands.
 
@@ -26,9 +24,13 @@ Commands:
 Options:
     --clear         Clear the console before running.
 
-    --dir <path>    Specify the target directory of tests.
+    --dir <path>    Specify the target directory of tests to run.
                     Defaults to pwd/tests (current directory/tests)
                         t3st --dir usr/temp/my-project/tests
+
+                    When used with the gen command, specify the target directory to create tests in:
+                        t3st --dir /over/there test.js
+                        t3st --dir /over/yonder --ref /lib/feature.js
 
     --filter        Specify a file pattern match to use for finding tests.
         <pattern>   The default filter is *.js
@@ -39,6 +41,8 @@ Options:
 
                     Invalid t3st command line input will still be shown.
                     The exit code of 0 (success) or 1 (failure) is still set.
+
+    --ref           Specify a file to create with the gen command.
 
     --verbose       Display the names of each passing test.
 
@@ -62,7 +66,7 @@ const _more =
     t3st help <topic>   To display info about a specific topic,
                         where <topic> is one of the following:
                         --- Command line options ---
-                        gen, init, watch, clear,
+                        gen, watch, clear,
                         dir, filter, silent, verbose
                         ------ Test functions ------
                         test, assert, affirm, alike

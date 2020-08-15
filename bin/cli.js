@@ -4,22 +4,21 @@
     const parse = require('./parse')
     const conf = parse(process.argv.slice(2))
 
-    if (conf.errors) {
-        console.log('Invalid t3st input')
-        console.log('-'.repeat(18))
-        conf.errors.forEach(e => console.log(e))
-        console.log(`\nSee 't3st help'`)
-        require('process').exitCode = 1
-        return
-    }
-
     const nop = () => { }
-
     const display = !conf.opt.silent && console || {
         log: nop,
         time: nop,
         timeEnd: nop,
         clear: nop
+    }
+
+    if (conf.errors) {
+        display.log('Invalid t3st input')
+        display.log('-'.repeat(18))
+        conf.errors.forEach(e => display.log(e))
+        display.log(`\nSee 't3st help'`)
+        process.exitCode = 1
+        return
     }
 
     conf.opt.clear && display.clear()
@@ -38,10 +37,7 @@
         require('./commands/help')(conf.arg.help)
     }
     else if (conf.opt.gen) {
-        require('./commands/gen')(conf)
-    }
-    else if (conf.opt.init) {
-        require('./commands/init')()
+        require('./commands/gen')(display.log, conf.arg.gen)
     }
 
 })()
