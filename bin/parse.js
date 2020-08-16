@@ -42,15 +42,15 @@ module.exports = (args) => {
 
     const commands_count = [
         conf.opt.gen,
-        conf.opt.help,
         conf.opt.test,
         conf.opt.watch,
     ].filter(c => c).length
 
     if (commands_count > 1)
         return {
+            opt: conf.opt,
             errors: (conf.errors || []).concat([
-                `If you do specify a command, only specify a single one : gen help test watch`])
+                `If you do specify a command, only specify a single one : gen test watch`])
         }
 
     if (commands_count === 0)

@@ -37,7 +37,7 @@
         require('./commands/help')(conf.arg.help)
     }
     else if (conf.opt.gen) {
-        require('./commands/gen')(display.log, conf.arg.gen)
+        require('./commands/gen')(display, conf.arg.gen, conf.opt.ref)
     }
 
 })()
