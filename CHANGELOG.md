@@ -5,6 +5,7 @@
 * **p**erformance
 
 ### 2020.8.
+* **f** Add `-gen <filename> [--ref]` command to generate test and/or referenced file.
 * **f** Add optional cli argument `-v` or `--verbose` to display noisy test run info.
 
 ### 2020.8.12
