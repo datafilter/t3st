@@ -23,6 +23,12 @@
 
     conf.opt.clear && display.clear()
 
+    if (conf.arg.watch_mode) {
+        const watch_header = require('./commands/watch_msg')
+        console.log(watch_header)
+        console.log('-'.repeat(watch_header.length))
+    }
+
     if (conf.opt.test) {
         const target_dir = conf.arg.dir || 'tests'
 

@@ -1,0 +1,1 @@
+module.exports = `Watching for changes.. Press ctrl + c to exit.`

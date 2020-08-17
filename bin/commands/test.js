@@ -14,8 +14,9 @@ module.exports = async (display, target_dir, verbose) => {
         ? path.join(test_dir, 'tests')
         : test_dir
 
-    display.log(`testing ${run_dir}`)
-    display.log('-'.repeat(40))
+    const test_msg = `testing ${run_dir}`
+    display.log(test_msg)
+    display.log('-'.repeat(test_msg.length))
 
     if (fs.existsSync(run_dir)) {
         const summary = await run({ test_dir: run_dir, verbose })
