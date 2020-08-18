@@ -4,6 +4,9 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.8.18
+* **p** `-w` Cache dependency checking.
+
 ### 2020.8.17
 * **f** Add `-w` command to watch for changes and rerun tests.
 * **f** Add `-gen <filename> [--ref]` command to generate test and/or referenced file.
