@@ -21,6 +21,7 @@ const cache_msg = (pkg) =>
 
 module.exports = () => {
 
+    let checked_dependencies = false
     let notify_t3st = false
     let notify_nodemon = false
 
@@ -45,11 +46,14 @@ module.exports = () => {
 
     t3stmon.stderr.setEncoding('utf8')
     t3stmon.stderr.on('data', (_data) => {
-        console.log('Missing npm package(s): t3st and/or nodemon.')
-        console.time('checked in')
-        console.log('Checking dependencies..')
-        notify_t3st = cache_msg(`t3st`)
-        notify_nodemon = cache_msg(`nodemon`)
-        console.timeEnd('checked in')
+        if (!checked_dependencies) {
+            console.log('Missing npm package(s): t3st and/or nodemon.')
+            console.time('checked in')
+            console.log('Checking dependencies..')
+            notify_t3st = cache_msg(`t3st`)
+            notify_nodemon = cache_msg(`nodemon`)
+            console.timeEnd('checked in')
+            checked_dependencies = true
+        }
     })
 }
