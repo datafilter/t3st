@@ -21,7 +21,6 @@ module.exports = async (display, target_dir, verbose) => {
     if (fs.existsSync(run_dir)) {
         const summary = await run({ test_dir: run_dir, verbose })
         display.log(summary)
-        verbose && display.log('-'.repeat(40))
     } else {
         require('../../lib/io').flagExitError()
         display.log('no tests found in ' + run_dir)
