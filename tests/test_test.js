@@ -24,18 +24,6 @@ module.exports = ({ test, assert, affirm }) => {
             assert(test_complete.constructor.name, 'Object')
             assert(true, !!test_complete.description)
         })
-        , test("promise body returns promise result", () => {
-            const test_promise = test("_", Promise.resolve())
-            assert(test_promise.constructor.name, 'Promise')
-            assert(false, !!test_promise.description)
-            assert(true, !!test_promise.then)
-        })
-        , test("IIFE async body returns promise result", () => {
-            const test_promise = test("_", (async () => { })())
-            assert(test_promise.constructor.name, 'Promise')
-            assert(false, !!test_promise.description)
-            assert(true, !!test_promise.then)
-        })
         , test("async body returns promise result", () => {
             const test_promise = test("_", async () => { })
             assert(test_promise.constructor.name, 'Promise')
@@ -44,7 +32,7 @@ module.exports = ({ test, assert, affirm }) => {
         })
         , test("unexpected body returns error result", () => {
             const unexpected_primitives = [null, 0, 1, 'oh, hi mark', Symbol()]
-            const some_unexpected_objects = [Date.now(), { stack: 'trace' }, new Object(1), NaN, Infinity, new SyntaxError]
+            const some_unexpected_objects = [Date.now(), { stack: 'trace' }, new Object(1), NaN, Infinity, new SyntaxError, Promise.resolve()]
 
             const unexpecteds = [...unexpected_primitives, ...some_unexpected_objects]
 

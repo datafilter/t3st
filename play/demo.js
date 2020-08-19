@@ -27,8 +27,6 @@ module.exports = async ({ test, assert, affirm, alike }) => [
         const james = await Promise.resolve('bond')
         assert(james, 'bond')
     })
-    , await test("You can use a promise chaining instead of await",
-        Promise.resolve(1).then(x => x === 1))
 
     // It can handle nesting test results
     , [[[[test("results can be a little bit nested", () => { }),

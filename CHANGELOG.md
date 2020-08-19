@@ -6,6 +6,7 @@
 
 ### 2020.8.18
 * **p** `-w` Cache dependency checking.
+* **p** Remove promise as test body.
 
 ### 2020.8.17
 * **f** Add `-w` command to watch for changes and rerun tests.

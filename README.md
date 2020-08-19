@@ -74,6 +74,7 @@ Command line argument `-s` or `--silent` supresses printing output, so the only 
 
 <!-- TODO examples -->
 #### test(description, (function) => { ..code ..})
+#### test(description, async (function) => { ..code ..})
 Run a function runs a piece of code. It catches and error, the test fails.
 #### assert(a,b)
 Compare that two values are ===, throws on false/error.
