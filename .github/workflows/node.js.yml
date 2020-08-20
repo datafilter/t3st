@@ -43,6 +43,7 @@ jobs:
       with:
         node-version: '12.x'
         registry-url: 'https://registry.npmjs.org'
+    - run: npm i
     - run: (node .github/scripts/npm-version-diff.js && npm publish) || echo did not publish
       env:
         # https://docs.github.com/en/actions/language-and-framework-guides/publishing-nodejs-packages
