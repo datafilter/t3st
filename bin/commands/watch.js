@@ -44,4 +44,9 @@ module.exports = () => {
         }
         process.stdout.write(s) // not console.log, as it prints unwanted additional newlines
     })
+
+    t3stmon.stderr.setEncoding('utf-8')
+    t3stmon.stderr.on('data', (data) => {
+        process.stderr.write('' + data)
+    })
 }
