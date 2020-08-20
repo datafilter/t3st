@@ -4,6 +4,9 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.8.20
+* **m** Make gen reference path relative
+
 ### 2020.8.19
 * **f** Add `-v` option to display version number.
 

@@ -38,7 +38,7 @@ module.exports = (display, filename, is_ref = false) => {
 
     const filename_with_ext = filename.includes('.') ? filename : filename + '.js'
     // regex: remove leading / and \ slashes
-    const file_path = path.normalize(filename_with_ext).replace(/^\/+/g, '').replace(/^\\+/g, '') 
+    const file_path = path.normalize(filename_with_ext).replace(/^\/+/g, '').replace(/^\\+/g, '')
 
     const test_path = path.join(`tests`, file_path)
 
@@ -51,19 +51,21 @@ module.exports = (display, filename, is_ref = false) => {
         }
     }
 
-    const require_path = (file_path.includes('/') || file_path.includes('\\'))
-        ? path.join('../', file_path).replace(/\\/g, '/')
-        : path.join('../', file_path).replace(/\\/g, '/')
+    const absolute_path = file_path.replace(/\\/g, '/')
 
-    console.log('req path:', require_path)
+    const root_path = '../' +
+        absolute_path.split('')
+            .filter(c => c == `/` || c == `\\`)
+            .map(_ => '../')
+            .join('')
+
+    const require_path = root_path + absolute_path
 
     const test_content = is_ref
         ? source_test.replace(`<<replace>>`,
             `const ${
             path.basename(file_path, path.extname(file_path))
-            } = require.main.require('${
-            require_path
-            }')`)
+            } = require('${require_path}')`)
         : source_test.replace(`<<replace>>`, `// const unit = require('...')`)
 
     fs.mkdirSync(path.dirname(test_path), { recursive: true });
