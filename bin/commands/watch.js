@@ -29,7 +29,7 @@ module.exports = () => {
 
     console.log('Starting watch mode..')
 
-    const t3stmon = spawn(`npx`, [`nodemon`, `-q`, `-x`, `'npx t3st --watch_mode=true'`], { shell: true })
+    const t3stmon = spawn(`npx`, [`nodemon`, `-q`, `-x`, `"npx t3st --watch_mode=true"`], { shell: true })
 
     t3stmon.stdout.setEncoding('utf8')
     t3stmon.stdout.on('data', (data) => {
