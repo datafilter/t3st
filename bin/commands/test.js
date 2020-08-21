@@ -1,4 +1,4 @@
-module.exports = async (display, target_dir, verbose) => {
+module.exports = async (display, target_dir, noisy) => {
 
     display.time('elapsed')
 
@@ -19,7 +19,7 @@ module.exports = async (display, target_dir, verbose) => {
     display.log('-'.repeat(test_msg.length))
 
     if (fs.existsSync(run_dir)) {
-        const summary = await run({ test_dir: run_dir, verbose })
+        const summary = await run({ test_dir: run_dir, noisy })
         display.log(summary)
     } else {
         require('../../lib/io').flagExitError()

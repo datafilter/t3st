@@ -4,6 +4,9 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.8.19
+* **f** Add `-v` option to display version number.
+
 ### 2020.8.18
 * **p** `-w` Cache dependency checking.
 * **p** Remove promise as test body.
@@ -11,7 +14,7 @@
 ### 2020.8.17
 * **f** Add `-w` command to watch for changes and rerun tests.
 * **f** Add `-gen <filename> [--ref]` command to generate test and/or referenced file.
-* **f** Add optional cli argument `-v` or `--verbose` to display noisy test run info.
+* **f** Add optional cli argument `-n` or `--noisy` to display noisy test run info.
 
 ### 2020.8.12
 

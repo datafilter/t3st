@@ -21,6 +21,12 @@
         return
     }
 
+    if (conf.opt.version) {
+        const pkg = require('../package.json')
+        console.log(pkg.version)
+        return
+    }
+
     conf.opt.clear && display.clear()
 
     if (conf.arg.watch_mode) {
@@ -29,20 +35,20 @@
         console.log('-'.repeat(watch_header.length))
     }
 
-    if (conf.opt.test) {
+    if (conf.command.test) {
         const target_dir = conf.arg.dir || 'tests'
 
         const test = require('./commands/test')
 
-        await test(display, target_dir, conf.opt.verbose || false)
+        await test(display, target_dir, conf.opt.noisy || false)
     }
-    else if (conf.opt.watch) {
+    else if (conf.command.watch) {
         require('./commands/watch')(conf)
     }
-    else if (conf.opt.help) {
+    else if (conf.command.help) {
         require('./commands/help')(conf.arg.help)
     }
-    else if (conf.opt.gen) {
+    else if (conf.command.gen) {
         require('./commands/gen')(display, conf.arg.gen, conf.opt.ref)
     }
 

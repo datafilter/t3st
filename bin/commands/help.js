@@ -4,47 +4,57 @@ const usage =
 
 A small and light javascript test framework.
 
-['clear', 'dir', 'filter', 'gen', 'help', 'silent', 'test', 'verbose', 'watch'])
+['clear', 'dir', 'filter', 'gen', 'help', 'noisy', 'silent', 'ref', 'test', 'version', 'watch']
 
 Commands:
-    gen <path>      Generate a new test file:
-                        t3st gen test.js
-                        t3st gen sub/path/test.js
+    gen <path>      
+        Generate a new test file:
+            t3st gen test.js
+            t3st gen sub/path/test.js
 
-                    Generate a new file, and a new test file:
-                        t3st gen --ref /lib/feature.js
+        Generate a new file, and a new test file:
+            t3st gen --ref /lib/feature.js
 
-    help            Display this help message.
+    help
+        Display this help message.
 
-    test            Run the tests. This is the default if you don't specify any commands.
+    test
+        Run the tests. This is the default if you don't specify any commands.
 
-    watch           Watch for changes in .js files, and rerun tests.
-                    Also known as live tests, or hot reloading.
+    watch           Keep a test window open, watch for file changes and rerun tests.
 
 Options:
-    --clear         Clear the console before running.
+    -c, --clear
+        Clear the console before running.
 
-    --dir <path>    Specify the target directory of tests to run.
-                    Defaults to pwd/tests (current directory/tests)
-                        t3st --dir usr/temp/my-project/tests
+    --dir <path>    
+        Specify the target directory of tests to run.
+        Defaults to pwd/tests (current directory/tests)
+            t3st --dir usr/temp/my-project/tests
 
-                    When used with the gen command, specify the target directory to create tests in:
-                        t3st --dir /over/there test.js
-                        t3st --dir /over/yonder --ref /lib/feature.js
+        When used with the gen command, specify the target directory to create tests in:
+            t3st --dir /over/there test.js
+            t3st --dir /over/yonder --ref /lib/feature.js
 
-    --filter        Specify a file pattern match to use for finding tests.
-        <pattern>   The default filter is *.js
-                        t3st -f *.spec.js
-                        t3st -f *.mjs
+    --filter <pattern> 
+        Specify a file pattern match to use for finding tests.
+        The default filter is *.js
+            t3st -f *.spec.js
+            t3st -f *.mjs
 
-    --silent        Do not write any test result output to console.
+    -s, --silent
+        Do not write any test result output to console.
+        Invalid command line input will still be shown.
+        The exit code of 0 (success) or 1 (failure) is still set.
 
-                    Invalid t3st command line input will still be shown.
-                    The exit code of 0 (success) or 1 (failure) is still set.
+    -r, -ref
+        Specify a file to create with the gen command.
 
-    --ref           Specify a file to create with the gen command.
+    -n, --noisy
+        Display the names of each passing test.
 
-    --verbose       Display the names of each passing test.
+    -v, --version
+        Display the version of t3st.
 
 Running t3st with defaults:
     t3st
@@ -56,7 +66,7 @@ The very first argument can also be specified with just the starting letter.
 
 More than one option without <value> can flagged at the same time
     t3st w -d /tests -f *.spec.js -cv
-    # t3st watch --dir /tests --filter *.spec.js --clear --verbose
+    # t3st watch --dir /tests --filter *.spec.js --clear --noisy
 `
 // examples can be found [here](link)
 
@@ -67,7 +77,7 @@ const _more =
                         where <topic> is one of the following:
                         --- Command line options ---
                         gen, watch, clear,
-                        dir, filter, silent, verbose
+                        dir, filter, silent, noisy
                         ------ Test functions ------
                         test, assert, affirm, alike
 `

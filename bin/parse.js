@@ -13,7 +13,7 @@ const find_closest_command = (command, alias) => {
 
 const build_config = (args) => {
 
-    const alias = ['clear', 'dir', 'filter', 'gen', 'help', 'silent', 'ref', 'test', 'verbose', 'watch']
+    const alias = ['clear', 'dir', 'filter', 'gen', 'help', 'noisy', 'silent', 'ref', 'test', 'version', 'watch']
 
     const conf = clia(args, alias)
 
@@ -40,21 +40,15 @@ module.exports = (args) => {
 
     const conf = build_config(args)
 
-    const commands_count = [
-        conf.opt.gen,
-        conf.opt.test,
-        conf.opt.watch,
-    ].filter(c => c).length
+    conf.command = {}
 
-    if (commands_count > 1)
-        return {
-            opt: conf.opt,
-            errors: (conf.errors || []).concat([
-                `If you do specify a command, only specify a single one : gen test watch`])
-        }
-
-    if (commands_count === 0)
-        conf.opt.test = true
+    if (conf.opt.help)
+        conf.command.help = true
+    else if (conf.opt.watch)
+        conf.command.watch = true
+    else if (conf.opt.gen)
+        conf.command.gen = true
+    else conf.command.test = true
 
     return conf
 }
