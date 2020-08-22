@@ -4,6 +4,9 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.8.21
+* **f** Add `-f` to filter which files to test.
+
 ### 2020.8.20
 * **m** Make gen reference path relative
 

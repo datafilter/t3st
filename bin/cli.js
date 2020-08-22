@@ -36,11 +36,14 @@
     }
 
     if (conf.command.test) {
-        const target_dir = conf.arg.dir || 'tests'
 
         const test = require('./commands/test')
 
-        await test(display, target_dir, conf.opt.noisy || false)
+        const target_dir = conf.arg.dir || 'tests'
+        const noisy = conf.opt.noisy || false
+        const filter = conf.arg.filter || '.js'
+
+        await test(display, target_dir, noisy, filter)
     }
     else if (conf.command.watch) {
         require('./commands/watch')(conf)
