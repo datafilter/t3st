@@ -24,15 +24,32 @@ const check_packages = () => {
     perf_message = `${recommend('t3st')}\n${recommend('nodemon')}`.trim()
 }
 
-module.exports = () => {
+const rebuild_args = (conf) => {
+    const not_watch = (key) => key !== 'watch' && key !== 'w'
 
-    // TODO optional pass additional options to spawned t3st.
+    const args = Object.keys(conf.args)
+        .filter(not_watch)
+        .map(key => conf.args[key].map(val =>
+            `--${key}=${val}`).join(` `))
+        .join(` `)
+
+    const opts = Object.keys(conf.opt)
+        .filter(not_watch)
+        .map(o => `--${o}`).join(` `)
+
+    return `${args} ${opts}`
+}
+
+module.exports = (conf) => {
 
     console.log('Starting watch mode..')
 
+    const args = rebuild_args(conf)
+    const t3st_command = `"npx t3st --watch_mode=true ${args}"`
+
     setTimeout(check_packages, 0)
 
-    const t3stmon = spawn(`npx`, [`nodemon`, `-q`, `-x`, `"npx t3st --watch_mode=true"`], { shell: true })
+    const t3stmon = spawn(`npx`, [`nodemon`, `-q`, `-x`, t3st_command], { shell: true })
 
     t3stmon.stdout.setEncoding('utf8')
     t3stmon.stdout.on('data', (data) => {
