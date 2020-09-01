@@ -3,7 +3,7 @@ module.exports = async (framework) => {
 
     const path = require('path')
 
-    const { test, assert, affirm } = framework
+    const { test, equal, affirm } = framework
 
     const { execSync } = require("child_process")
     const shell = (cmd) => execSync(cmd) + ''
@@ -30,7 +30,7 @@ module.exports = async (framework) => {
                     }
                 }
             })
-            assert(fail_t3st.error.status, 1)
+            equal(fail_t3st.error.status, 1)
             affirm(fail_t3st.error.message, m => m.includes('Command failed'))
             affirm(fail_t3st.error.output, o => o.includes('0 tests [ok] ..and 1 [error]'))
             affirm(fail_t3st.error.output, o => o.includes("Possible missing 'await' statement before an async test"))

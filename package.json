@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2020.8.21",
+  "version": "2020.9.1",
   "description": "small & light javascript test framework",
   "files": [
     "/bin",
@@ -20,14 +20,8 @@
   "keywords": [
     "testing",
     "test",
-    "tests",
-    "test framework",
-    "unit test",
     "unit testing",
-    "tdd",
-    "bdd",
-    "assert",
-    "assertion"
+    "tdd"
   ],
   "author": "devmachiine",
   "license": "MIT",

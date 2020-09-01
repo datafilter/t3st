@@ -12,17 +12,17 @@ Usage: npx t3st gen <test filename>
        If the filename has no extension it is appended with .js
 `
 
-const source_test = `module.exports = async ({ test, assert, affirm, alike }) => {
+const source_test = `module.exports = async ({ test, equal, affirm }) => {
 
     <<replace>>
 
     return [
         test("description", () => {
-            assert(2, 1 + 1)
+            equal(2, 1 + 1)
             affirm(1, 1 + 1, (a, b) => a + b == 3)
         }),
         , await test("async test as to be awaited.", async () => {
-            alike({}, {})
+            equal({}, {})
         })]
 }`
 

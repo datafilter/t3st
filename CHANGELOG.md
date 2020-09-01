@@ -4,7 +4,8 @@
 * **m**aintenance
 * **p**erformance
 
-### 2020.8.
+### 2020.9.1
+**m** replace assert & alike functions with equal
 **f** pass additional options via watch mode
 
 ### 2020.8.21

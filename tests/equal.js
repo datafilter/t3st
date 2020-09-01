@@ -1,4 +1,4 @@
-module.exports = async ({ test, assert, equal }) => {
+module.exports = async ({ test, equal }) => {
 
     // const unit = require('...')
 
@@ -30,7 +30,7 @@ module.exports = async ({ test, assert, equal }) => {
     return [
         test("non-equal NaN", () => {
             const NE = test("NaN", () => equal(NaN, NaN))
-            assert(true, !!NE.trace)
+            equal(true, !!NE.trace)
         })
         , test("equal primitives", () => {
             equal(1, 1)
@@ -90,6 +90,13 @@ module.exports = async ({ test, assert, equal }) => {
 
             equal({}, flatn({}))
             equal({ e: {} }, flatn({ e: {} }))
+        })
+        , test("equal nulls", () => equal(null, null))
+        , test("compare null to object gives expected error", () => {
+            const t1 = test("", () => equal(null, {}))
+            const t2 = test("", () => equal({}, null))
+            equal(true, t1.error.message.includes("Evaluation ["))
+            equal(true, t2.error.message.includes("Evaluation ["))
         })
     ]
 }

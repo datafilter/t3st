@@ -1,18 +1,18 @@
-module.exports = ({ test, assert, affirm }) => {
+module.exports = ({ test, equal, affirm }) => {
     return [
         test("empty returns error", () => {
             const nothing = test()
-            assert("empty test", nothing.description)
+            equal("empty test", nothing.description)
             affirm(() => nothing.error.message.includes('invalid test'))
         })
         , test("any description test ok", () => {
             const any_value = [0, undefined, null, true, false, '', 't3st', f => g => x => g(f(x))]
-            assert(true, any_value.every(name =>
-                assert(false, !!test(name, () => true).trace)))
+            equal(true, any_value.every(name =>
+                equal(false, !!test(name, () => true).trace)))
         })
         , test("without body returns error", () => {
-            const detached_head = test("assert truthy")
-            assert(true, !!detached_head.trace)
+            const detached_head = test("equal truthy")
+            equal(true, !!detached_head.trace)
             affirm(() => detached_head.error.message.includes('invalid test'))
         })
         , test("ERROR body cannot be boolean", () => {
@@ -21,14 +21,14 @@ module.exports = ({ test, assert, affirm }) => {
         })
         , test("function body returns immediate result", () => {
             const test_complete = test("_", () => { })
-            assert(test_complete.constructor.name, 'Object')
-            assert(true, !!test_complete.description)
+            equal(test_complete.constructor.name, 'Object')
+            equal(true, !!test_complete.description)
         })
         , test("async body returns promise result", () => {
             const test_promise = test("_", async () => { })
-            assert(test_promise.constructor.name, 'Promise')
-            assert(false, !!test_promise.description)
-            assert(true, !!test_promise.then)
+            equal(test_promise.constructor.name, 'Promise')
+            equal(false, !!test_promise.description)
+            equal(true, !!test_promise.then)
         })
         , test("unexpected body returns error result", () => {
             const unexpected_primitives = [null, 0, 1, 'oh, hi mark', Symbol()]

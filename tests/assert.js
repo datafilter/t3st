@@ -1,71 +1,63 @@
-module.exports = ({ test, assert, affirm }) => {
+module.exports = ({ test, equal, affirm }) => {
 
-    const assert_chain_tests = [
-        test("true assert returns true",
-            () => assert(true, assert(true, true)))
-        , test("chained assert stops at first error", () => {
+    const equal_chain_tests = [
+        test("true equal returns true",
+            () => equal(true, equal(true, true)))
+        , test("chained equal stops at first error", () => {
             const err_third = test("_",
-                () => assert(true, true) && assert(1, 1) && assert(1, 5) && assert(6, 7))
+                () => equal(true, true) && equal(1, 1) && equal(1, 5) && equal(6, 7))
             affirm(err_third.error.message, (m) => m.includes('Evaluation [1] === [5]'))
         })
     ]
 
-    const undefined_argument_error = 'assert(?,?) missing or undefined argument(s)'
+    const undefined_argument_error = 'equal(?,?) missing or undefined argument(s)'
 
-    const assert_equal_tests = [
-        test("OK results from equal values", () => assert(true, true) && assert(false, false) && assert('a', 'a'))
-        , test("strict assert shows type mismatch error", () => {
-            const nonstrict_err = test("_", () => assert('5', 5))
-            assert(true, !!nonstrict_err.trace)
-            affirm(nonstrict_err.error.message, (m) => m.includes('Type mismatch: assert(string, number)'))
+    const equal_equal_tests = [
+        test("OK results from equal values", () => equal(true, true) && equal(false, false) && equal('a', 'a'))
+        , test("strict equal shows type mismatch error", () => {
+            const nonstrict_err = test("_", () => equal('5', 5))
+            equal(true, !!nonstrict_err.trace)
+            affirm(nonstrict_err.error.message, (m) => m.includes('Type mismatch: equal(string, number)'))
         })
         , test("ERROR results for same type doesn't show type error", () => {
-            const nonstrict_err = test("_", () => assert(1, 2))
-            assert(true, !!nonstrict_err.trace)
-            assert(false, nonstrict_err.error.message.includes('Type mismatch: assert(string, number)'))
+            const nonstrict_err = test("_", () => equal(1, 2))
+            equal(true, !!nonstrict_err.trace)
+            equal(false, nonstrict_err.error.message.includes('Type mismatch: equal(string, number)'))
         })
         , test("Evaluation is included in error message", () => {
-            affirm(test("err", () => assert(true, false)).error.message, (m) =>
+            affirm(test("err", () => equal(true, false)).error.message, (m) =>
                 m.includes("Evaluation [true] === [false]"))
-            affirm(test("err", () => assert(true, 'true')).error.message, (m) =>
+            affirm(test("err", () => equal(true, 'true')).error.message, (m) =>
                 m.includes("Evaluation [true] === ['true']"))
-            affirm(test("err", () => assert("text", `other text`)).error.message, (m) =>
+            affirm(test("err", () => equal("text", `other text`)).error.message, (m) =>
                 m.startsWith("Evaluation ['text'] === ['other text']"))
-            affirm(test("err", () => assert(5, true)).error.message, (m) =>
+            affirm(test("err", () => equal(5, true)).error.message, (m) =>
                 m.includes("Evaluation [5] === [true]"))
         })
-        , test("assert nothing or undefined returns error", () => {
-            const nullary = test("_", () => assert())
-            const unary = test("_", () => assert(undefined))
-            const binary = test("_", () => assert(undefined, undefined))
+        , test("equal nothing or undefined returns error", () => {
+            const nullary = test("_", () => equal())
+            const unary = test("_", () => equal(undefined))
+            const binary = test("_", () => equal(undefined, undefined))
             affirm(() => nullary.error.message.includes(undefined_argument_error))
             affirm(() => unary.error.message.includes(undefined_argument_error))
             affirm(() => binary.error.message.includes(undefined_argument_error))
         })
-        , test("assert value against undefined returns error", () => {
-            const missing_2nd = test("_", () => assert("truthy"))
-            const undefined_1st = test("_", () => assert(undefined, "truthy"))
-            const undefined_2nd = test("_", () => assert("truthy", undefined))
+        , test("equal value against undefined returns error", () => {
+            const missing_2nd = test("_", () => equal("truthy"))
+            const undefined_1st = test("_", () => equal(undefined, "truthy"))
+            const undefined_2nd = test("_", () => equal("truthy", undefined))
             affirm(() => missing_2nd.error.message.includes(undefined_argument_error))
             affirm(() => undefined_1st.error.message.includes(undefined_argument_error))
             affirm(() => undefined_2nd.error.message.includes(undefined_argument_error))
         })
-        , test("error in assert is caught in test before it's passed to assert", () => {
-            const err_assert = test("_", () => assert(1, (() => { throw 'iife throw'})()))
-            assert(err_assert.error + '', 'iife throw')
+        , test("error in equal is caught in test before it's passed to equal", () => {
+            const err_equal = test("_", () => equal(1, (() => { throw 'iife throw'})()))
+            equal(err_equal.error + '', 'iife throw')
 
             const test_err = test("_", () => (() => { throw 'iife throw'})())
-            affirm(test_err.error + '', err_assert.error + '', (t, e) => t === e)
-        })
-        , test("failed assert object compare suggests alike function", () => {
-            const mark1 = { name: 'mark' }
-            const mark2 = { name: 'mark' }
-            assert(mark1, mark1)
-            assert(mark2, mark2)
-            const err_assert = test("_", () => assert(mark1, mark2))
-            affirm(() => err_assert.error.message.includes('use : alike(data, data'))
+            affirm(test_err.error + '', err_equal.error + '', (t, e) => t === e)
         })
     ]
 
-    return [assert_chain_tests, assert_equal_tests]
+    return [equal_chain_tests, equal_equal_tests]
 }

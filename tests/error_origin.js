@@ -1,4 +1,4 @@
-module.exports = async ({ test, assert, affirm }) => [
+module.exports = async ({ test, equal, affirm }) => [
 
     test("invalid test body type", () => {
         const missing_body = test("_")
@@ -9,15 +9,15 @@ module.exports = async ({ test, assert, affirm }) => [
         affirm(undefined_dessert.trace, (trace) => trace.includes('error_origin.js'))
     })
     , test("thrown error in test shows origin", () => {
-        const thrown_error = test("_", () => assert(true, false))
+        const thrown_error = test("_", () => equal(true, false))
         affirm(thrown_error.trace, (trace) => trace.includes('error_origin.js'))
     })
     , test("inner fail should still fail", async () => {
-        const tr = await test("?>", async () => await assert(false, true))
-        assert(true, !!tr.trace)
+        const tr = await test("?>", async () => await equal(false, true))
+        equal(true, !!tr.trace)
     })
     , await test("Find async error origin", async () => {
-        const tr = await test("?>", async () => assert(false, true))
+        const tr = await test("?>", async () => equal(false, true))
         affirm(tr.trace, (trace) => trace.includes('error_origin.js'))
     })
     , await test("async test without await gives await hint", async () => {

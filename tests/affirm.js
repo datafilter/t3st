@@ -1,10 +1,10 @@
-module.exports = ({ test, assert, affirm }) => {
+module.exports = ({ test, equal, affirm }) => {
 
     const affirm_chain_tests = [
-        test("true assert returns true", () =>
-            assert(true, affirm(() => true))
+        test("true equal returns true", () =>
+            equal(true, affirm(() => true))
         )
-        , test("chained assert stops at first error", () => {
+        , test("chained equal stops at first error", () => {
             const err_third = test("_", () =>
                 affirm(() => true)
                 && affirm(() => 1 === 1)
@@ -18,7 +18,7 @@ module.exports = ({ test, assert, affirm }) => {
     const affirm_tests = [
         test("affirm nothing gives hint", () => {
             const nullary_affirm = test("_", () => affirm())
-            assert(true, nullary_affirm.error.message.includes('expected (...values, function => boolean'))
+            equal(true, nullary_affirm.error.message.includes('expected (...values, function => boolean'))
         })
         , test("includes error message of invalid assertion", () => {
             /* eslint-disable no-undef */
@@ -37,26 +37,26 @@ module.exports = ({ test, assert, affirm }) => {
         })
         , test("expects a boolean result", () => {
             const non_boolean = test("_", () => affirm(() => 'truthy'))
-            assert(true, !!non_boolean.trace)
+            equal(true, !!non_boolean.trace)
             affirm(non_boolean.error.message, (m) =>
                 m.includes('expected affirm(function => boolean)'))
 
-            assert(false, non_boolean.error.message.includes("failed *before* assertion"))
+            equal(false, non_boolean.error.message.includes("failed *before* assertion"))
         })
-        , test("ok assert truthy with !!", () => affirm(() => !!'truthy'))
+        , test("ok equal truthy with !!", () => affirm(() => !!'truthy'))
         , test("includes evaluation in false assertion", () => {
             const err_false = test("_", () => affirm(() => 50 < 1))
-            assert(true, err_false.error.message.includes("Evaluation [() => 50 < 1]"))
+            equal(true, err_false.error.message.includes("Evaluation [() => 50 < 1]"))
 
-            assert(false, err_false.error.message.includes("failed *before* assertion"))
+            equal(false, err_false.error.message.includes("failed *before* assertion"))
         })
         , test("description is optional", () => affirm(() => true))
         , test("description can be added", () => affirm("something", () => true))
         , test("description is shown in error message", () => {
             const flavor = "cinnamon"
             const err_description = test("_", () => affirm(flavor, () => flavor == "vanilla"))
-            assert(true, err_description.error.message.includes("cinnamon"))
-            assert(true, err_description.error.message.includes(`Evaluation [() => flavor == "vanilla"]`))
+            equal(true, err_description.error.message.includes("cinnamon"))
+            equal(true, err_description.error.message.includes(`Evaluation [() => flavor == "vanilla"]`))
         })
         , test("propositions are passed into assertion", () => {
             const one = 1
@@ -68,11 +68,11 @@ module.exports = ({ test, assert, affirm }) => {
             const number = 7
             const false_affirm = test("_", () => affirm(text, number, {}, 'na', (_na) => false))
             const m = false_affirm.error.message
-            assert(true, m.includes('water'))
-            assert(true, m.includes(`'water'`))
-            assert(true, m.includes('7'))
+            equal(true, m.includes('water'))
+            equal(true, m.includes(`'water'`))
+            equal(true, m.includes('7'))
 
-            assert(false, m.includes(`'7'`))
+            equal(false, m.includes(`'7'`))
         })
         , test("affirm error includes preposition object properties", () => {
             const test_object = {

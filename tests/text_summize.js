@@ -1,4 +1,4 @@
-module.exports = ({ test, assert, affirm }) => {
+module.exports = ({ test, equal, affirm }) => {
 
     const { summize } = require('../lib/text')
 
@@ -17,7 +17,7 @@ module.exports = ({ test, assert, affirm }) => {
                 , summize(...results_empty)
             ]
 
-            assert(true, test_cases.every(report =>
+            equal(true, test_cases.every(report =>
                 affirm(report, expected_start, (r, e) => r.startsWith(e))))
         })
         , test("summize single OK result", () => {
@@ -25,7 +25,7 @@ module.exports = ({ test, assert, affirm }) => {
             const test_cases = [
                 summize(results_single_success)
             ]
-            assert(true, test_cases.every(c =>
+            equal(true, test_cases.every(c =>
                 affirm(c, expected_start, (c, expected_start) => c.startsWith(expected_start))
             ))
         })
@@ -37,11 +37,11 @@ module.exports = ({ test, assert, affirm }) => {
                 , { description: (a) => a * a }
                 , { description: 0, error: 0 }
             ]
-            assert(true, valid_results.every(c =>
+            equal(true, valid_results.every(c =>
                 affirm(summize([c]), (report) => !report.includes('Not a test result'))))
 
             const non_results = [{}, 5, "some", null, { error: "no description" }, Promise.resolve(1)]
-            assert(true, non_results.every(c =>
+            equal(true, non_results.every(c =>
                 affirm(summize([c]), (report) => report.includes('Not a test result'))))
         })
         , test("Tests with errors from thrown falsey values are tallied as errors", () => {

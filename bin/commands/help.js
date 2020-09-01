@@ -79,7 +79,7 @@ const _more =
                         gen, watch, clear,
                         dir, filter, silent, noisy
                         ------ Test functions ------
-                        test, assert, affirm, alike
+                        test, equal, affirm
 `
 
 module.exports = (_topic) => {

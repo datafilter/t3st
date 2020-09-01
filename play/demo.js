@@ -1,12 +1,12 @@
-module.exports = async ({ test, assert, affirm, alike }) => [
+module.exports = async ({ test, equal, affirm }) => [
 
     // Hello World
     test("passing in a function runs it", () => console.log('spooky side-effect'))
 
     // Fun Validation
-    , test("assert compares values with ===", () => {
+    , test("equal compares values with ===", () => {
         const five = 2 + 3
-        assert(5, five)
+        equal(5, five)
     })
     , test("remove comments to view detailed output using affirm", () => {
         const a = 'some' //+ ' thing'
@@ -16,16 +16,16 @@ module.exports = async ({ test, assert, affirm, alike }) => [
             return number == 5 && text.length >= name_length
         })
     })
-    , test("compare data transfer objects with alike", () => {
+    , test("compare data transfer objects with equal", () => {
         const a = { 'type': 'aircraft', 'cost': '$4bn' }
         const b = { 'type': 'aircraft', 'cost': '$4bn' }
-        alike(a, b)
+        equal(a, b)
     })
 
     // Pinky Promise 
     , await test("tests can be async", async () => {
         const james = await Promise.resolve('bond')
-        assert(james, 'bond')
+        equal(james, 'bond')
     })
 
     // It can handle nesting test results

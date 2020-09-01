@@ -24,14 +24,14 @@ mkdir tests
 Paste this test code into a new file under `tests/demo.js`:
 
 ```javascript
-module.exports = async ({ test, assert, affirm }) => [
-    test("assert compares values with ===", () => {
+module.exports = async ({ test, equal, affirm }) => [
+    test("equal compares values with ===", () => {
         const five = 2 + 3
-        assert(5, five)
+        equal(5, five)
     })
     , await test("tests can be async", async () => {
         const james = await Promise.resolve('bond')
-        assert(james, 'bond')
+        equal(james, 'bond')
     })
 ]
 ```
@@ -76,12 +76,14 @@ Command line argument `-s` or `--silent` supresses printing output, so the only 
 #### test(description, (function) => { ..code ..})
 #### test(description, async (function) => { ..code ..})
 Run a function runs a piece of code. It catches and error, the test fails.
-#### assert(a,b)
-Compare that two values are ===, throws on false/error.
+#### equal(a,b)
+Compare that the data of two values are ===, including deepEquals of objects and function comparison. Throws on false/error.
+
+For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the same thing regardless of their shared/separate location(s) in memory.
 #### affirm(\[...values,\] function => boolean)
 Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
 #### alike(a,b)
-Compare the data of two values. For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the exact same thing regardless of their shared/separate location(s) in memory.
+
 
 ## [Design/Contributing](https://github.com/devmachiine/t3st/blob/master/docs/contributing.md)
 

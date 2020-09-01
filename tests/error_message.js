@@ -1,18 +1,18 @@
-module.exports = ({ test, assert, affirm, alike }) => [
-    test("Assert quotes string in error", () => {
+module.exports = ({ test, equal, affirm }) => [
+    test("Equal quotes string in error", () => {
         affirm(test('', () =>
-            assert(true, 'true')).error.message,
+            equal(true, 'true')).error.message,
             (m) => m.includes(`[true] === ['true']`))
         affirm(test('', () =>
-            assert(0, '0')).error.message,
+            equal(0, '0')).error.message,
             (m) => m.includes(`[0] === ['0']`))
     })
-    , test("Alike quotes string in error", () => {
+    , test("equal quotes string in error", () => {
         affirm(test('', () =>
-            alike(true, 'true')).error.message,
+            equal(true, 'true')).error.message,
             (m) => m.includes(`[true] === ['true']`))
         affirm(test('', () =>
-            alike(0, '0')).error.message,
+            equal(0, '0')).error.message,
             (m) => m.includes(`[0] === ['0']`))
     })
     , test("Affirm quotes string in error", () => {
