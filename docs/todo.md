@@ -6,7 +6,7 @@
 - Missing tests folder and/or better discovery/errors wrt tests
 - Mixed mode parameter, eg: -mix (defaults to .t3.js) or -mix:spec.js -> tests project dir with endswith filter.
 - Add optional runtime stats arg, eg: -time, -time:avg, -time:total,avg,slowest
-- Highlight differences in alike erros, eg for 
+- Highlight differences in equal object errors, eg for 
     {name : 'mark', age : 20, location : 'there'} 
     vs
     {name : 'mark', age : 40, awake : true}
