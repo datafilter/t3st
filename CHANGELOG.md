@@ -4,9 +4,12 @@
 * **m**aintenance
 * **p**erformance
 
+### 2020.
+**f** Add `throws` test function
+
 ### 2020.9.1
-**m** replace assert & alike functions with equal
-**f** pass additional options via watch mode
+**m** Replace `assert` & `alike` functions with `equal`
+**f** Pass additional options via watch mode
 
 ### 2020.8.21
 * **f** Add `-f` to filter which files to test.

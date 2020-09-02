@@ -1,4 +1,4 @@
-module.exports = ({ test, equal, affirm }) => {
+module.exports = ({ test, throws, equal, affirm }) => {
 
     const affirm_chain_tests = [
         test("true equal returns true", () =>
@@ -35,13 +35,11 @@ module.exports = ({ test, equal, affirm }) => {
 
             affirm(err_false.error + '', (err) => false === err.includes("failed *before* assertion"))
         })
-        , test("expects a boolean result", () => {
-            const non_boolean = test("_", () => affirm(() => 'truthy'))
-            equal(true, !!non_boolean.trace)
-            affirm(non_boolean.error.message, (m) =>
-                m.includes('expected affirm(function => boolean)'))
-
-            equal(false, non_boolean.error.message.includes("failed *before* assertion"))
+        , throws("expects a boolean result", () => {
+            affirm(() => 'truthy')
+        }, (err) => {
+            affirm(err.message, (m) => m.includes('expected affirm(function => boolean)'))
+            equal(false, err.message.includes("failed *before* assertion"))
         })
         , test("ok equal truthy with !!", () => affirm(() => !!'truthy'))
         , test("includes evaluation in false assertion", () => {

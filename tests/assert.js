@@ -1,4 +1,4 @@
-module.exports = ({ test, equal, affirm }) => {
+module.exports = ({ test, throws, equal, affirm }) => {
 
     const equal_chain_tests = [
         test("true equal returns true",
@@ -14,10 +14,10 @@ module.exports = ({ test, equal, affirm }) => {
 
     const equal_equal_tests = [
         test("OK results from equal values", () => equal(true, true) && equal(false, false) && equal('a', 'a'))
-        , test("strict equal shows type mismatch error", () => {
-            const nonstrict_err = test("_", () => equal('5', 5))
-            equal(true, !!nonstrict_err.trace)
-            affirm(nonstrict_err.error.message, (m) => m.includes('Type mismatch: equal(string, number)'))
+        , throws("strict equal shows type mismatch error", () => {
+            equal('5', 5)
+        }, (err) => {
+            affirm(err.message, (m) => m.includes('Type mismatch: equal(string, number)'))
         })
         , test("ERROR results for same type doesn't show type error", () => {
             const nonstrict_err = test("_", () => equal(1, 2))
@@ -51,10 +51,10 @@ module.exports = ({ test, equal, affirm }) => {
             affirm(() => undefined_2nd.error.message.includes(undefined_argument_error))
         })
         , test("error in equal is caught in test before it's passed to equal", () => {
-            const err_equal = test("_", () => equal(1, (() => { throw 'iife throw'})()))
+            const err_equal = test("_", () => equal(1, (() => { throw 'iife throw' })()))
             equal(err_equal.error + '', 'iife throw')
 
-            const test_err = test("_", () => (() => { throw 'iife throw'})())
+            const test_err = test("_", () => (() => { throw 'iife throw' })())
             affirm(test_err.error + '', err_equal.error + '', (t, e) => t === e)
         })
     ]
