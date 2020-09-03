@@ -98,5 +98,30 @@ module.exports = async ({ test, equal }) => {
             equal(true, t1.error.message.includes("Evaluation ["))
             equal(true, t2.error.message.includes("Evaluation ["))
         })
+        // , test("equal shows useful message", () => {
+        //     equal({
+        //         name: 'mark',
+        //         age: 80,
+        //         vessel: 'boat',
+        //         par: {
+        //             sub1: [1, 2],
+        //             sub2: 'diff',
+        //             fsame: (x) => 1,
+        //             fdiff: (y) => 9
+        //         }
+        //     }, {
+        //         name: 'joe',
+        //         age: 80,
+        //         fruit: 'banana',
+        //         par: {
+        //             sub1: [1, 2],
+        //             sub2: 'difff',
+        //             fsame: (x) => 1,
+        //             sub3: {
+        //                 sub4: { subsub: [1, 2, 3] }
+        //             }
+        //         }
+        //     })
+        // })
     ]
 }
