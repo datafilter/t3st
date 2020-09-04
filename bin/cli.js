@@ -54,6 +54,12 @@
     else if (conf.command.gen) {
         require('./commands/gen')(display, conf.arg.gen, conf.opt.ref)
     }
+    else if (conf.command.x) {
+        const isWin = require('os').platform() === 'win32'
+        if (isWin)
+            console.log(`nodemon -q -x "node bin\\cli.js -c --watch_mode=true"`)
+        else console.log(`nodemon -q -x 'node bin/cli.js -c --watch_mode=true'`)
+    }
 
 })()
 

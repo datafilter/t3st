@@ -56,6 +56,9 @@ Options:
     -v, --version
         Display the version of t3st.
 
+    -x, --xecute
+        Display full command of t3st watch
+
 Running t3st with defaults:
     t3st
     t3st test --dir \${pwd}/tests --filter *.js # same as 't3st' without options.
