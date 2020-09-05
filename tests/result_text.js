@@ -19,13 +19,13 @@ module.exports = ({ test, equal, affirm }) => {
             /* eslint-disable no-undef */
             const err_undefined = test("_", () => { _undefined })
             /* eslint-disable no-undef */
-            affirm(() => result_text(err_undefined).includes('ReferenceError: _undefined is not defined'))
+            affirm(() => result_text(err_undefined).message.includes('ReferenceError: _undefined is not defined'))
 
             const err_string = test("_", () => { throw 'err-msg' })
-            affirm(() => result_text(err_string).includes('err-msg'))
+            affirm(() => result_text(err_string).message.includes('err-msg'))
 
             const err_new_error = test("_", () => { throw Error('err--msg') })
-            const rt = result_text(err_new_error)
+            const rt = result_text(err_new_error).message
             affirm(() => rt.includes('Error'))
             affirm(() => rt.includes('err--msg'))
             affirm(rt, s => s.includes('    at'))
@@ -36,7 +36,7 @@ module.exports = ({ test, equal, affirm }) => {
                 const ok_test = test(name, nop)
                 return equal(ok_test.description, name)
                     && equal(!!ok_test.trace, false)
-                    && equal(result_text(ok_test), '[ok] ' + name)
+                    && equal(result_text(ok_test).message, '[ok] ' + name)
             }))
         })
         , test("ERROR test description is verbatim : *not* converted to string", () => {
@@ -44,7 +44,7 @@ module.exports = ({ test, equal, affirm }) => {
                 const err_test = test(name, () => equal(false, true))
                 return equal(err_test.description, name)
                     && equal(!!err_test.trace, true)
-                    && affirm(() => result_text(err_test).includes('[error] ' + name))
+                    && affirm(() => result_text(err_test).message.includes('[error] ' + name))
             }))
         })
         , test("description is open for re-use", () => {

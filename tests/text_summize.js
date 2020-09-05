@@ -1,6 +1,7 @@
 module.exports = ({ test, equal, affirm }) => {
 
-    const { summize } = require('../lib/text')
+    const { report } = require('../lib/text')
+    const report_silent = (results) => report({ results, silent: true })
 
     const results_empty = []
     const results_single_success = [{ description: "mkay fine" }]
@@ -9,21 +10,21 @@ module.exports = ({ test, equal, affirm }) => {
         test("summize empty results", () => {
             const expected_start = "0 tests [ok] 🥦"
             const test_cases = [
-                summize()
-                , summize([])
-                , summize([[]])
-                , summize([[[]]])
-                , summize(results_empty)
-                , summize(...results_empty)
+                report_silent()
+                , report_silent([])
+                , report_silent([[]])
+                , report_silent([[[]]])
+                , report_silent(results_empty)
+                , report_silent(...results_empty)
             ]
 
-            equal(true, test_cases.every(report =>
-                affirm(report, expected_start, (r, e) => r.startsWith(e))))
+            equal(true, test_cases.every(test_case =>
+                affirm(test_case, expected_start, (r, e) => r.startsWith(e))))
         })
         , test("summize single OK result", () => {
             const expected_start = "1 test [ok] 🥦"
             const test_cases = [
-                summize(results_single_success)
+                report_silent(results_single_success)
             ]
             equal(true, test_cases.every(c =>
                 affirm(c, expected_start, (c, expected_start) => c.startsWith(expected_start))
@@ -38,11 +39,11 @@ module.exports = ({ test, equal, affirm }) => {
                 , { description: 0, error: 0 }
             ]
             equal(true, valid_results.every(c =>
-                affirm(summize([c]), (report) => !report.includes('Not a test result'))))
+                affirm(report_silent([c]), (report) => !report.includes('Not a test result'))))
 
             const non_results = [{}, 5, "some", null, { error: "no description" }, Promise.resolve(1)]
             equal(true, non_results.every(c =>
-                affirm(summize([c]), (report) => report.includes('Not a test result'))))
+                affirm(report_silent([c]), (report) => report.includes('Not a test result'))))
         })
         , test("Tests with errors from thrown falsey values are tallied as errors", () => {
             const falseys = [false, '', 0, NaN, null, undefined]
@@ -50,9 +51,9 @@ module.exports = ({ test, equal, affirm }) => {
             const mixed_results = [...falsey_results, { description: '' }]
             const mixed_2_ok = [...mixed_results, { description: 'na' }]
 
-            affirm(summize(falsey_results), o => o.includes('0 tests [ok] ..and 6 [errors]'))
-            affirm(summize(mixed_results), o => o.includes('1 test [ok] ..and 6 [errors]'))
-            affirm(summize(mixed_2_ok), o => o.includes('2 tests [ok] ..and 6 [errors]'))
+            affirm(report_silent(falsey_results), o => o.includes('0 tests [ok] ..and 6 [errors]'))
+            affirm(report_silent(mixed_results), o => o.includes('1 test [ok] ..and 6 [errors]'))
+            affirm(report_silent(mixed_2_ok), o => o.includes('2 tests [ok] ..and 6 [errors]'))
         })
     ]
 

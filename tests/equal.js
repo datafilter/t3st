@@ -123,5 +123,6 @@ module.exports = async ({ test, equal }) => {
         //         }
         //     })
         // })
+        // , test("after", () => { throw 'printed after previous test table' })
     ]
 }

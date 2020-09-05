@@ -1,4 +1,4 @@
-module.exports = async (display, target_dir, noisy, filter) => {
+module.exports = async (display, target_dir, noisy, silent, filter) => {
 
     display.time('elapsed')
 
@@ -7,8 +7,7 @@ module.exports = async (display, target_dir, noisy, filter) => {
 
     const validation = require('../../lib/validation')
     const io = require('../../lib/io')
-    const { summize } = require('../../lib/text')
-    const run = require('../../lib/run')(validation, io, summize)
+    const run = require('../../lib/run')(validation, io)
 
     const entry = process.cwd()
 
@@ -23,12 +22,12 @@ module.exports = async (display, target_dir, noisy, filter) => {
     display.log('-'.repeat(test_msg.length))
 
     if (fs.existsSync(run_dir)) {
-        const summary = await run({
+        await run({
             test_dir: run_dir,
             file_filter: x => x.endsWith(filter),
-            noisy
+            noisy,
+            silent
         })
-        display.log(summary)
     } else {
         require('../../lib/io').flagExitError()
         display.log('no tests found in ' + run_dir)

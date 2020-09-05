@@ -43,7 +43,7 @@
         const noisy = conf.opt.noisy || false
         const filter = conf.arg.filter || '.js'
 
-        await test(display, target_dir, noisy, filter)
+        await test(display, target_dir, noisy, conf.opt.silent, filter)
     }
     else if (conf.command.watch) {
         require('./commands/watch')(conf)
