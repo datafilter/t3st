@@ -1,6 +1,6 @@
 module.exports = ({ test, equal, affirm }) => {
 
-    const { report } = require('../lib/text')
+    const { report } = require('../lib/report')
     const report_silent = (results) => report({ results, silent: true })
 
     const results_empty = []

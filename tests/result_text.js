@@ -1,6 +1,6 @@
 module.exports = ({ test, equal, affirm }) => {
 
-    const { result_text } = require('../lib/text')
+    const { result_text } = require('../lib/report')
 
     const nop = () => { }
 
