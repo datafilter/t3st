@@ -4,7 +4,7 @@
 * **m**aintenance
 * **p**erformance
 
-### 2020.
+### 2020.9.17
 **f** Add `throws` test function
 
 ### 2020.9.1

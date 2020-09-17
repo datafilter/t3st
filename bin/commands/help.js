@@ -48,7 +48,7 @@ Options:
         The exit code of 0 (success) or 1 (failure) is still set.
 
     -r, -ref
-        Specify a file to create with the gen command.
+        Used with the gen command to create a code and a corresponding test file.
 
     -n, --noisy
         Display the names of each passing test.
@@ -74,7 +74,7 @@ More than one option without <value> can flagged at the same time
 // examples can be found [here](link)
 
 const _more =
-`Usage:
+    `Usage:
     t3st help           To display main usage page.
     t3st help <topic>   To display info about a specific topic,
                         where <topic> is one of the following:
