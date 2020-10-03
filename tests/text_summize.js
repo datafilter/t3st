@@ -8,7 +8,7 @@ module.exports = ({ test, equal, affirm }) => {
 
     const summize_tests = [
         test("summize empty results", () => {
-            const expected_start = "0 tests [ok] 🥦"
+            const expected_start = "~ no tests found ⚔️🔥"
             const test_cases = [
                 report_silent()
                 , report_silent([])
