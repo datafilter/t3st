@@ -30,7 +30,7 @@ module.exports = async (display, target_dir, noisy, silent, filter) => {
         })
     } else {
         require('../../lib/io').flagExitError()
-        display.log('no tests found in ' + run_dir)
+        display.log('Directory does not exist ' + run_dir)
     }
 
     display.timeEnd('elapsed')
