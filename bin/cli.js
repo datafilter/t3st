@@ -52,7 +52,7 @@
         require('./commands/help')(conf.arg.help)
     }
     else if (conf.command.gen) {
-        require('./commands/gen')(display, conf.arg.gen, conf.opt.ref)
+        require('./commands/gen')(display, conf.arg.gen || conf.arg.ref, conf.opt.ref)
     }
     else if (conf.command.x) {
         const isWin = require('os').platform() === 'win32'

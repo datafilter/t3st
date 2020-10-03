@@ -26,7 +26,12 @@ const source_test = `module.exports = async ({ test, equal, affirm }) => {
         })]
 }`
 
-const source_new = `module.exports = () => true`
+const source_new = `const fun = () => true
+
+module.exports = { 
+    fun
+}
+`
 
 module.exports = (display, filename, is_ref = false) => {
 
@@ -63,8 +68,7 @@ module.exports = (display, filename, is_ref = false) => {
 
     const test_content = is_ref
         ? source_test.replace(`<<replace>>`,
-            `const ${
-            path.basename(file_path, path.extname(file_path))
+            `const ${path.basename(file_path, path.extname(file_path))
             } = require('${require_path}')`)
         : source_test.replace(`<<replace>>`, `// const unit = require('...')`)
 
