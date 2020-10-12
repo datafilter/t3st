@@ -12,14 +12,14 @@ Usage: npx t3st gen <test filename>
        If the filename has no extension it is appended with .js
 `
 
-const source_test = `module.exports = async ({ test, equal, affirm }) => {
+const source_test = `module.exports = async ({ test, equal, check }) => {
 
     <<replace>>
 
     return [
         test("description", () => {
             equal(2, 1 + 1)
-            affirm(1, 1 + 1, (a, b) => a + b == 3)
+            check(1, 1 + 1, (a, b) => a + b == 3)
         }),
         , await test("async test as to be awaited.", async () => {
             equal({}, {})

@@ -1,4 +1,4 @@
-module.exports = ({ test, equal, affirm }) => {
+module.exports = ({ test, equal, check }) => {
 
     const { report } = require('../lib/report')
     const report_silent = (results) => report({ results, silent: true })
@@ -19,7 +19,7 @@ module.exports = ({ test, equal, affirm }) => {
             ]
 
             equal(true, test_cases.every(test_case =>
-                affirm(test_case, expected_start, (r, e) => r.startsWith(e))))
+                check(test_case, expected_start, (r, e) => r.startsWith(e))))
         })
         , test("summize single OK result", () => {
             const expected_start = "1 test [ok] 🥦"
@@ -27,7 +27,7 @@ module.exports = ({ test, equal, affirm }) => {
                 report_silent(results_single_success)
             ]
             equal(true, test_cases.every(c =>
-                affirm(c, expected_start, (c, expected_start) => c.startsWith(expected_start))
+                check(c, expected_start, (c, expected_start) => c.startsWith(expected_start))
             ))
         })
         , test("detect non test-results", () => {
@@ -39,11 +39,11 @@ module.exports = ({ test, equal, affirm }) => {
                 , { description: 0, error: 0 }
             ]
             equal(true, valid_results.every(c =>
-                affirm(report_silent([c]), (report) => !report.includes('Not a test result'))))
+                check(report_silent([c]), (report) => !report.includes('Not a test result'))))
 
             const non_results = [{}, 5, "some", null, { error: "no description" }, Promise.resolve(1)]
             equal(true, non_results.every(c =>
-                affirm(report_silent([c]), (report) => report.includes('Not a test result'))))
+                check(report_silent([c]), (report) => report.includes('Not a test result'))))
         })
         , test("Tests with errors from thrown falsey values are tallied as errors", () => {
             const falseys = [false, '', 0, NaN, null, undefined]
@@ -51,9 +51,9 @@ module.exports = ({ test, equal, affirm }) => {
             const mixed_results = [...falsey_results, { description: '' }]
             const mixed_2_ok = [...mixed_results, { description: 'na' }]
 
-            affirm(report_silent(falsey_results), o => o.includes('0 tests [ok] ..and 6 [errors]'))
-            affirm(report_silent(mixed_results), o => o.includes('1 test [ok] ..and 6 [errors]'))
-            affirm(report_silent(mixed_2_ok), o => o.includes('2 tests [ok] ..and 6 [errors]'))
+            check(report_silent(falsey_results), o => o.includes('0 tests [ok] ..and 6 [errors]'))
+            check(report_silent(mixed_results), o => o.includes('1 test [ok] ..and 6 [errors]'))
+            check(report_silent(mixed_2_ok), o => o.includes('2 tests [ok] ..and 6 [errors]'))
         })
     ]
 

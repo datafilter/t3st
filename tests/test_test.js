@@ -1,9 +1,9 @@
-module.exports = ({ test, equal, affirm }) => {
+module.exports = ({ test, equal, check }) => {
     return [
         test("empty returns error", () => {
             const nothing = test()
             equal("empty test", nothing.description)
-            affirm(() => nothing.error.message.includes('invalid test'))
+            check(() => nothing.error.message.includes('invalid test'))
         })
         , test("any description test ok", () => {
             const any_value = [0, undefined, null, true, false, '', 't3st', f => g => x => g(f(x))]
@@ -13,11 +13,11 @@ module.exports = ({ test, equal, affirm }) => {
         , test("without body returns error", () => {
             const detached_head = test("equal truthy")
             equal(true, !!detached_head.trace)
-            affirm(() => detached_head.error.message.includes('invalid test'))
+            check(() => detached_head.error.message.includes('invalid test'))
         })
         , test("ERROR body cannot be boolean", () => {
             const err_bool = test("_", true)
-            affirm(err_bool.trace, t => t.includes('invalid test !! expected test(string, {'))
+            check(err_bool.trace, t => t.includes('invalid test !! expected test(string, {'))
         })
         , test("function body returns immediate result", () => {
             const test_complete = test("_", () => { })
@@ -38,7 +38,7 @@ module.exports = ({ test, equal, affirm }) => {
 
             unexpecteds.every(p => {
                 const invalid_test = test("_", p)
-                affirm(invalid_test.error, `unexpected body type in test(string, ${typeof p})`, (err, expected) =>
+                check(invalid_test.error, `unexpected body type in test(string, ${typeof p})`, (err, expected) =>
                     err.message.includes(expected))
             })
         })

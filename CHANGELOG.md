@@ -4,6 +4,9 @@
 * **m**aintenance
 * **p**erformance
 
+## 2020.10.
+**x** Rename affirm to check
+
 ### 2020.10.3
 **x** Set error exitcode if no tests found 
 

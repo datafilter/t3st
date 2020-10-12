@@ -27,7 +27,7 @@ mkdir tests
 Paste this code into a new file under `tests/demo.js`:
 
 ```javascript
-module.exports = async ({ test, equal, affirm }) => [
+module.exports = async ({ test, equal, check }) => [
     test("hello world", 1 > 0)
     , test("equal compares values with ===", () => {
         const five = 2 + 3

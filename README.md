@@ -24,7 +24,7 @@ mkdir tests
 Paste this test code into a new file under `tests/demo.js`:
 
 ```javascript
-module.exports = async ({ test, equal, affirm }) => [
+module.exports = async ({ test, equal, check }) => [
     test("equal compares values with ===", () => {
         const five = 2 + 3
         equal(5, five)
@@ -80,7 +80,7 @@ Run a function runs a piece of code. It catches and error, the test fails.
 Compare that the data of two values are ===, including deepEquals of objects and function comparison. Throws on false/error.
 
 For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the same thing regardless of their shared/separate location(s) in memory.
-#### affirm(\[...values,\] function => boolean)
+#### check(\[...values,\] function => boolean)
 Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
 
 

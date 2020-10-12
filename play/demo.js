@@ -1,4 +1,4 @@
-module.exports = async ({ test, equal, affirm }) => [
+module.exports = async ({ test, equal, check }) => [
 
     // Hello World
     test("passing in a function runs it", () => console.log('spooky side-effect'))
@@ -8,11 +8,11 @@ module.exports = async ({ test, equal, affirm }) => [
         const five = 2 + 3
         equal(5, five)
     })
-    , test("remove comments to view detailed output using affirm", () => {
+    , test("remove comments to view detailed output using check", () => {
         const a = 'some' //+ ' thing'
         const b = 5 //+ 1
         const c = { name: 'mark' }
-        affirm(a, b, c.name.length, (text, number, name_length) => {
+        check(a, b, c.name.length, (text, number, name_length) => {
             return number == 5 && text.length >= name_length
         })
     })

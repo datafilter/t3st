@@ -1,4 +1,4 @@
-module.exports = ({ test, equal, affirm }) => {
+module.exports = ({ test, equal, check }) => {
 
     const equal_chain_tests = [
         test("true equal returns true",
@@ -6,7 +6,7 @@ module.exports = ({ test, equal, affirm }) => {
         , test("chained equal stops at first error", () => {
             const err_third = test("_",
                 () => equal(true, true) && equal(1, 1) && equal(1, 5) && equal(6, 7))
-            affirm(err_third.error, (e) => e.message.includes("Evaluation [1] === [5]"))
+            check(err_third.error, (e) => e.message.includes("Evaluation [1] === [5]"))
         })
     ]
 
@@ -38,9 +38,9 @@ module.exports = ({ test, equal, affirm }) => {
             equal(true, !!error_result.trace)
         })
         , test("Evaluation is included in error message", () => {
-            affirm(test("err", () => equal("text", `other text`)).error,
+            check(test("err", () => equal("text", `other text`)).error,
                 (e) => e.message.startsWith(`Evaluation ['text'] === ['other text']`))
-            affirm(test("err", () => equal(true, false)).error,
+            check(test("err", () => equal(true, false)).error,
                 (e) => e.message.includes("Evaluation [true] === [false]"))
         })
         , test("equal nothing or undefined returns error", () => {
@@ -87,7 +87,7 @@ module.exports = ({ test, equal, affirm }) => {
             equal(name_then_age, age_then_name)
         })
         , test("can't be used for truthy equalions", () => {
-            affirm(test("_", () => equal(5, '5')).error.message, (m) =>
+            check(test("_", () => equal(5, '5')).error.message, (m) =>
                 m.includes(`[5] === ['5']`))
         })
         , test("can compare against null", () => {

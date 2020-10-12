@@ -1,4 +1,4 @@
-module.exports = async ({ test, throws, equal, affirm }) => {
+module.exports = async ({ test, throws, equal, check }) => {
 
     return [
         test("throws catches error and returns test result", () => {
@@ -10,7 +10,7 @@ module.exports = async ({ test, throws, equal, affirm }) => {
         , test("non-thrown is error result", () => {
             const result = throws('', () => 0)
             equal(true, !!result.trace)
-            affirm(result.error.message, (msg) => msg.includes('did not throw'))
+            check(result.error.message, (msg) => msg.includes('did not throw'))
         })
         , test("throws has continuation when expected is thrown", () => {
             const conintued = throws('<test>', () => {
@@ -26,8 +26,8 @@ module.exports = async ({ test, throws, equal, affirm }) => {
                 (_err) => {
                     throw 'invalid'
                 })
-            affirm(halted.error, (he) => he !== 'invalid')
-            affirm(halted.error.message, (msg) => msg.includes('did not throw'))
+            check(halted.error, (he) => he !== 'invalid')
+            check(halted.error.message, (msg) => msg.includes('did not throw'))
         })
     ]
 }

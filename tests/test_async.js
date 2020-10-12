@@ -1,4 +1,4 @@
-module.exports = async ({ test, equal, affirm }) => {
+module.exports = async ({ test, equal, check }) => {
     return [
         await test("Promise is invalid body", () => {
             const invalid = test("invalid", Promise.resolve())
@@ -8,7 +8,7 @@ module.exports = async ({ test, equal, affirm }) => {
         , await test("await async function is ok", async () => { })
         , await test("an async test is a promise", () => {
             const test_async = test("async", async () => { })
-            affirm(test_async.constructor.name, (name) => name === 'Promise')
+            check(test_async.constructor.name, (name) => name === 'Promise')
         })
         , test("not needed to await async test on creation for passing tests", async () => { })
         , test("happy path - basic, awaited basic, and awaited async tests are equivalent after await",
@@ -17,7 +17,7 @@ module.exports = async ({ test, equal, affirm }) => {
                 const basic_async = await test("_", async () => { })
                 equal(basic.description, basic_async.description)
                 equal(false, !!basic.trace)
-                affirm(() => basic.error === basic_async.error)
+                check(() => basic.error === basic_async.error)
             }
         )
         , test("thrown error returns error result verbatim",
@@ -25,7 +25,7 @@ module.exports = async ({ test, equal, affirm }) => {
                 const equal_error = async (rejected_promise, error_message) => {
                     const async_error = await test(error_message, rejected_promise)
                     return equal(true, !!async_error.trace)
-                        && affirm(async_error.error + '', error_message + '', (msg, expected) => msg.includes(expected))
+                        && check(async_error.error + '', error_message + '', (msg, expected) => msg.includes(expected))
                 }
                 await equal_error(async () => { throw undefined }, undefined)
                 await equal_error(async () => { throw 3 }, 3)
@@ -43,7 +43,7 @@ module.exports = async ({ test, equal, affirm }) => {
 
                 equal(true, !!test_basic.trace && !!test_async.trace)
 
-                affirm(test_basic.error + '', test_async.error + '', (be, ae) => be === ae)
+                check(test_basic.error + '', test_async.error + '', (be, ae) => be === ae)
             }
         )
         , await test("async test gives expected error on null body", async () => {

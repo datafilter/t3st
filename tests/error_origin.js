@@ -1,16 +1,16 @@
-module.exports = async ({ test, equal, affirm }) => [
+module.exports = async ({ test, equal, check }) => [
 
     test("invalid test body type", () => {
         const missing_body = test("_")
-        affirm(missing_body.trace, (trace) => trace.includes('error_origin.js'))
+        check(missing_body.trace, (trace) => trace.includes('error_origin.js'))
     })
     , test("interpreted error in test shows origin", () => {
         const undefined_dessert = test("_", () => { throw 1 })
-        affirm(undefined_dessert.trace, (trace) => trace.includes('error_origin.js'))
+        check(undefined_dessert.trace, (trace) => trace.includes('error_origin.js'))
     })
     , test("thrown error in test shows origin", () => {
         const thrown_error = test("_", () => equal(true, false))
-        affirm(thrown_error.trace, (trace) => trace.includes('error_origin.js'))
+        check(thrown_error.trace, (trace) => trace.includes('error_origin.js'))
     })
     , test("inner fail should still fail", async () => {
         const tr = await test("?>", async () => await equal(false, true))
@@ -18,7 +18,7 @@ module.exports = async ({ test, equal, affirm }) => [
     })
     , await test("Find async error origin", async () => {
         const tr = await test("?>", async () => equal(false, true))
-        affirm(tr.trace, (trace) => trace.includes('error_origin.js'))
+        check(tr.trace, (trace) => trace.includes('error_origin.js'))
     })
     , await test("async test without await gives await hint", async () => {
         // const inner_awaited = await (async () => await test("async test with await", Promise.reject(null)))()
@@ -34,11 +34,11 @@ module.exports = async ({ test, equal, affirm }) => [
         const missing_async_msg = "Possible missing 'await' statement before an async test"
 
         // fails on ubuntu 18.04.4 node 12.18.3
-        // affirm(inner_awaited.trace, t1 => !t1.includes(missing_async_msg))
-        // affirm(inner_awaited.trace, t2 => t2.includes('error_origin.js'))
+        // check(inner_awaited.trace, t1 => !t1.includes(missing_async_msg))
+        // check(inner_awaited.trace, t2 => t2.includes('error_origin.js'))
         // console.log(`inner_awaited: ${JSON.stringify(inner_awaited)}\nia-trace: ${inner_awaited.trace}`)
 
-        affirm(non_awaited.trace, t3 => t3.includes(missing_async_msg))
-        affirm(non_awaited.trace, t4 => !t4.includes('error_origin.js'))
+        check(non_awaited.trace, t3 => t3.includes(missing_async_msg))
+        check(non_awaited.trace, t4 => !t4.includes('error_origin.js'))
     })
 ]

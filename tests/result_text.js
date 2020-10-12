@@ -1,4 +1,4 @@
-module.exports = ({ test, equal, affirm }) => {
+module.exports = ({ test, equal, check }) => {
 
     const { result_text } = require('../lib/report')
 
@@ -19,17 +19,17 @@ module.exports = ({ test, equal, affirm }) => {
             /* eslint-disable no-undef */
             const err_undefined = test("_", () => { _undefined })
             /* eslint-disable no-undef */
-            affirm(() => result_text(err_undefined).message.includes('ReferenceError: _undefined is not defined'))
+            check(() => result_text(err_undefined).message.includes('ReferenceError: _undefined is not defined'))
 
             const err_string = test("_", () => { throw 'err-msg' })
-            affirm(() => result_text(err_string).message.includes('err-msg'))
+            check(() => result_text(err_string).message.includes('err-msg'))
 
             const err_new_error = test("_", () => { throw Error('err--msg') })
             const rt = result_text(err_new_error).message
-            affirm(() => rt.includes('Error'))
-            affirm(() => rt.includes('err--msg'))
-            affirm(rt, s => s.includes('    at'))
-            affirm(rt, () => rt.includes('result_text.js:'))
+            check(() => rt.includes('Error'))
+            check(() => rt.includes('err--msg'))
+            check(rt, s => s.includes('    at'))
+            check(rt, () => rt.includes('result_text.js:'))
         })
         , test("OK test description is verbatim : *not* converted to string", () => {
             equal(true, nonstring_names.every(name => {
@@ -44,7 +44,7 @@ module.exports = ({ test, equal, affirm }) => {
                 const err_test = test(name, () => equal(false, true))
                 return equal(err_test.description, name)
                     && equal(!!err_test.trace, true)
-                    && affirm(() => result_text(err_test).message.includes('[error] ' + name))
+                    && check(() => result_text(err_test).message.includes('[error] ' + name))
             }))
         })
         , test("description is open for re-use", () => {
