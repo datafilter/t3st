@@ -4,6 +4,10 @@
 * **m**aintenance
 * **p**erformance
 
+## 2020.10.
+
+**x** Unhandled promise rejection sets non-zero exit code
+
 ## 2020.10.14
 **x** Rename affirm to check
 **f** Check function also accepts all parameters as boolean

@@ -68,6 +68,8 @@ npx t3st help
 
 `t3st` sets an exit code of `0` if all tests succeeded, and an exit code of `1` if any tests failed.
 
+Unhandled promise rejections causes `t3st` in an exit code of `1`, even if all tests pass.
+
 Command line argument `-s` or `--silent` supresses printing output, so the only program artifact is the exit code.
 
 ## Functions
