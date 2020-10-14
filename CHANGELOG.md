@@ -4,8 +4,9 @@
 * **m**aintenance
 * **p**erformance
 
-## 2020.10.
+## 2020.10.14
 **x** Rename affirm to check
+**f** Check function also accepts all parameters as boolean
 
 ### 2020.10.3
 **x** Set error exitcode if no tests found 

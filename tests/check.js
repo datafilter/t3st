@@ -1,17 +1,29 @@
 module.exports = ({ test, throws, equal, check }) => {
 
     const check_tests = [
-        test("true equal returns true", () =>
+        test("true equal returns true", () => {
+            equal(true, check(true))
             equal(true, check(() => true))
-        )
+        })
         , throws("on false evaluation with evaluation", () => {
             check(() => 1 === 7)
         }, err => {
             equal(true, err.message.includes('() => 1 === 7'))
         })
+        , throws("on false evaluation with boolean", () => {
+            check(true, true, false)
+        })
+        , throws("error for non boolean argument", () => {
+            check(1)
+        }, err => {
+            equal(true, err.message.includes('argument must be either function or boolean'))
+        })
+        , test("function check can have non boolean arguments", () => {
+            check(1, '2', (a, b) => a + Number(b) === 3)
+        })
         , test("check nothing gives hint", async () => {
             const nullary_check = await test("_", () => check())
-            equal(true, nullary_check.error.message.includes('expected (...values, function => boolean'))
+            equal(true, nullary_check.error.message.includes('expected (...values [, function => boolean]'))
         })
         , test("includes error message of invalid assertion", async () => {
             /* eslint-disable no-undef */
