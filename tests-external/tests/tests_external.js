@@ -21,24 +21,17 @@ module.exports = async (framework) => {
         , throws("unhandled promise rejection sets non-zero exit code", () => {
             const _t3st_output = t3st(`--dir ${path.resolve(__dirname, '../promise_rejected/')}`)
         }, (err) => {
+            equal(err.status, 1)
+            check(err.output + '', (o) => o.includes('⚔️🔥 Unhandled Rejection'))
             check(err.message, (m) => m.includes('Command failed'))
         })
-        , test("missing await in failing test gives hint", () => {
-            const fail_t3st = test("_", () => {
-                try {
-                    const _na = t3st(`--dir ${path.resolve(__dirname, '../missing_await')}`)
-                } catch (err) {
-                    throw {
-                        'status': err.status,
-                        'message': err.message,
-                        'output': err.output + ''
-                    }
-                }
-            })
-            equal(fail_t3st.error.status, 1)
-            check(fail_t3st.error.message, m => m.includes('Command failed'))
-            check(fail_t3st.error.output, o => o.includes('0 tests [ok] ..and 1 [error]'))
-            check(fail_t3st.error.output, o => o.includes("Possible missing 'await' statement before an async test"))
+        , throws("missing await in failing test gives hint", () => {
+            const _na = t3st(`--dir ${path.resolve(__dirname, '../missing_await')}`)
+        }, (err) => {
+            equal(err.status, 1)
+            check(err.message, m => m.includes('Command failed'))
+            check(err.output + '', o => o.includes('0 tests [ok] ..and 1 [error]'))
+            check(err.output + '', o => o.includes("Possible missing 'await' statement before an async test"))
         })
     ]
 
