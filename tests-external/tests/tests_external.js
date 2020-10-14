@@ -3,7 +3,7 @@ module.exports = async (framework) => {
 
     const path = require('path')
 
-    const { test, equal, check } = framework
+    const { test, equal, check, throws } = framework
 
     const { execSync } = require("child_process")
     const shell = (cmd) => execSync(cmd) + ''
@@ -17,6 +17,11 @@ module.exports = async (framework) => {
         , test("silent prints no output", () => {
             const t3st_output = t3st(`--dir ${path.resolve(__dirname, '../all_ok/')} --silent`)
             check(t3st_output, o => o === '')
+        })
+        , throws("unhandled promise rejection sets non-zero exit code", () => {
+            const t3st_output = t3st(`--dir ${path.resolve(__dirname, '../promise_rejected/')}`)
+        }, (err) => {
+            check(err.message, (m) => m.includes('Command failed'))
         })
         , test("missing await in failing test gives hint", () => {
             const fail_t3st = test("_", () => {
