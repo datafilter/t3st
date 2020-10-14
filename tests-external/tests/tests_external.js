@@ -19,7 +19,7 @@ module.exports = async (framework) => {
             check(t3st_output, o => o === '')
         })
         , throws("unhandled promise rejection sets non-zero exit code", () => {
-            const t3st_output = t3st(`--dir ${path.resolve(__dirname, '../promise_rejected/')}`)
+            const _t3st_output = t3st(`--dir ${path.resolve(__dirname, '../promise_rejected/')}`)
         }, (err) => {
             check(err.message, (m) => m.includes('Command failed'))
         })
