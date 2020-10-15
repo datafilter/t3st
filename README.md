@@ -24,10 +24,13 @@ mkdir tests
 Paste this test code into a new file under `tests/demo.js`:
 
 ```javascript
-module.exports = async ({ test, equal, check }) => [
+module.exports = async ({ test, equal, check, throws }) => [
     test("equal compares values with ===", () => {
         const five = 2 + 3
         equal(5, five)
+    })
+    , throws("expects erros to be thrown", () => {
+        throw 'uncomment this line to cause failing test'
     })
     , await test("tests can be async", async () => {
         const james = await Promise.resolve('bond')
@@ -66,18 +69,21 @@ npx t3st help
 
 ## Use with scripts / build servers:
 
-`t3st` sets an exit code of `0` if all tests succeeded, and an exit code of `1` if any tests failed.
+`t3st` sets an exit code of `0` if all tests succeeded.
 
-Unhandled promise rejections causes `t3st` in an exit code of `1`, even if all tests pass.
+ An exit code of `1` is set when:
+ * Any tests failed 
+ * No tests are found
+ * Unhandled promise rejections were detected.
 
 Command line argument `-s` or `--silent` supresses printing output, so the only program artifact is the exit code.
 
 ## Functions
 
 <!-- TODO examples -->
-#### test(description, (function) => { ..code ..})
-#### test(description, async (function) => { ..code ..})
-Run a function runs a piece of code. It catches and error, the test fails.
+#### test(description, () => { ..code ..})
+#### test(description, async () => { ..code ..})
+Runs a given function. It catches an error, the test fails.
 #### equal(a,b)
 Compare that the data of two values are ===, including deepEquals of objects and function comparison. Throws on false/error.
 
@@ -85,6 +91,8 @@ For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikip
 #### check(\[...values,\] function => boolean)
 Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
 
+#### throws(description, () => { ..code ..} [, (error) => { ..code ..}])
+Expects an error to be thrown in the first function. An optional second function runs like test() with the caught error as input.
 
 ## [Design/Contributing](https://github.com/devmachiine/t3st/blob/master/docs/contributing.md)
 

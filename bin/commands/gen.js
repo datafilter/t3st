@@ -21,7 +21,10 @@ const source_test = `module.exports = async ({ test, equal, check }) => {
             equal(2, 1 + 1)
             check(1, 1 + 1, (a, b) => a + b == 3)
         }),
-        , await test("async test as to be awaited.", async () => {
+        , throws("expects erros to be thrown", () => {
+            throw 'uncomment this line to cause failing test'
+        })
+        , await test("async test has to be awaited.", async () => {
             equal({}, {})
         })]
 }`

@@ -1,4 +1,4 @@
-module.exports = async ({ test, equal, check }) => [
+module.exports = async ({ test, equal, check, throws }) => [
 
     // Hello World
     test("passing in a function runs it", () => console.log('spooky side-effect'))
@@ -21,6 +21,14 @@ module.exports = async ({ test, equal, check }) => [
         const b = { 'type': 'aircraft', 'cost': '$4bn' }
         equal(a, b)
     })
+    , throws("expects erros to be thrown", () => {
+        throw 'uncomment this line to cause failing test'
+    })
+    // todo after merge test & test async functions.
+    // , await throws("expects erros to be thrown", async () => {
+    //     const reject = Promise.reject()
+    //     await reject
+    // })
 
     // Pinky Promise 
     , await test("tests can be async", async () => {
