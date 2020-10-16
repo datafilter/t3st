@@ -1,15 +1,14 @@
-module.exports = ({ test, throws, equal, check }) => [
+module.exports = ({ throws, equal, check }) => [
 
     // todo move all error message tests here.
 
     throws("Equal quotes string in error vs boolean", () =>
         equal(true, 'true'), (error) =>
         check(error.message,
-            (m) => m.includes(`[true] === ['true']`))),
-    throws("Equal quotes string in error vs number", () =>
+            (m) => m.includes(`[true] === ['true']`)))
+    , throws("Equal quotes string in error vs number", () =>
         equal(0, '0'), (error) =>
-        check(error.message, (m) => m.includes(`[0] === ['0']`))),
-
+        check(error.message, (m) => m.includes(`[0] === ['0']`)))
     , throws("check function invalid output", () => {
         check('a', 2, 3.4, true, 'true', (x, y) => x == y)
     }, (err) => {

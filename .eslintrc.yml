@@ -8,6 +8,7 @@ parserOptions:
 rules:
   no-unused-vars: ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
   prefer-const: ["error"]
+ignorePatterns: ["/tests-external/error_in_file/*.js"]
  
 
 
