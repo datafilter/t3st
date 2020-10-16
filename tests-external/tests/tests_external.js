@@ -30,8 +30,19 @@ module.exports = async (framework) => {
         }, (err) => {
             equal(err.status, 1)
             check(err.message, m => m.includes('Command failed'))
-            check(err.output + '', o => o.includes('0 tests [ok] ..and 1 [error]'))
-            check(err.output + '', o => o.includes("Possible missing 'await' statement before an async test"))
+            const output = err.output + ''
+            check(output, o => o.includes('0 tests [ok] ..and 1 [error]'))
+            check(output, o => o.includes("Possible missing 'await' statement before an async test"))
+        })
+        , throws("invalid javascript in file gives details", () => {
+            const _na = t3st(`--dir ${path.resolve(__dirname, '../error_in_file')}`)
+        }, (err) => {
+            equal(err.status, 1)
+            check(err.message, m => m.includes('Command failed'))
+            const output = err.output + ''
+            check(output, o => o.includes('caught: exception occurred *outside* of tests'))
+            check(output, o => o.includes('SyntaxError:'))
+            check(output, o => o.includes('tests-external/error_in_file/invalid_javascript.js:4'))
         })
     ]
 

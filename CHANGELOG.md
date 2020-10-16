@@ -4,9 +4,11 @@
 * **m**aintenance
 * **p**erformance
 
-## 2020.10.
+## 2020.10.16
 
 **x** Unhandled promise rejection sets non-zero exit code
+**x** Fix to display details when javascript error in file
+**m** Improve check function output
 
 ## 2020.10.14
 **x** Rename affirm to check
