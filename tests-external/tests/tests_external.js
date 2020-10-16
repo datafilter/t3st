@@ -42,7 +42,11 @@ module.exports = async (framework) => {
             const output = err.output + ''
             check(output, o => o.includes('caught: exception occurred *outside* of tests'))
             check(output, o => o.includes('SyntaxError:'))
-            check(output, o => o.includes('tests-external/error_in_file/invalid_javascript.js:4'))
+
+            const path = require('path')
+            const path_error_file = path.join('tests-external', 'error_in_file', 'invalid_javascript.js')
+
+            check(output, o => o.includes(`${path_error_file}:4`))
         })
     ]
 
