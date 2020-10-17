@@ -13,6 +13,8 @@ module.exports = ({ throws, equal, check }) => [
         check('a', 2, 3.4, true, 'true', (x, y) => x == y)
     }, (err) => {
         equal(true, err.message.includes(`check invalid with 6 argument(s):`))
+        equal(false, err.message.includes(`some argument(s) !== true`))
+        equal(true, err.message.includes(`function evaluated to false`))
         equal(true, err.message.includes(`arg[0]: 'a'`))
         equal(true, err.message.includes(`arg[1]: 2`))
         equal(true, err.message.includes(`arg[2]: 3.4`))
@@ -24,6 +26,8 @@ module.exports = ({ throws, equal, check }) => [
         check(true, false)
     }, (err) => {
         equal(true, err.message.includes(`check invalid with 2 argument(s):`))
+        equal(true, err.message.includes(`some argument(s) !== true`))
+        equal(false, err.message.includes(`function evaluated to false`))
         equal(true, err.message.includes(`arg[0]: true`))
         equal(true, err.message.includes(`arg[1]: false`))
     })

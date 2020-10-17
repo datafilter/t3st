@@ -4,18 +4,21 @@
 * **m**aintenance
 * **p**erformance
 
-## 2020.10.
+### 2020.10.
 
-**m** Clean up parse file error output. 
+**m** Clean up parse file error output.
+**m** Reduce equal(lhs,rhs) error output
+**m** Elaborate check error reason
 **m** Indent JSON stringify uses.
+**m** Unify error source output.
 
-## 2020.10.16
+### 2020.10.16
 
 **x** Unhandled promise rejection sets non-zero exit code
 **x** Fix to display details when javascript error in file
 **m** Improve check function output
 
-## 2020.10.14
+### 2020.10.14
 **x** Rename affirm to check
 **f** Check function also accepts all parameters as boolean
 

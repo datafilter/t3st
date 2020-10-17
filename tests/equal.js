@@ -1,4 +1,4 @@
-module.exports = async ({ test, throws, equal }) => {
+module.exports = async ({ test, throws, equal, check }) => {
 
     // const unit = require('...')
 
@@ -94,16 +94,20 @@ module.exports = async ({ test, throws, equal }) => {
         , test("equal nulls", () => equal(null, null))
         , throws("null is not equal to object", () => equal(null, {}))
         , throws("object is not equal to null", () => equal({}, null))
-        // , test("manual demo", () => {
-        //     // console.log('Evaluation: equal({object},null)')
-        //     const obja = { k: 'tub', sub: { bub: 7, dub: { chub: 'gub' } } }
-        //     const ocja = { r: 'tub', sub: { bulb: 7, dub: { chub: 'stub' } } }
-        //     // console.log(JSON.stringify(obja, null, 2))
-            
-        //     // equal(3, '3')
-        //     // equal(obja, null)
-        //     // equal(obja, ocja)
-        // })
+        , test("manual demo", () => {
+            // console.log('Evaluation: equal({object},null)')
+            // const obja = { k: 'tub', sub: { bub: 7, dub: { chub: 'gub' } } }
+            // const ocja = { r: 'tub', sub: { bulb: 7, dub: { chub: 'stub' } } }
+            // console.log(JSON.stringify(obja, null, 2))
+            check('eslint', () => true)
+
+            // check(1,2,() => false)
+            // check(1, 2, () => { })
+            // check(1, 2, true)
+            // equal(3, '3')
+            // equal(obja, null)
+            // equal(obja, ocja)
+        })
         // , test("equal shows useful message", () => {
         //     equal({
         //         name: 'mark',
