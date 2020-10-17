@@ -4,6 +4,11 @@
 * **m**aintenance
 * **p**erformance
 
+## 2020.10.
+
+**m** Clean up parse file error output. 
+**m** Indent JSON stringify uses.
+
 ## 2020.10.16
 
 **x** Unhandled promise rejection sets non-zero exit code

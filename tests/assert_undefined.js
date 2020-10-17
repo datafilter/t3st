@@ -23,6 +23,6 @@ module.exports = ({ test, equal, check }) => [
         check(str.error.message, (m) => m.includes('string') && m.includes(`'undefined'`))
 
         const obj = test('', _ => equal.undefined({ name: 'mark' }))
-        check(obj.error.message, (m) => m.includes('object') && m.includes(`"name":"mark"`))
+        check(obj.error.message, (m) => m.includes('object') && m.includes(`"name": "mark"`))
     })
 ]

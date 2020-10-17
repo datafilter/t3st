@@ -1,4 +1,4 @@
-module.exports = async ({ test, equal }) => {
+module.exports = async ({ test, throws, equal }) => {
 
     // const unit = require('...')
 
@@ -92,12 +92,18 @@ module.exports = async ({ test, equal }) => {
             equal({ e: {} }, flatn({ e: {} }))
         })
         , test("equal nulls", () => equal(null, null))
-        , test("compare null to object gives expected error", () => {
-            const t1 = test("", () => equal(null, {}))
-            const t2 = test("", () => equal({}, null))
-            equal(true, t1.error.message.includes("Evaluation ["))
-            equal(true, t2.error.message.includes("Evaluation ["))
-        })
+        , throws("null is not equal to object", () => equal(null, {}))
+        , throws("object is not equal to null", () => equal({}, null))
+        // , test("manual demo", () => {
+        //     // console.log('Evaluation: equal({object},null)')
+        //     const obja = { k: 'tub', sub: { bub: 7, dub: { chub: 'gub' } } }
+        //     const ocja = { r: 'tub', sub: { bulb: 7, dub: { chub: 'stub' } } }
+        //     // console.log(JSON.stringify(obja, null, 2))
+            
+        //     // equal(3, '3')
+        //     // equal(obja, null)
+        //     // equal(obja, ocja)
+        // })
         // , test("equal shows useful message", () => {
         //     equal({
         //         name: 'mark',

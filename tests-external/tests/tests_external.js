@@ -40,7 +40,7 @@ module.exports = async (framework) => {
             equal(err.status, 1)
             check(err.message, m => m.includes('Command failed'))
             const output = err.output + ''
-            check(output, o => o.includes('caught: exception occurred *outside* of tests'))
+            check(output, o => o.includes('exception occurred *outside* of tests'))
             check(output, o => o.includes('SyntaxError:'))
 
             const path = require('path')

@@ -91,7 +91,7 @@ module.exports = ({ test, throws, equal, check }) => {
             check(err.message, (m) =>
                 m.includes('mark') &&
                 m.includes(1976) &&
-                m.includes(JSON.stringify({})))
+                m.includes(JSON.stringify({}, null, 2)))
         })
 
     ]
