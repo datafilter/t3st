@@ -11,6 +11,7 @@
 **m** Elaborate check error reason
 **m** Indent JSON stringify uses.
 **m** Unify error source output.
+**m** Throws gives usage hint for empty or partial arguments.
 
 ### 2020.10.16
 

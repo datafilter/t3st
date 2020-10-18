@@ -1,4 +1,6 @@
-module.exports = async ({ test, throws, equal, check }) => {
+const { test, throws, equal, check } = require('../lib/validation')
+
+module.exports = async () => {
 
     return [
         test("throws catches error and returns test result", () => {
@@ -28,6 +30,21 @@ module.exports = async ({ test, throws, equal, check }) => {
                 })
             check(halted.error, (he) => he !== 'invalid')
             check(halted.error.message, (msg) => msg.includes('did not throw'))
+        })
+        , test('without any arguments give usage hint', () => {
+            const result = throws()
+            equal(true, result.is_error)
+            check(result.description, d => d.includes('throws() is empty'))
+            check(result.error.message, (m) => m.includes('expected') && m.includes('..code'))
+        })
+        , test('test description matches throws description', () => {
+            const ok = throws('match', () => { throw 1 })
+            const result = throws('match')
+            equal(true, result.is_error)
+            equal.undefined(ok.is_error)
+            equal(ok.description, result.description)
+            check(result.description, d => d.includes('match'))
+            check(result.error.message, (m) => m.includes('expected throws(`match`'))
         })
     ]
 }
