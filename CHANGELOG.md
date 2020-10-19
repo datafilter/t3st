@@ -4,34 +4,35 @@
 * **m**aintenance
 * **p**erformance
 
-### 2020.10.
+### 2020.10.18
 
-**m** Clean up parse file error output.
-**m** Reduce equal(lhs,rhs) error output
-**m** Elaborate check error reason
-**m** Indent JSON stringify uses.
-**m** Unify error source output.
-**m** Throws gives usage hint for empty or partial arguments.
+* **f** Add inline throws as validation function
+* **m** Clean up parse file error output
+* **m** Reduce equal(lhs,rhs) error output
+* **m** Elaborate check error reason
+* **m** Indent JSON stringify uses
+* **m** Unify error source output
+* **m** Throws gives usage hint for empty or partial arguments
 
 ### 2020.10.16
 
-**x** Unhandled promise rejection sets non-zero exit code
-**x** Fix to display details when javascript error in file
-**m** Improve check function output
+* **x** Unhandled promise rejection sets non-zero exit code
+* **x** Fix to display details when javascript error in file
+* **m** Improve check function output
 
 ### 2020.10.14
-**x** Rename affirm to check
-**f** Check function also accepts all parameters as boolean
+* **x** Rename affirm to check
+* **f** Check function also accepts all parameters as boolean
 
 ### 2020.10.3
-**x** Set error exitcode if no tests found 
+* **x** Set error exitcode if no tests found 
 
 ### 2020.9.17
-**f** Add `throws` test function
+* **f** Add `throws` test function
 
 ### 2020.9.1
-**m** Replace `assert` & `alike` functions with `equal`
-**f** Pass additional options via watch mode
+* **m** Replace `assert` & `alike` functions with `equal`
+* **f** Pass additional options via watch mode
 
 ### 2020.8.21
 * **f** Add `-f` to filter which files to test.

@@ -14,6 +14,15 @@ module.exports = async () => {
             equal(true, !!result.trace)
             check(result.error.message, (msg) => msg.includes('did not throw'))
         })
+        , test("throws can be used inline when first argument is function", () => {
+            const data = Symbol()
+            const err = throws(() => { throw data })
+            equal(err, data)
+        })
+        , throws("inline throws throws when error is not thrown",
+            () => throws(() => 0)
+            , (err) => check(err.message, (m) => m.includes('did not throw'))
+        )
         , test("throws has continuation when expected is thrown", () => {
             const conintued = throws('<test>', () => {
                 throw 123

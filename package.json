@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2020.10.16",
+  "version": "2020.10.18",
   "description": "small & light javascript test framework",
   "files": [
     "/bin",
@@ -11,7 +11,8 @@
   "bin": "./bin/cli.js",
   "scripts": {
     "test": "(node bin/cli.js) && (node bin/cli.js --dir tests-external/tests)",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "push": "npm run test && npm run lint && git push"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,8 @@
 module.exports = ({ throws, equal, check }) => [
 
-    // todo move all error message tests here.
+    // todo move all non-(test, throws, equal ,check) error message tests here.
+    // move all (test, throws, equal, check) messages to those files.
+    // rename this to ?test_runner?_error_messages
 
     throws("Equal quotes string in error vs boolean", () =>
         equal(true, 'true'), (error) =>
