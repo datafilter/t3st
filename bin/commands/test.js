@@ -1,4 +1,4 @@
-module.exports = async (display, target_dir, noisy, silent, filter) => {
+module.exports = async (display, target_dir, noisy, silent, filters) => {
 
     display.time('elapsed')
 
@@ -17,14 +17,14 @@ module.exports = async (display, target_dir, noisy, silent, filter) => {
         ? path.join(test_dir, 'tests')
         : test_dir
 
-    const test_msg = `testing ${run_dir} (${filter})`
+    const test_msg = `testing ${run_dir} (${filters.join(' ')})`
     display.log(test_msg)
     display.log('-'.repeat(test_msg.length))
 
     if (fs.existsSync(run_dir)) {
         await run({
             test_dir: run_dir,
-            file_filter: x => x.endsWith(filter),
+            file_filter: file => filters.find(filter => file.endsWith(filter)),
             noisy,
             silent
         })

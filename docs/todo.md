@@ -1,26 +1,14 @@
 # Features/Bugs
 
-- cli generate test file/framework:
-    t3st path/bla --> no tests found, print usage
-    t3st touch /tests/bla.js --> create bla.js with module.exports (test,equal..) [ test(...)]
 - Missing tests folder and/or better discovery/errors wrt tests
 - Mixed mode parameter, eg: -mix (defaults to .t3.js) or -mix:spec.js -> tests project dir with endswith filter.
 - Add optional runtime stats arg, eg: -time, -time:avg, -time:total,avg,slowest
-- Highlight differences in equal object errors, eg for 
-    {name : 'mark', age : 20, location : 'there'} 
-    vs
-    {name : 'mark', age : 40, awake : true}
-  show: age[20/40], location['there',] awake[,true]
-- Perf
-- Throw erorr, not string, in validation. (might help with stack in async origin also) <- consider .isError/.hasError prop
-- cli args: [dir], [filter], eg `tests *origin*`
 - replace printed \[value\] with less ambiguous (value)
 - document check only prints varargs before last fuction
-- improve check output, if possible also show all binded key/value pairs even when not passed in varargs.
 - add result in ok_result = ({description, result}) ?
 - when any tests fail print summary n tests [ok] and n [error(s)] at beginning and end of message
-- add pre-publish step, eg test&lint before publish.
-- only run CI tests if index.js or /lib files updated.
+- only run full CI test suite if version bumped
+- gen command generate mjs instead of cjs, or, IF within package, same module system as package.
 
 # Document
 - run.js error: `exception occurred *outside* of tests\n\t--> ${err}`, // todo explain its user error eg. typo

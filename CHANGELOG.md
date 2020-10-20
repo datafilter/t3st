@@ -4,6 +4,11 @@
 * **m**aintenance
 * **p**erformance
 
+## 2020.10.19
+
+* **f** Add support for mjs tests
+* **f** Cli multiple filter line endings
+
 ### 2020.10.18
 
 * **f** Add inline throws as validation function
