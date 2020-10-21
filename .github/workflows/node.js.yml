@@ -23,7 +23,7 @@ jobs:
       
   multi-platform-test:
     needs: lint-and-test
-    if: needs.lint.outputs.version-changed == "true"
+    if: needs.lint.outputs.version-changed == 'true'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
