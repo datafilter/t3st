@@ -9,12 +9,21 @@ on:
   # pull_request:
   #   branches: [ master ]
 jobs:
-  lint:
+  lint-and-test:
     runs-on: ubuntu-latest # any nodejs will do
+    outputs:
+      version-changed: ${{ steps.check-version.outputs.changed }}
     steps:
     - uses: actions/checkout@v1
     - run: npm run lint
-  test:
+    - run: npm ci
+    - run: npm test
+    - id: check-version
+      run: echo "::set-output name=changed::$(node .github/scripts/version-changed.js)"
+      
+  multi-platform-test:
+    needs: lint-and-test
+    if: needs.lint.outputs.version-changed == "true"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -34,7 +43,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish:
-    needs: [lint, test]
+    needs: multi-platform-test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
