@@ -9,6 +9,19 @@ module.exports = async (framework) => {
     const shell = (cmd) => execSync(cmd) + ''
     const t3st = (cli) => shell(`node ${require.main.filename} ${cli}`)
 
+    const cli_display = [
+        test("x prints test t3st command", () => {
+            const t3st_output = t3st(`-x`).trim()
+
+            const unix = `nodemon -q -x "node bin/cli.js -c --watch_mode=true"`
+            const win32 = `nodemon -q -x "node bin\\cli.js -c --watch_mode=true"`
+
+            const platform_cmd = require('os').platform() === 'win32' ? win32 : unix
+
+            equal(t3st_output, platform_cmd)
+        })
+    ]
+
     const cli_tests = [
         test("ok tests print ok", () => {
             const t3st_output = t3st(`--dir ${path.resolve(__dirname, '../all_ok/')}`)
@@ -50,5 +63,5 @@ module.exports = async (framework) => {
         })
     ]
 
-    return [...cli_tests, ...demo_results]
+    return [...cli_display, ...cli_tests, ...demo_results]
 }
