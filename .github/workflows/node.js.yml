@@ -32,7 +32,7 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
         node-version: [12.x, 14.x]
-        exclude:
+        exclude: # already tested platform in previous lint-and-test job:
           - os: ubuntu-latest
             node-version: 12.x
     steps:
