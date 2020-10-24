@@ -12,7 +12,10 @@ Usage: npx t3st gen <test filename>
        If the filename has no extension it is appended with .js
 `
 
-const source_test = `module.exports = async ({ test, equal, check }) => {
+// todo instead of text use test that is part of t3st tests.
+// eg, demo.mjs
+
+const source_test = `module.exports = async ({ test, throws, equal, check, jsmodule }) => {
 
     <<replace>>
 
@@ -55,7 +58,7 @@ module.exports = (display, filename, is_ref = false) => {
             display.log(`File ${file} already exists.`)
         } else {
             fs.writeFileSync(file, contents)
-            display.log(`Created ${file}.`)
+            display.log(`Created ${file}`)
         }
     }
 
