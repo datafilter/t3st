@@ -1,10 +1,9 @@
-
 const usage =
     `Usage:	t3st [COMMAND] [OPTIONS]
 
 A small and light javascript test framework.
 
-['clear', 'dir', 'filter', 'gen', 'help', 'noisy', 'silent', 'ref', 'test', 'version', 'watch']
+['clear', 'dir', 'filter', 'gen', 'help', 'noisy', 'ref', 'silent', 'test', 'version', 'watch']
 
 Commands:
     gen <path>      
@@ -21,7 +20,8 @@ Commands:
     test
         Run the tests. This is the default if you don't specify any commands.
 
-    watch           Keep a test window open, watch for file changes and rerun tests.
+    watch
+        Continuously re-run the tests when any code changes.
 
 Options:
     -c, --clear
@@ -37,10 +37,14 @@ Options:
             t3st --dir /over/yonder --ref /lib/feature.js
 
     --filter <pattern> 
-        Specify a file pattern match to use for finding tests.
-        The default filter is *.js
-            t3st -f *.spec.js
-            t3st -f *.mjs
+        Specify filename pattern(s) match to use for finding tests.
+        A pattern compares against the filename as follows:
+         - If the pattern starts with a dot, 'filepath'.endsWith(pattern) is used.
+         - Otherwise, 'filepath.includes() is used.
+        If any of the given patterns match, it is included in the test run.
+        The default filters are: .mjs .js
+            t3st -f .spec.js .mjs
+            t3st -f .test.js and-this-file
 
     -s, --silent
         Do not write any test result output to console.

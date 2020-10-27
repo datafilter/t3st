@@ -4,6 +4,10 @@
 * **m**aintenance
 * **p**erformance
 
+## 2020.10.
+
+* **f** Add includes file filter pattern.
+
 ## 2020.10.24
 
 * **f** Add jsmodule function to import javascript modules that have .js extension

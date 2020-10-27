@@ -63,5 +63,37 @@ module.exports = async (framework) => {
         })
     ]
 
-    return [...cli_display, ...cli_tests, ...demo_results]
+    const test_filter_dir = `-n --dir ${path.resolve(__dirname, '../filter')}`
+
+    const command_tests = [
+        test("filter not specified defaults to (.mjs .js)", () => {
+            const no_filter = t3st(`${test_filter_dir}`)
+            check(no_filter, o => o.includes('(.mjs .js)')
+                && o.includes('4 tests [ok]')
+                && o.includes('a-ok')
+                && o.includes('b-ok')
+                && o.includes('c-ok')
+                && o.includes('d-ok')
+            )
+        })
+        , test("filter endswith with when pattern starts with .", () => {
+            const ext_js_filter = t3st(`-f .ext.js ${test_filter_dir}`)
+            check(ext_js_filter, o => o.includes('(.ext.js)')
+                && o.includes('2 tests [ok]')
+                && o.includes('a-ok')
+                && o.includes('b-ok')
+            )
+        })
+        , test("filter includes when pattern doesnt start with .", () => {
+            const includes_filter = t3st(`-f ext mjs ${test_filter_dir}`)
+            check(includes_filter, o => o.includes('(ext mjs)')
+                && o.includes('3 tests [ok]')
+                && o.includes('a-ok')
+                && o.includes('b-ok')
+                && o.includes('d-ok')
+            )
+        })
+    ]
+
+    return [...command_tests, ...cli_display, ...cli_tests, ...demo_results]
 }
