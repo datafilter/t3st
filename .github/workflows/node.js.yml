@@ -10,11 +10,14 @@ on:
   #   branches: [ master ]
 jobs:
   lint-and-test:
-    runs-on: ubuntu-latest # any nodejs will do
+    runs-on: ubuntu-latest
     outputs:
       version_changed: ${{ steps.version.outputs.changed }}
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
     - run: npm run lint
     - run: npm ci
     - run: npm test
@@ -27,10 +30,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os: [ubuntu-latest]
         os: [macos-latest, ubuntu-latest, windows-latest]
-        # node-version: [12.x]
         node-version: [12.x, 14.x]
+        exclude: # already tested platform in previous lint-and-test job:
+          - os: ubuntu-latest
+            node-version: 12.x
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -42,6 +46,7 @@ jobs:
     - run: node .github/scripts/post-status.js ${{ matrix.os }} ${{ matrix.node-version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
   publish:
     needs: multi-platform-test
     runs-on: ubuntu-latest
