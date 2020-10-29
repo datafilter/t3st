@@ -38,14 +38,15 @@ module.exports = async (framework) => {
             check(err.output + '', (o) => o.includes('⚔️🔥 Unhandled Rejection'))
             check(err.message, (m) => m.includes('Command failed'))
         })
-        , throws("missing await in failing test gives hint", () => {
+        , throws("missing await in failing test still finds error origin", () => {
             const _na = t3st(`--dir ${path.resolve(__dirname, '../missing_await')}`)
         }, (err) => {
             equal(err.status, 1)
             check(err.message, m => m.includes('Command failed'))
             const output = err.output + ''
             check(output, o => o.includes('0 tests [ok] ..and 1 [error]'))
-            check(output, o => o.includes("Possible missing 'await' statement before an async test"))
+            check(output, o => !o.includes("Possible missing 'await' statement before an async test"))
+            check(output, o => o.includes('async_without_await.js'))
         })
         , throws("invalid javascript in file gives details", () => {
             const _na = t3st(`--dir ${path.resolve(__dirname, '../error_in_file')}`)
