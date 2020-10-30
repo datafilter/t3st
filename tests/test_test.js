@@ -17,7 +17,7 @@ module.exports = ({ test, equal, check }) => {
         })
         , test("ERROR body cannot be boolean", () => {
             const err_bool = test("_", true)
-            check(err_bool.trace, t => t.includes('invalid test !! expected test(string, {'))
+            check(err_bool.error.message, t => t.includes('invalid test !! expected test(string, {'))
         })
         , test("function body returns immediate result", () => {
             const test_complete = test("_", () => { })

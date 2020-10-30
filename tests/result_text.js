@@ -47,6 +47,13 @@ module.exports = ({ test, equal, check }) => {
                     && check(() => result_text(err_test).message.includes('[error] ' + name))
             }))
         })
+        , test("source is not derived from thrown error stacktrace", () => {
+            const err_test = test('description', () => equal('at some/code.js', '\nat other/file.mjs'))
+            const [description, source, ...detail] = result_text(err_test).message.split('\n')
+            equal(description, '[error] description')
+            check(source, (s) => s.includes('result_text.js'))
+            check(detail.join('\n'), (d) => d.includes('at some/code.js') && d.includes('at other/file.mjs'))
+        })
         , test("description is open for re-use", () => {
             const person = 'brendan'
             const fun_test = test(name => `${name} has a plane.`, () => { })

@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2020.10.24",
+  "version": "2020.10.30",
   "description": "small & light javascript test framework",
   "files": [
     "/bin",

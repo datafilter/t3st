@@ -4,10 +4,11 @@
 * **m**aintenance
 * **p**erformance
 
-## 2020.10.
+## 2020.10.30
 
 * **f** Add includes file filter pattern.
 * **x** Find async test origin
+* **x** Exclude validation cause from stacktrace evaluation
 
 ## 2020.10.24
 
