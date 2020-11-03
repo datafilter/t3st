@@ -1,68 +1,72 @@
-<p align="center">
-  <img src="https://github.com/devmachiine/t3st/raw/master/play/t3st.png"/>
-</p>
-<h2 align="center"> A small & light javascript test framework </h2>
 
-### What makes it different from other test frameworks?
+## What is it ?
 
-* Get started with a single command
+A minimal javascript test framework.
+
+* Concise output by default
 * Small self-evident codebase
-* Clear brief output
+* Command line interface with watch mode
+* < 50 kB
 
-# Quickstart
+# How to use it
 
-#### (1/2) Create test directory & test file
-
-In a [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp) project directory
-
-Create a new directory called `tests` 
-
-```bash
-mkdir tests
+Create or navigate to a [Node.js](https://www.w3schools.com/nodejs/nodejs_intro.asp) project directory
+```
+mkdir my-project
+cd my-project
+npm init -y
 ```
 
-Paste this test code into a new file under `tests/demo.js`:
+Install `t3st` _(optional, but recommended)_
+```
+npm i -d t3st
+```
 
+Generate a test
+```
+npx t3st gen hello
+```
+The above command creates a test file `hello.js` similar to this:
 ```javascript
-module.exports = async ({ test, equal, check, throws }) => [
-    test("equal compares values with ===", () => {
-        const five = 2 + 3
-        equal(5, five)
-    })
-    , throws("expects erros to be thrown", () => {
-        throw 'uncomment this line to cause failing test'
-    })
-    , await test("tests can be async", async () => {
-        const james = await Promise.resolve('bond')
-        equal(james, 'bond')
-    })
-]
+module.exports = async ({ test, throws, equal, check }) => {
+
+    // const unit = require('...')
+
+    return [
+        test("description", () => {
+            equal(2, 1 + 1)
+            check(1, 1 + 1, (a, b) => a + b == 3)
+        }),
+        , throws("expects erros to be thrown", () => {
+            throw 'uncomment this line to cause failing test'
+        })
+        , await test("async test has to be awaited.", async () => {
+            equal({}, {})
+        })]
+}
 ```
 
-#### (2/2) Run the tests
-
-```bash
+Run the tests
+ ```
 npx t3st
+ ```   
+
+Continuously re-run the tests when any code changes
+```
+npx t3st -w
 ```
 
-#### (3/2) More tests:
+Edit `tests/hello.js` to see output for failing tests.
 
-You can add more `.js` test files within your tests directory and its sub-directories.
+---
 
-For more examples [see the framework tests](https://github.com/devmachiine/t3st/tree/master/tests)
-
-If you'd like to specificy a directory for tests, add it as an argument:
-
-```bash
-npx t3st --dir other_dir
+Add the noisy `-n` flag to get more output
+```
+npx t3st -n
 ```
 
-There is no need to install t3st anywhere, though doing so might save npx a second:
-```bash
-npm install t3st -g
-```
-
-To view all cli options, run:
+<!-- cli options are [documented here](devmachiine.com) -->
+View command line documentation via the terminal
 ```
 npx t3st help
 ```
@@ -71,48 +75,45 @@ npx t3st help
 
 `t3st` sets an exit code of `0` if all tests succeeded.
 
- An exit code of `1` is set when:
- * Any tests failed 
- * No tests are found
- * Unhandled promise rejections were detected.
+An exit code of `1` is set when:
+* Any tests failed 
+* No tests are found
+* Unhandled promise rejections were detected.
 
-Command line argument `-s` or `--silent` supresses printing output, so the only program artifact is the exit code.
+To prevent writing output to the console, use the silent option `-s` or `--silent` (just the error code is set).
 
-## Functions
+To specify a different directory than `$(pwd)/tests` use the `-d` or `--dir` option.
 
-<!-- TODO examples -->
-#### test(description, () => { ..code ..})
-#### test(description, async () => { ..code ..})
-Runs a given function. It catches an error, the test fails.
-#### equal(a,b)
-Compare that the data of two values are ===, including deepEquals of objects and function comparison. Throws on false/error.
+ Project [clia](https://www.npmjs.com/package/clia) is an example of how `t3st` can be used on a build server, with this CI/CD [github workflow definition](https://github.com/devmachiine/clia/actions/runs/308972687/workflow) and this [package.json](https://github.com/devmachiine/clia/blob/master/package.json) config.
 
-For example `{ name: 'mark' }`. Made to compare [value objects](https://en.wikipedia.org/wiki/Value_object) (infamously known as DTO's), YMMV on objects with functions. Not intended for referential comparison. In other words - if two things are similar in value they are viewed as the same thing regardless of their shared/separate location(s) in memory.
-#### check(\[...values,\] function => boolean)
-Run a function that throws if an expression is not true. It pretty prints given values to help with investigation.
+## How it works
 
-#### throws(description, () => { ..code ..} [, (error) => { ..code ..}])
-Expects an error to be thrown in the first function. An optional second function runs like test() with the caught error as input.
+`t3st` recursively reads all javascript test files in a directory and imports them.
 
-## [Design/Contributing](https://github.com/devmachiine/t3st/blob/master/docs/contributing.md)
+The default function that each test exports is called with the framework validation functions as arguments.
 
----
+Invoked tests produce a collection of test results:
+- Passing tests, objects with a single property: { description }
+- Failing tests, objects with other additional properties, eg. { description, error, .. }
+
+These results are used to build up a report to display for the user.
+
+## Future work
+
+Stand alone tests aren't supported _(yet?)_, a good alternative is [here](https://github.com/tapjs/node-tap)
+
+Keeping the test framework small, yet feature rich-enough is a balancing act between scope-creep and simplicity.
+
+If you miss a feature that you really need or find a bug, please reach out / send a PR.
+
+<!-- I'd also appreciate if you buy me a coffee <3 -->
 
 ![CI](https://github.com/devmachiine/t3st/workflows/CI/badge.svg)
 
-[![Dependencies](https://img.shields.io/badge/dependencies-0-green)](https://img.shields.io/badge/dependencies-0-green)
-
+<!-- Metrics
 [![License](https://img.shields.io/badge/license-MIT-black)](https://img.shields.io/badge/license-MIT-black)
- <!-- Todo make dynamic, eg update via Github actions on PR: -->
-[![License](https://img.shields.io/badge/core%20LOC-~321-brightgreen)](https://img.shields.io/badge/core%20LOC-~321-brightgreen)
-
-[![License](https://img.shields.io/badge/tests%20LOC-~723-lightgrey)](https://img.shields.io/badge/tests%20LOC-~723-lightgrey)
-
-<!-- Todo Metrics
 [![Build Status](https://img.shields.io/npm/t3st/one.svg)](https://npmjs.com/one)
 [![Snyk](https://img.shields.io/npm/t3st/two.svg)](https://npmjs.com/two)
 [![License](https://img.shields.io/npm/t3st/three.svg)](https://npmjs.com/three)
 [![Coverage](https://img.shields.io/npm/t3st/four.svg)](https://npmjs.com/four)
 -->
-
-Any feedback, bugs, questions, contributions or money is always welcome :)

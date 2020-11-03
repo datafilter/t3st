@@ -1,7 +1,7 @@
 const usage =
     `Usage:	t3st [COMMAND] [OPTIONS]
 
-A small and light javascript test framework.
+A minimal javascript test framework
 
 ['clear', 'dir', 'filter', 'gen', 'help', 'noisy', 'ref', 'silent', 'test', 'version', 'watch']
 
@@ -60,9 +60,6 @@ Options:
     -v, --version
         Display the version of t3st.
 
-    -x, --xecute
-        Display full command of t3st watch
-
 Running t3st with defaults:
     t3st
     t3st test --dir \${pwd}/tests --filter *.js # same as 't3st' without options.
@@ -74,6 +71,9 @@ The very first argument can also be specified with just the starting letter.
 More than one option without <value> can flagged at the same time
     t3st w -d /tests -f *.spec.js -cv
     # t3st watch --dir /tests --filter *.spec.js --clear --noisy
+
+Collect test coverage via [nyc](https://istanbul.js.org/)
+    npx nyc t3st
 `
 // examples can be found [here](link)
 

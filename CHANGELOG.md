@@ -4,6 +4,10 @@
 * **m**aintenance
 * **p**erformance
 
+## 2020.11.3
+
+* **m** Update readme. Add test coverage doc.
+
 ## 2020.10.30
 
 * **f** Add includes file filter pattern.
