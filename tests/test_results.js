@@ -15,7 +15,7 @@ module.exports = ({ test, equal, check }) => {
         })
         , test("Stack is included in ERROR if available", () => {
             const err_result = test("_", () => { throw Error('#20') })
-            check(() => typeof err_result.error.stack !== undefined)
+            equal(typeof err_result.error.stack, 'string')
             check(err_result.error.stack + '', (stack) => stack.includes('test_results.js'))
         })
     ]
