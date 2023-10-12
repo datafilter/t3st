@@ -108,3 +108,7 @@
 ### 2020.7.25
 
  * **f** Add hint: missing test function in test file.
+
+ ### 2020.7.25
+
+ * **m** Replace Object.prototype.hasOwnProperty.call with Object.hasOwn
