@@ -20,3 +20,6 @@ node_modules/
 
 # vscode
 .vscode/launch.json
+
+# test coverage
+.nyc_output
