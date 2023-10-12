@@ -22,7 +22,7 @@ jobs:
     - run: npm ci
     - run: npm test
     - id: version
-      run: echo "::set-output name=changed::$(node .github/scripts/version-changed.js)"
+      run: echo "changed=$(node .github/scripts/version-changed.js)" >> "$GITHUB_OUTPUT"
       
   multi-platform-test:
     needs: lint-and-test
