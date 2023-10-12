@@ -4,7 +4,7 @@ const shell = (cmd) => (execSync(cmd) + '').trim()
 const this_package = require('../../package.json')
 
 const this_version = this_package.version
-const latest_version = shell('npx -q t3st -v')
+const latest_version = shell('npm view t3st version')
 
 console.log(`local  v ${this_version}`)
 console.log(`latest v ${latest_version}`)
