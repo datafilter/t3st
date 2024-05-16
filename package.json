@@ -11,7 +11,7 @@
   "bin": "./bin/cli.js",
   "scripts": {
     "test": "(node bin/cli.js) && (node bin/cli.js --dir tests-external/tests)",
-    "lint": "npx eslint .",
+    "lint": "npx eslint@7 .",
     "push": "npm run lint && npm run test && git push"
   },
   "repository": {
