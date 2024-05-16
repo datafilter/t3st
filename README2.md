@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/devmachiine/t3st/raw/master/play/t3st.png"/>
+  <img src="https://github.com/datafilter/t3st/raw/master/play/t3st.png"/>
 </p>
 <h2 align="center"> A small & light javascript test framework </h2>
 
@@ -49,7 +49,7 @@ npx t3st
 
 You can add more `.js` test files within your tests directory and its sub-directories.
 
-For more examples [see the framework tests](https://github.com/devmachiine/t3st/tree/master/tests)
+For more examples [see the framework tests](https://github.com/datafilter/t3st/tree/master/tests)
 
 If you'd like to specificy a directory for tests, add it as an argument:
 
@@ -94,11 +94,10 @@ Run a function that throws if an expression is not true. It pretty prints given 
 #### throws(description, () => { ..code ..} [, (error) => { ..code ..}])
 Expects an error to be thrown in the first function. An optional second function runs like test() with the caught error as input.
 
-## [Design/Contributing](https://github.com/devmachiine/t3st/blob/master/docs/contributing.md)
+## [Design/Contributing](https://github.com/datafilter/t3st/blob/master/docs/contributing.md)
 
 ---
 
-![CI](https://github.com/devmachiine/t3st/workflows/CI/badge.svg)
 
 [![License](https://img.shields.io/badge/license-MIT-black)](https://img.shields.io/badge/license-MIT-black)
  <!-- Todo make dynamic, eg update via Github actions on PR: -->
@@ -106,11 +105,5 @@ Expects an error to be thrown in the first function. An optional second function
 
 [![License](https://img.shields.io/badge/tests%20LOC-~723-lightgrey)](https://img.shields.io/badge/tests%20LOC-~723-lightgrey)
 
-<!-- Todo Metrics
-[![Build Status](https://img.shields.io/npm/t3st/one.svg)](https://npmjs.com/one)
-[![Snyk](https://img.shields.io/npm/t3st/two.svg)](https://npmjs.com/two)
-[![License](https://img.shields.io/npm/t3st/three.svg)](https://npmjs.com/three)
-[![Coverage](https://img.shields.io/npm/t3st/four.svg)](https://npmjs.com/four)
--->
 
 Any feedback, bugs, questions, contributions or money is always welcome :)

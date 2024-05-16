@@ -65,7 +65,6 @@ Add the noisy `-n` flag to get more output
 npx t3st -n
 ```
 
-<!-- cli options are [documented here](devmachiine.com) -->
 View command line documentation via the terminal
 ```
 npx t3st help
@@ -84,7 +83,7 @@ To prevent writing output to the console, use the silent option `-s` or `--silen
 
 To specify a different directory than `$(pwd)/tests` use the `-d` or `--dir` option.
 
- Project [clia](https://www.npmjs.com/package/clia) is an example of how `t3st` can be used on a build server, with this CI/CD [github workflow definition](https://github.com/devmachiine/clia/actions/runs/308972687/workflow) and this [package.json](https://github.com/devmachiine/clia/blob/master/package.json) config.
+ Project [clia](https://www.npmjs.com/package/clia) is an example of how `t3st` can be used on a build server, with this CI/CD [github workflow definition](https://github.com/datafilter/clia/actions/runs/308972687/workflow) and this [package.json](https://github.com/datafilter/clia/blob/master/package.json) config.
 
 ## How it works
 
@@ -106,14 +105,4 @@ Keeping the test framework small, yet feature rich-enough is a balancing act bet
 
 If you miss a feature that you really need or find a bug, please reach out / send a PR.
 
-<!-- I'd also appreciate if you buy me a coffee <3 -->
 
-![CI](https://github.com/devmachiine/t3st/workflows/CI/badge.svg)
-
-<!-- Metrics
-[![License](https://img.shields.io/badge/license-MIT-black)](https://img.shields.io/badge/license-MIT-black)
-[![Build Status](https://img.shields.io/npm/t3st/one.svg)](https://npmjs.com/one)
-[![Snyk](https://img.shields.io/npm/t3st/two.svg)](https://npmjs.com/two)
-[![License](https://img.shields.io/npm/t3st/three.svg)](https://npmjs.com/three)
-[![Coverage](https://img.shields.io/npm/t3st/four.svg)](https://npmjs.com/four)
--->

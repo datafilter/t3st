@@ -1,11 +1,11 @@
 # Fork / Play
 
-The main part of the test framework is in [this file on github](https://github.com/devmachiine/t3st/blob/master/lib/validation.js). Most of the code in the project are tests to test the test framework.
+The main part of the test framework is in [this file on github](https://github.com/datafilter/t3st/blob/master/lib/validation.js). Most of the code in the project are tests to test the test framework.
 
 Run the tests that test the test framework:
 
 ```
-git clone https://github.com/devmachiine/t3st.git
+git clone https://github.com/datafilter/t3st.git
 cd t3st
 npm test
 ```
