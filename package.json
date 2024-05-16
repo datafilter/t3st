@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2023.10.12",
+  "version": "2024.05.16",
   "description": "A minimal javascript test framework",
   "files": [
     "/bin",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devmachiine/t3st.git"
+    "url": "git+https://github.com/datafilter/t3st.git"
   },
   "keywords": [
     "testing",
@@ -24,12 +24,12 @@
     "unit testing",
     "tdd"
   ],
-  "author": "devmachiine",
+  "author": "datafilter",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devmachiine/t3st/issues"
+    "url": "https://github.com/datafilter/t3st/issues"
   },
-  "homepage": "https://github.com/devmachiine/t3st#readme",
+  "homepage": "https://github.com/datafilter/t3st#readme",
   "dependencies": {
     "clia": "^2020.8.11"
   }

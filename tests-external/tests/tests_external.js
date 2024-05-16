@@ -35,8 +35,6 @@ module.exports = async (framework) => {
             const _t3st_output = t3st(`--dir ${path.resolve(__dirname, '../promise_rejected/')}`)
         }, (err) => {
             equal(err.status, 1)
-            // Possibly remove these text checks when output is pre-empted by nodejs (15+)
-            check(err.output + '', (o) => o.includes('⚔️🔥 Unhandled Rejection'))
             check(err.message, (m) => m.includes('Command failed'))
         })
         , throws("missing await in failing test still finds error origin", () => {
