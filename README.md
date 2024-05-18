@@ -4,8 +4,8 @@
 A minimal javascript test framework.
 
 * Concise output by default
-* Small self-evident codebase
 * Command line interface with watch mode
+* Integration with ci/cd pipelines
 * < 50 kB
 
 # How to use it
