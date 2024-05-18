@@ -89,15 +89,17 @@ To specify a different directory than `$(pwd)/tests` use the `-d` or `--dir` opt
 
 `t3st` recursively reads all javascript test files in a directory and imports them.
 
-The default function that each test exports is called with the framework validation functions as arguments.
+Each test exports a default function, which is invoked with the framework validation functions as arguments.
 
-Invoked tests produce a collection of test results:
+Executed tests produce a collection of test results:
 - Passing tests, objects with a single property: { description }
 - Failing tests, objects with other additional properties, eg. { description, error, .. }
 
 These results are used to build up a report to display for the user.
 
-## Future work
+## Development / Future work
+
+After cloning the repository run `npm ci` _(to install dependency `clia`)_, then run `npm test` to test t3st.
 
 Stand alone tests aren't supported _(yet?)_, a good alternative is [here](https://github.com/tapjs/node-tap)
 
