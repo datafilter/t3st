@@ -4,7 +4,6 @@ module.exports = ({ test, equal, check }) => {
     const report_silent = (results) => report({ results, silent: true })
 
     const results_empty = []
-    // eslint-disable-next-line no-sparse-arrays
     const mixed_empty = [,,[,,[[,,],],,],,,]
     const results_single_success = [{ description: "mkay fine" }]
 

@@ -16,9 +16,7 @@ module.exports = ({ test, equal, check }) => {
 
     const result_tests = [
         test("error is included in error message", () => {
-            /* eslint-disable no-undef */
             const err_undefined = test("_", () => { _undefined })
-            /* eslint-disable no-undef */
             check(() => result_text(err_undefined).message.includes('ReferenceError: _undefined is not defined'))
 
             const err_string = test("_", () => { throw 'err-msg' })
