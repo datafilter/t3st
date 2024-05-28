@@ -1,6 +1,6 @@
 {
   "name": "t3st",
-  "version": "2024.05.16",
+  "version": "2024.05.28",
   "description": "A minimal javascript test framework",
   "files": [
     "/bin",
@@ -11,7 +11,7 @@
   "bin": "./bin/cli.js",
   "scripts": {
     "test": "(node bin/cli.js) && (node bin/cli.js --dir tests-external/tests)",
-    "lint": "npx eslint@7 .",
+    "lint": "npx eslint@9 . --ignore-pattern '**/invalid_javascript.js'",
     "push": "npm run lint && npm run test && git push"
   },
   "repository": {

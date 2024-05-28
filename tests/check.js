@@ -27,17 +27,13 @@ module.exports = ({ test, throws, equal, check }) => {
             equal(true, err.message.includes('expected (...values [, function => boolean]'))
         })
         , throws("includes error message of invalid assertion", () => {
-            /* eslint-disable no-undef */
             check(() => _undefined)
-            /* eslint-enable no-undef */
         }, (err) => {
             check(err.message, (m) => m.includes("ReferenceError: _undefined is not defined"))
             check(err.message, (m) => m.includes("failed *before* assertion"))
         })
         , throws("test catches error in check proposition arguments", () => {
-            /* eslint-disable no-undef */
             check(_undefined, (_n, _a) => true)
-            /* eslint-enable no-undef */
         }, (err) => {
             check(err + '', (err) => err.includes("ReferenceError: _undefined is not defined"))
             check(err + '', (err) => false === err.includes("failed *before* assertion"))
