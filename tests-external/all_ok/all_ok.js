@@ -1,4 +1,3 @@
-/* eslint-disable no-sparse-arrays */
 module.exports = ({ test, equal, check }) => [
     test("ok", () => true),
     test("also ok", () => { equal(1, 1) }),
