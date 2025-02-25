@@ -23,14 +23,11 @@ const build_config = (args) => {
         const expected_commands = alias.concat(alias.map(a => a[0]))
 
         if (!expected_commands.some(e => e === command)) {
-
-            const closest = find_closest_command(command, alias)
-            const did_you_mean = `Did you mean 't3st ${closest}' ?`
-
             // TODO: if command is a file or directory
             //       run test -d 'command'
             return {
-                errors: [`${command} is not a t3st command.`, `${did_you_mean}`],
+                errors: [`${command} is not a t3st command.`,
+                         `Did you mean t3st ${find_closest_command(command, alias)} ?`],
                 ...conf
             }
         } else return clia([`--${command}`, ...options], alias)
